@@ -58,9 +58,9 @@ design_1 your_instance_name (
   .pcie_7x_mgt_rtl_0_rxp(pcie_7x_mgt_rtl_0_rxp), // input wire [1:0] pcie_7x_mgt_rtl_0_rxp
   .pcie_7x_mgt_rtl_0_txn(pcie_7x_mgt_rtl_0_txn), // output wire [1:0] pcie_7x_mgt_rtl_0_txn
   .pcie_7x_mgt_rtl_0_txp(pcie_7x_mgt_rtl_0_txp), // output wire [1:0] pcie_7x_mgt_rtl_0_txp
-  .sys_rst_n(sys_rst_n), // input wire sys_rst_n
   .pcie_clk_clk_n(pcie_clk_clk_n), // input wire [0:0] pcie_clk_clk_n
   .pcie_clk_clk_p(pcie_clk_clk_p), // input wire [0:0] pcie_clk_clk_p
+  .sys_rst_n(sys_rst_n), // input wire sys_rst_n
   .LED(LED), // output wire [0:0] LED
   .user_resetn(user_resetn), // output wire user_resetn
   .user_lnk_up(user_lnk_up) // output wire user_lnk_up

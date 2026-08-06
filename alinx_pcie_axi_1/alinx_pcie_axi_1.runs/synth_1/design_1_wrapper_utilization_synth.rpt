@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
-| Date         : Tue Aug  4 10:01:56 2026
+| Date         : Tue Aug  4 17:35:45 2026
 | Host         : emerald running 64-bit Ubuntu 26.04 LTS
 | Command      : report_utilization -file design_1_wrapper_utilization_synth.rpt -pb design_1_wrapper_utilization_synth.pb
 | Design       : design_1_wrapper
@@ -31,13 +31,13 @@ Table of Contents
 +----------------------------+-------+-------+------------+-----------+-------+
 |          Site Type         |  Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+-------+-------+------------+-----------+-------+
-| Slice LUTs*                | 18053 |     0 |          0 |    134600 | 13.41 |
-|   LUT as Logic             | 16200 |     0 |          0 |    134600 | 12.04 |
+| Slice LUTs*                | 18052 |     0 |          0 |    134600 | 13.41 |
+|   LUT as Logic             | 16199 |     0 |          0 |    134600 | 12.03 |
 |   LUT as Memory            |  1853 |     0 |          0 |     46200 |  4.01 |
 |     LUT as Distributed RAM |  1765 |     0 |            |           |       |
 |     LUT as Shift Register  |    88 |     0 |            |           |       |
-| Slice Registers            | 18190 |     0 |          0 |    269200 |  6.76 |
-|   Register as Flip Flop    | 18190 |     0 |          0 |    269200 |  6.76 |
+| Slice Registers            | 18215 |     0 |          0 |    269200 |  6.77 |
+|   Register as Flip Flop    | 18215 |     0 |          0 |    269200 |  6.77 |
 |   Register as Latch        |     0 |     0 |          0 |    269200 |  0.00 |
 | F7 Muxes                   |   282 |     0 |          0 |     67300 |  0.42 |
 | F8 Muxes                   |    21 |     0 |          0 |     33650 |  0.06 |
@@ -64,7 +64,7 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | 58    |          Yes |           - |          Set |
 | 56    |          Yes |           - |        Reset |
 | 186   |          Yes |         Set |            - |
-| 17890 |          Yes |       Reset |            - |
+| 17915 |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -158,7 +158,7 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +---------------+-------+----------------------+
 |    Ref Name   |  Used |  Functional Category |
 +---------------+-------+----------------------+
-| FDRE          | 17890 |         Flop & Latch |
+| FDRE          | 17915 |         Flop & Latch |
 | LUT6          |  5877 |                  LUT |
 | LUT3          |  4362 |                  LUT |
 | LUT5          |  3202 |                  LUT |
@@ -166,7 +166,7 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | RAMD32        |  2538 |   Distributed Memory |
 | LUT2          |  1806 |                  LUT |
 | LUT1          |  1541 |                  LUT |
-| CARRY4        |   847 |           CarryLogic |
+| CARRY4        |   853 |           CarryLogic |
 | RAMS32        |   782 |   Distributed Memory |
 | MUXF7         |   282 |                MuxFx |
 | FDSE          |   186 |         Flop & Latch |

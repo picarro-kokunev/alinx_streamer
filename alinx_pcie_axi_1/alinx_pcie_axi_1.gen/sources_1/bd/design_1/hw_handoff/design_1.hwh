@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Aug  3 18:27:50 2026" VIVADOVERSION="2025.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Aug  4 17:33:45 2026" VIVADOVERSION="2025.2">
 
   <SYSTEMINFO ARCH="artix7" DEVICE="7a200t" NAME="design_1" PACKAGE="fbg484" SPEEDGRADE="-2"/>
 
@@ -80,6 +80,312 @@
       <DOCUMENTS>
         <DOCUMENT SOURCE="http://www.xilinx.com/cgi-bin/docs/ipdoc?c=axi_bram_ctrl;v=v4_1;d=pg078-axi-bram-ctrl.pdf"/>
       </DOCUMENTS>
+      <ADDRESSBLOCKS>
+        <ADDRESSBLOCK ACCESS="read-write" INTERFACE="S_AXI" NAME="Mem0" RANGE="4096" USAGE="memory">
+          <REGISTERS>
+            <REGISTER NAME="ECC_STATUS">
+              <PROPERTY NAME="DESCRIPTION" VALUE="ECC Status Register"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x000"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="read-write"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0x0"/>
+              <FIELDS>
+                <FIELD NAME="UE_STATUS">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="If 1 an uncorrectable error has occurred. Cleared when 1 is written to this bit position&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-write"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE="oneToClear"/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="1"/>
+                </FIELD>
+                <FIELD NAME="CE_STATUS">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="If 1 a correctable error has occurred. Cleared when 1 is written to this bit position&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="1"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-write"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE="oneToClear"/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="1"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="1"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="ECC_EN_IRQ">
+              <PROPERTY NAME="DESCRIPTION" VALUE="ECC Enable Interrupt Register"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x004"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="read-write"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0x0"/>
+              <FIELDS>
+                <FIELD NAME="UE_EN_IRQ">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="1 - The value of the UE_STATUS bit of the ECC Status Register is propagated to the Interrupt signal.&#xA;0 - The value of the UE_STATUS bit of the ECC Status Register is not propagated to the Interrupt signal.&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-write"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="1"/>
+                </FIELD>
+                <FIELD NAME="CE_EN_IRQ">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="1 - The value of the CE_STATUS bit of the ECC Status Register is propagated to the Interrupt signal.&#xA;0 - The value of the CE_STATUS bit of the ECC Status Register is not propagated to the Interrupt signal.&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="1"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-write"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="1"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="1"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="ECC_ON_OFF">
+              <PROPERTY NAME="DESCRIPTION" VALUE="ECC On/Off Register"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x008"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="read-write"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="ECC_ON_OFF">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="0 - ECC checking is disabled on read operations. (ECC generation is enabled on write operations when C_ECC = 1).&#xA;1 - ECC checking is enabled on read operations. All correctable and uncorrectable error conditions are captured and status updated.&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-write"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="1"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="CE_CNT">
+              <PROPERTY NAME="DESCRIPTION" VALUE="Correctable Error Counter Register"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x00C"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="read-write"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="CE_CNT">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="Registers holds number of correctable errors encountered&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-write"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="8"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="CE_FFA0">
+              <PROPERTY NAME="DESCRIPTION" VALUE="Correctable Error First Failing Address Register, bits [31:0]"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x1C0"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="CE_FFA0">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="Address (bits [31:0]) of the first occurrence of a correctable error&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="32"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="CE_FFA1">
+              <PROPERTY NAME="DESCRIPTION" VALUE="Correctable Error First Failing Address Register, bits [63:32]"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x1C4"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="CE_FFA1">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="Address (bits [63:32]) of the first occurrence of a correctable error&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="32"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="UE_FFD1">
+              <PROPERTY NAME="DESCRIPTION" VALUE="Uncorrectable Error First Failing Data Register , bits [63:32]"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x204"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="UE_FFD">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="Data (bits [63:32) of the first occurrence of an uncorrectable error&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="32"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="UE_FFD2">
+              <PROPERTY NAME="DESCRIPTION" VALUE="Uncorrectable Error First Failing Data Register , bits [95:64]"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x208"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="UE_FFD">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="Data (bits [95:64]) of the first occurrence of an uncorrectable error&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="32"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="UE_FFD3">
+              <PROPERTY NAME="DESCRIPTION" VALUE="Uncorrectable Error First Failing Data Register , bits [127:96]"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x20C"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="UE_FFD">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="Data (bits [127:96]) of the first occurrence of an uncorrectable error&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="32"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="FI_D0">
+              <PROPERTY NAME="DESCRIPTION" VALUE="Fault Inject Data Register, bits[31:0]"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x300"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="write-only"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="FI_D0">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="Bit positions set to 1 toggle the corresponding bits [31:0] of the next data word written to the block RAM.&#xA;The register is automatically cleared after the fault has been injected.&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="32"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="FI_D1">
+              <PROPERTY NAME="DESCRIPTION" VALUE="Fault Inject Data Register, bits[63:32]"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x304"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="write-only"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="FI_D1">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="Bit positions set to 1 toggle the corresponding bits [63:32] of the next data word written to the block RAM.&#xA;The register is automatically cleared after the fault has been injected.&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="32"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="FI_D2">
+              <PROPERTY NAME="DESCRIPTION" VALUE="Fault Inject Data Register, bits[95:64]"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x308"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="write-only"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="FI_D2">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="Bit positions set to 1 toggle the corresponding bits [95:64] of the next data word written to the block RAM.&#xA;The register is automatically cleared after the fault has been injected.&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="32"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="FI_D3">
+              <PROPERTY NAME="DESCRIPTION" VALUE="Fault Inject Data Register, bits[127:96]"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x30C"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="write-only"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="FI_D3">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="Bit positions set to 1 toggle the corresponding bits [127:96] of the next data word written to the block RAM.&#xA;The register is automatically cleared after the fault has been injected.&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="32"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+            <REGISTER NAME="FI_ECC">
+              <PROPERTY NAME="DESCRIPTION" VALUE="Fault Inject ECC Register"/>
+              <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0x380"/>
+              <PROPERTY NAME="SIZE" VALUE="1"/>
+              <PROPERTY NAME="ACCESS" VALUE="write-only"/>
+              <PROPERTY NAME="IS_ENABLED" VALUE="false"/>
+              <PROPERTY NAME="RESET_VALUE" VALUE="0"/>
+              <FIELDS>
+                <FIELD NAME="FI_ECC">
+                  <PROPERTY NAME="DESCRIPTION" VALUE="Bit positions set to 1 toggle the corresponding bit of the next ECC written to the block RAM.&#xA;The register is automatically cleared after the fault has been injected.&#xA;"/>
+                  <PROPERTY NAME="ADDRESS_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="ACCESS" VALUE="read-only"/>
+                  <PROPERTY NAME="MODIFIED_READ_VALUES" VALUE=""/>
+                  <PROPERTY NAME="WRITE_CONSTRAINT" VALUE="0"/>
+                  <PROPERTY NAME="READ_ACTION" VALUE=""/>
+                  <PROPERTY NAME="BIT_OFFSET" VALUE="0"/>
+                  <PROPERTY NAME="BIT_WIDTH" VALUE="32"/>
+                </FIELD>
+              </FIELDS>
+            </REGISTER>
+          </REGISTERS>
+        </ADDRESSBLOCK>
+      </ADDRESSBLOCKS>
       <PARAMETERS>
         <PARAMETER NAME="C_BRAM_ADDR_WIDTH" VALUE="13"/>
         <PARAMETER NAME="C_BRAM_INST_MODE" VALUE="EXTERNAL"/>
@@ -3236,8 +3542,8 @@
     <MODULE COREREVISION="0" FULLNAME="/xlslice_0" HWVERSION="2.0" INSTANCE="xlslice_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:2.0">
       <DOCUMENTS/>
       <PARAMETERS>
-        <PARAMETER NAME="DIN_FROM" VALUE="0"/>
-        <PARAMETER NAME="DIN_TO" VALUE="0"/>
+        <PARAMETER NAME="DIN_FROM" VALUE="25"/>
+        <PARAMETER NAME="DIN_TO" VALUE="25"/>
         <PARAMETER NAME="DIN_WIDTH" VALUE="26"/>
         <PARAMETER NAME="Component_Name" VALUE="design_1_xlslice_0_0"/>
         <PARAMETER NAME="DOUT_WIDTH" VALUE="1"/>

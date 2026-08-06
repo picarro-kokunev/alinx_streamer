@@ -524,7 +524,10 @@
         "vlnv": "xilinx.com:inline_hdl:ilslice:1.0",
         "parameters": {
           "DIN_FROM": {
-            "value": "0"
+            "value": "25"
+          },
+          "DIN_TO": {
+            "value": "25"
           },
           "DIN_WIDTH": {
             "value": "26"

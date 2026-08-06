@@ -62,11 +62,11 @@ module design_1_sv (
   (* X_INTERFACE_IGNORE = "true" *)
   output wire [1:0] pcie_7x_mgt_rtl_0_txp,
   (* X_INTERFACE_IGNORE = "true" *)
-  input wire sys_rst_n,
-  (* X_INTERFACE_IGNORE = "true" *)
   input wire [0:0] pcie_clk_clk_n,
   (* X_INTERFACE_IGNORE = "true" *)
   input wire [0:0] pcie_clk_clk_p,
+  (* X_INTERFACE_IGNORE = "true" *)
+  input wire sys_rst_n,
   (* X_INTERFACE_IGNORE = "true" *)
   output wire [0:0] LED,
   (* X_INTERFACE_IGNORE = "true" *)
@@ -80,9 +80,9 @@ module design_1_sv (
     .pcie_7x_mgt_rtl_0_rxp(pcie_7x_mgt_rtl_0_rxp),
     .pcie_7x_mgt_rtl_0_txn(pcie_7x_mgt_rtl_0_txn),
     .pcie_7x_mgt_rtl_0_txp(pcie_7x_mgt_rtl_0_txp),
-    .sys_rst_n(sys_rst_n),
     .pcie_clk_clk_n(pcie_clk_clk_n),
     .pcie_clk_clk_p(pcie_clk_clk_p),
+    .sys_rst_n(sys_rst_n),
     .LED(LED),
     .user_resetn(user_resetn),
     .user_lnk_up(user_lnk_up)
