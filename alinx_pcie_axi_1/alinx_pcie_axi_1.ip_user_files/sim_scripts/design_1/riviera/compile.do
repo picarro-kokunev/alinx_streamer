@@ -177,7 +177,9 @@ vcom -work xil_defaultlib -93  -incr \
 "../../../bd/design_1/ip/design_1_c_counter_binary_0_0/sim/design_1_c_counter_binary_0_0.vhd" \
 
 vlog -work xil_defaultlib  -incr -v2k5 "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/d6c9/hdl/verilog" "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../../../../../../../../opt/Xilinx_2/2025.2/data/rsb/busdef" "+incdir+/opt/Xilinx_2/2025.2/data/xilinx_vip/include" -l xilinx_vip -l xpm -l xil_defaultlib -l blk_mem_gen_v8_4_12 -l fifo_generator_v13_2_14 -l xdma_v4_2_2 -l axi_bram_ctrl_v4_1_13 -l xbip_utils_v3_0_15 -l c_reg_fd_v12_0_11 -l xbip_dsp48_wrapper_v3_0_7 -l xbip_pipe_v3_0_11 -l c_addsub_v12_0_21 -l c_counter_binary_v12_0_22 -l generic_baseblocks_v2_1_2 -l axi_data_fifo_v2_1_36 -l axi_infrastructure_v1_1_0 -l axi_register_slice_v2_1_36 -l axi_protocol_converter_v2_1_37 \
-"../../../bd/design_1/sim/design_1.v" \
+"../../../bd/design_1/ip/design_1_c2h_streamer_0_0/sim/design_1_c2h_streamer_0_0.v" \
+"../../../bd/design_1/ip/design_1_h2c_axis_sink_0_0/sim/design_1_h2c_axis_sink_0_0.v" \
+"../../../bd/design_1/ip/design_1_h2c_axis_sink_1_0/sim/design_1_h2c_axis_sink_1_0.v" \
 
 vlog -work generic_baseblocks_v2_1_2  -incr -v2k5 "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/d6c9/hdl/verilog" "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../../../../../../../../opt/Xilinx_2/2025.2/data/rsb/busdef" "+incdir+/opt/Xilinx_2/2025.2/data/xilinx_vip/include" -l xilinx_vip -l xpm -l xil_defaultlib -l blk_mem_gen_v8_4_12 -l fifo_generator_v13_2_14 -l xdma_v4_2_2 -l axi_bram_ctrl_v4_1_13 -l xbip_utils_v3_0_15 -l c_reg_fd_v12_0_11 -l xbip_dsp48_wrapper_v3_0_7 -l xbip_pipe_v3_0_11 -l c_addsub_v12_0_21 -l c_counter_binary_v12_0_22 -l generic_baseblocks_v2_1_2 -l axi_data_fifo_v2_1_36 -l axi_infrastructure_v1_1_0 -l axi_register_slice_v2_1_36 -l axi_protocol_converter_v2_1_37 \
 "../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/0c28/hdl/generic_baseblocks_v2_1_vl_rfs.v" \
@@ -196,6 +198,7 @@ vlog -work axi_protocol_converter_v2_1_37  -incr -v2k5 "+incdir+../../../../alin
 
 vlog -work xil_defaultlib  -incr -v2k5 "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/d6c9/hdl/verilog" "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../../../../../../../../opt/Xilinx_2/2025.2/data/rsb/busdef" "+incdir+/opt/Xilinx_2/2025.2/data/xilinx_vip/include" -l xilinx_vip -l xpm -l xil_defaultlib -l blk_mem_gen_v8_4_12 -l fifo_generator_v13_2_14 -l xdma_v4_2_2 -l axi_bram_ctrl_v4_1_13 -l xbip_utils_v3_0_15 -l c_reg_fd_v12_0_11 -l xbip_dsp48_wrapper_v3_0_7 -l xbip_pipe_v3_0_11 -l c_addsub_v12_0_21 -l c_counter_binary_v12_0_22 -l generic_baseblocks_v2_1_2 -l axi_data_fifo_v2_1_36 -l axi_infrastructure_v1_1_0 -l axi_register_slice_v2_1_36 -l axi_protocol_converter_v2_1_37 \
 "../../../bd/design_1/ip/design_1_axi_interconnect_0_imp_auto_pc_0/sim/design_1_axi_interconnect_0_imp_auto_pc_0.v" \
+"../../../bd/design_1/sim/design_1.v" \
 
 vlog -work xil_defaultlib \
 "glbl.v"

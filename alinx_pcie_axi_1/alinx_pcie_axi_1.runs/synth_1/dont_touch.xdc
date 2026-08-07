@@ -33,14 +33,23 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_ax
 # IP: bd/design_1/ip/design_1_blk_mem_gen_1_0/design_1_blk_mem_gen_1_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_blk_mem_gen_1_0 || ORIG_REF_NAME==design_1_blk_mem_gen_1_0} -quiet] -quiet
 
+# IP: bd/design_1/ip/design_1_axi_interconnect_0_imp_auto_pc_0/design_1_axi_interconnect_0_imp_auto_pc_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_axi_interconnect_0_imp_auto_pc_0 || ORIG_REF_NAME==design_1_axi_interconnect_0_imp_auto_pc_0} -quiet] -quiet
+
 # IP: bd/design_1/ip/design_1_axi_interconnect_0_0/design_1_axi_interconnect_0_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_axi_interconnect_0_0 || ORIG_REF_NAME==design_1_axi_interconnect_0_0} -quiet] -quiet
 
 # IP: bd/design_1/ip/design_1_c_counter_binary_0_0/design_1_c_counter_binary_0_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_c_counter_binary_0_0 || ORIG_REF_NAME==design_1_c_counter_binary_0_0} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_axi_interconnect_0_imp_auto_pc_0/design_1_axi_interconnect_0_imp_auto_pc_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_axi_interconnect_0_imp_auto_pc_0 || ORIG_REF_NAME==design_1_axi_interconnect_0_imp_auto_pc_0} -quiet] -quiet
+# IP: bd/design_1/ip/design_1_c2h_streamer_0_0/design_1_c2h_streamer_0_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_c2h_streamer_0_0 || ORIG_REF_NAME==design_1_c2h_streamer_0_0} -quiet] -quiet
+
+# IP: bd/design_1/ip/design_1_h2c_axis_sink_0_0/design_1_h2c_axis_sink_0_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_h2c_axis_sink_0_0 || ORIG_REF_NAME==design_1_h2c_axis_sink_0_0} -quiet] -quiet
+
+# IP: bd/design_1/ip/design_1_h2c_axis_sink_1_0/design_1_h2c_axis_sink_1_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_h2c_axis_sink_1_0 || ORIG_REF_NAME==design_1_h2c_axis_sink_1_0} -quiet] -quiet
 
 # XDC: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_xdma_0_0/ip_4/pcie2_fifo_generator_tgt_brdg.xdc
 set_property KEEP_HIERARCHY SOFT [get_cells [split [join [get_cells -hier -filter {REF_NAME==pcie2_fifo_generator_tgt_brdg || ORIG_REF_NAME==pcie2_fifo_generator_tgt_brdg} -quiet] {/U0 } ]/U0 ] -quiet] -quiet

@@ -237,6 +237,42 @@
 						"WVALID": { "actual": "s_axi_wvalid"}
 					}
 				},
+				"/c2h_streamer_0/M_AXIS": {
+					"interface": "xilinx.com:interface:axis:1.0",
+					"ports": {
+						"ACLK": { "actual": "aclk"},
+						"ARESETN": { "actual": "aresetn"},
+						"TDATA": { "actual": "m_axis_tdata[63:0]"},
+						"TKEEP": { "actual": "m_axis_tkeep[7:0]"},
+						"TLAST": { "actual": "m_axis_tlast"},
+						"TREADY": { "actual": "m_axis_tready"},
+						"TVALID": { "actual": "m_axis_tvalid"}
+					}
+				},
+				"/h2c_axis_sink_0/S_AXIS": {
+					"interface": "xilinx.com:interface:axis:1.0",
+					"ports": {
+						"ACLK": { "actual": "aclk"},
+						"ARESETN": { "actual": "aresetn"},
+						"TDATA": { "actual": "s_axis_tdata[63:0]"},
+						"TKEEP": { "actual": "s_axis_tkeep[7:0]"},
+						"TLAST": { "actual": "s_axis_tlast"},
+						"TREADY": { "actual": "s_axis_tready"},
+						"TVALID": { "actual": "s_axis_tvalid"}
+					}
+				},
+				"/h2c_axis_sink_1/S_AXIS": {
+					"interface": "xilinx.com:interface:axis:1.0",
+					"ports": {
+						"ACLK": { "actual": "aclk"},
+						"ARESETN": { "actual": "aresetn"},
+						"TDATA": { "actual": "s_axis_tdata[63:0]"},
+						"TKEEP": { "actual": "s_axis_tkeep[7:0]"},
+						"TLAST": { "actual": "s_axis_tlast"},
+						"TREADY": { "actual": "s_axis_tready"},
+						"TVALID": { "actual": "s_axis_tvalid"}
+					}
+				},
 				"/xdma_0/M_AXIS_H2C_0": {
 					"interface": "xilinx.com:interface:axis:1.0",
 					"ports": {
@@ -297,18 +333,6 @@
 						"TLAST": { "actual": "s_axis_c2h_tlast_0"},
 						"TREADY": { "actual": "s_axis_c2h_tready_0"},
 						"TVALID": { "actual": "s_axis_c2h_tvalid_0"}
-					}
-				},
-				"/xdma_0/S_AXIS_C2H_1": {
-					"interface": "xilinx.com:interface:axis:1.0",
-					"ports": {
-						"ACLK": { "actual": "axi_aclk"},
-						"ARESETN": { "actual": "axi_aresetn"},
-						"TDATA": { "actual": "s_axis_c2h_tdata_1[63:0]"},
-						"TKEEP": { "actual": "s_axis_c2h_tkeep_1[7:0]"},
-						"TLAST": { "actual": "s_axis_c2h_tlast_1"},
-						"TREADY": { "actual": "s_axis_c2h_tready_1"},
-						"TVALID": { "actual": "s_axis_c2h_tvalid_1"}
 					}
 				}
 			}
