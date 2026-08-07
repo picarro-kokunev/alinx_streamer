@@ -5,17 +5,23 @@ Read samples from the alinx_streamer XDMA AXI-Stream path.
 Hardware (design_1):
   Host PCIe ──► xdma_0 (AXI Stream mode, Gen2 x2, 64-bit @ 125 MHz)
                   │
-                  ├─ M_AXIS_H2C_n ──► S_AXIS_C2H_n   (loopback, n=0,1)
-                  └─ M_AXI_LITE   ──► BRAM (4 KiB @ 0x0)
+                  ├─ c2h_streamer_0 ──► S_AXIS_C2H_0  (pattern source)
+                  ├─ h2c_axis_sink_* ◄── M_AXIS_H2C_* (discard)
+                  └─ M_AXI_LITE   ──► BRAM (4 KiB @ 0x0, port A host / port B FPGA)
+
+BRAM register map (stream control via port B):
+  0x00 CTRL [0]=start   0x04 LENGTH   0x08 STATUS   0x0C BEAT_CNT
+  0x10 SEED_LO          0x14 SEED_HI
 
 Device nodes (Xilinx dma_ip_drivers xdma):
   /dev/xdma0_h2c_{0,1}   host → card (AXIS)
   /dev/xdma0_c2h_{0,1}   card → host (AXIS)
   /dev/xdma0_user        AXI-Lite BAR (BRAM)
 
-Current bitstream loops H2C back to C2H, so a pure C2H read hangs unless
-something drives S_AXIS_C2H. Use --loopback to exercise the path today, or
---mode c2h once a sample source is connected on the FPGA.
+Current bitstream drives S_AXIS_C2H_0 from c2h_pattern_source (ascending
+64-bit counter).  ARM_ON_C2H is enabled: opening a C2H read also arms the
+source when LENGTH is set in BRAM (default 4096).  Use the pattern subcommand
+or write BRAM regs manually, then read C2H.
 """
 
 from __future__ import annotations
@@ -33,6 +39,13 @@ from typing import Iterable, List, Optional, Sequence, Tuple
 # AXI Stream beat width from XDMA IP configuration
 AXIS_BYTES_PER_BEAT = 8  # 64-bit TDATA
 BRAM_SIZE = 4096
+# Stream control register offsets (see stream_ctrl_regs.v)
+REG_CTRL     = 0x00
+REG_LENGTH   = 0x04
+REG_STATUS   = 0x08
+REG_BEAT_CNT = 0x0C
+REG_SEED_LO  = 0x10
+REG_SEED_HI  = 0x14
 DEFAULT_DEVICE = 0
 DEFAULT_CHANNEL = 0
 
@@ -258,6 +271,52 @@ def print_preview(samples: Iterable, limit: int = 16) -> None:
     print(f"  samples[{n}]: [{preview}]{more}")
 
 
+def arm_pattern_source(
+    nbytes: int,
+    device: int = DEFAULT_DEVICE,
+    seed: int = 0,
+) -> None:
+    """Program BRAM control regs and pulse start."""
+    nbytes = align_down(nbytes)
+    with UserBar(device) as bar:
+        bar.write_u32(REG_LENGTH, nbytes)
+        bar.write_u32(REG_SEED_LO, seed & 0xFFFFFFFF)
+        bar.write_u32(REG_SEED_HI, (seed >> 32) & 0xFFFFFFFF)
+        bar.write_u32(REG_CTRL, 1)
+
+
+def cmd_pattern(args: argparse.Namespace) -> int:
+    nbytes = align_down(args.bytes)
+    # Arm C2H read first so XDMA asserts tready, then pulse FPGA start.
+    err: List[BaseException] = []
+    rx_box: List[bytes] = []
+
+    def reader() -> None:
+        try:
+            rx_box.append(read_c2h(nbytes, args.device, args.channel, timeout_s=args.timeout))
+        except BaseException as exc:  # noqa: BLE001
+            err.append(exc)
+
+    t = threading.Thread(target=reader, name="c2h-reader", daemon=True)
+    t.start()
+    time.sleep(0.05)
+    arm_pattern_source(nbytes, args.device, seed=args.seed)
+    t.join(timeout=args.timeout + 1.0)
+    if err:
+        raise err[0]
+    if not rx_box:
+        raise TimeoutError("C2H reader did not complete")
+    rx = rx_box[0]
+    samples = parse_beats(rx, args.dtype)
+    print(f"Pattern capture: {len(rx)} bytes from ch{args.channel}")
+    if args.dtype != "raw":
+        print_preview(samples, args.preview)
+    if args.output:
+        Path(args.output).write_bytes(rx)
+        print(f"Wrote raw bytes to {args.output}")
+    return 0
+
+
 def cmd_c2h(args: argparse.Namespace) -> int:
     data = read_c2h(args.bytes, args.device, args.channel, timeout_s=args.timeout)
     samples = parse_beats(data, args.dtype)
@@ -319,7 +378,10 @@ examples:
   # Current bitstream: H2C↔C2H loopback smoke test
   sudo python3 read_axi_stream.py loopback -n 4096
 
-  # After FPGA drives S_AXIS_C2H from a sample source:
+  # FPGA pattern source on S_AXIS_C2H_0 (BRAM-armed or ARM_ON_C2H default length)
+  sudo python3 read_axi_stream.py pattern -n 4096 --dtype u64
+
+  # Raw C2H read (arms transfer; pattern may auto-start if ARM_ON_C2H=1)
   sudo python3 read_axi_stream.py c2h -n 1M --dtype u64 -o capture.bin
 
   # AXI-Lite BRAM peek/poke (4 KiB @ BAR user offset 0)
@@ -348,8 +410,12 @@ examples:
 
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    sp = sub.add_parser("c2h", help="read from C2H (needs FPGA AXIS source)")
+    sp = sub.add_parser("c2h", help="read from C2H (FPGA pattern source)")
     sp.set_defaults(func=cmd_c2h)
+
+    sp = sub.add_parser("pattern", help="arm BRAM regs + read C2H pattern")
+    sp.add_argument("--seed", type=lambda s: int(s, 0), default=0, help="64-bit seed")
+    sp.set_defaults(func=cmd_pattern)
 
     sp = sub.add_parser("loopback", help="H2C write + C2H read (current design)")
     sp.add_argument(

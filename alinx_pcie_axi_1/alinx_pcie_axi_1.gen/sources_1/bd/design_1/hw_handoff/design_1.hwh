@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Aug  4 17:33:45 2026" VIVADOVERSION="2025.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Aug  6 16:45:49 2026" VIVADOVERSION="2025.2">
 
   <SYSTEMINFO ARCH="artix7" DEVICE="7a200t" NAME="design_1" PACKAGE="fbg484" SPEEDGRADE="-2"/>
 
@@ -397,7 +397,7 @@
         <PARAMETER NAME="C_MEMORY_DEPTH" VALUE="8192"/>
         <PARAMETER NAME="C_RD_CMD_OPTIMIZATION" VALUE="0"/>
         <PARAMETER NAME="C_READ_LATENCY" VALUE="1"/>
-        <PARAMETER NAME="C_SINGLE_PORT_BRAM" VALUE="0"/>
+        <PARAMETER NAME="C_SINGLE_PORT_BRAM" VALUE="1"/>
         <PARAMETER NAME="C_S_AXI_ADDR_WIDTH" VALUE="15"/>
         <PARAMETER NAME="C_S_AXI_CTRL_ADDR_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_S_AXI_CTRL_DATA_WIDTH" VALUE="32"/>
@@ -416,7 +416,7 @@
         <PARAMETER NAME="PROTOCOL" VALUE="AXI4"/>
         <PARAMETER NAME="RD_CMD_OPTIMIZATION" VALUE="0"/>
         <PARAMETER NAME="READ_LATENCY" VALUE="1"/>
-        <PARAMETER NAME="SINGLE_PORT_BRAM" VALUE="0"/>
+        <PARAMETER NAME="SINGLE_PORT_BRAM" VALUE="1"/>
         <PARAMETER NAME="SUPPORTS_NARROW_BURST" VALUE="0"/>
         <PARAMETER NAME="USE_ECC" VALUE="0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
@@ -430,19 +430,9 @@
             <CONNECTION INSTANCE="blk_mem_gen_1" PORT="addra"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="14" NAME="bram_addr_b" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_addr_b">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="addrb"/>
-          </CONNECTIONS>
-        </PORT>
         <PORT DIR="O" NAME="bram_clk_a" SIGIS="clk" SIGNAME="axi_bram_ctrl_1_bram_clk_a">
           <CONNECTIONS>
             <CONNECTION INSTANCE="blk_mem_gen_1" PORT="clka"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="bram_clk_b" SIGIS="clk" SIGNAME="axi_bram_ctrl_1_bram_clk_b">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="clkb"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="bram_en_a" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_en_a">
@@ -450,19 +440,9 @@
             <CONNECTION INSTANCE="blk_mem_gen_1" PORT="ena"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="bram_en_b" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_en_b">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="enb"/>
-          </CONNECTIONS>
-        </PORT>
         <PORT DIR="I" LEFT="31" NAME="bram_rddata_a" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_rddata_a">
           <CONNECTIONS>
             <CONNECTION INSTANCE="blk_mem_gen_1" PORT="douta"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="31" NAME="bram_rddata_b" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_rddata_b">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="doutb"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="bram_rst_a" SIGIS="rst" SIGNAME="axi_bram_ctrl_1_bram_rst_a">
@@ -470,29 +450,14 @@
             <CONNECTION INSTANCE="blk_mem_gen_1" PORT="rsta"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="bram_rst_b" SIGIS="rst" SIGNAME="axi_bram_ctrl_1_bram_rst_b">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="rstb"/>
-          </CONNECTIONS>
-        </PORT>
         <PORT DIR="O" LEFT="3" NAME="bram_we_a" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_we_a">
           <CONNECTIONS>
             <CONNECTION INSTANCE="blk_mem_gen_1" PORT="wea"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="3" NAME="bram_we_b" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_we_b">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="web"/>
-          </CONNECTIONS>
-        </PORT>
         <PORT DIR="O" LEFT="31" NAME="bram_wrdata_a" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_wrdata_a">
           <CONNECTIONS>
             <CONNECTION INSTANCE="blk_mem_gen_1" PORT="dina"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="31" NAME="bram_wrdata_b" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_wrdata_b">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="dinb"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="125000000" DIR="I" NAME="s_axi_aclk" SIGIS="clk" SIGNAME="xdma_0_axi_aclk">
@@ -735,7 +700,7 @@
           <PARAMETER NAME="MEM_SIZE" VALUE="4096"/>
           <PARAMETER NAME="MEM_WIDTH" VALUE="32"/>
           <PARAMETER NAME="READ_LATENCY" VALUE="1"/>
-          <PARAMETER NAME="READ_WRITE_MODE" VALUE="WRITE_ONLY"/>
+          <PARAMETER NAME="READ_WRITE_MODE" VALUE="READ_WRITE"/>
           <PORTMAPS>
             <PORTMAP LOGICAL="ADDR" PHYSICAL="bram_addr_a"/>
             <PORTMAP LOGICAL="CLK" PHYSICAL="bram_clk_a"/>
@@ -744,24 +709,6 @@
             <PORTMAP LOGICAL="EN" PHYSICAL="bram_en_a"/>
             <PORTMAP LOGICAL="RST" PHYSICAL="bram_rst_a"/>
             <PORTMAP LOGICAL="WE" PHYSICAL="bram_we_a"/>
-          </PORTMAPS>
-        </BUSINTERFACE>
-        <BUSINTERFACE BUSNAME="axi_bram_ctrl_1_BRAM_PORTB" NAME="BRAM_PORTB" TYPE="INITIATOR" VLNV="xilinx.com:interface:bram:1.0">
-          <PARAMETER NAME="MASTER_TYPE" VALUE="BRAM_CTRL"/>
-          <PARAMETER NAME="MEM_ADDRESS_MODE"/>
-          <PARAMETER NAME="MEM_ECC" VALUE="NONE"/>
-          <PARAMETER NAME="MEM_SIZE" VALUE="4096"/>
-          <PARAMETER NAME="MEM_WIDTH" VALUE="32"/>
-          <PARAMETER NAME="READ_LATENCY" VALUE="1"/>
-          <PARAMETER NAME="READ_WRITE_MODE" VALUE="READ_ONLY"/>
-          <PORTMAPS>
-            <PORTMAP LOGICAL="ADDR" PHYSICAL="bram_addr_b"/>
-            <PORTMAP LOGICAL="CLK" PHYSICAL="bram_clk_b"/>
-            <PORTMAP LOGICAL="DIN" PHYSICAL="bram_wrdata_b"/>
-            <PORTMAP LOGICAL="DOUT" PHYSICAL="bram_rddata_b"/>
-            <PORTMAP LOGICAL="EN" PHYSICAL="bram_en_b"/>
-            <PORTMAP LOGICAL="RST" PHYSICAL="bram_rst_b"/>
-            <PORTMAP LOGICAL="WE" PHYSICAL="bram_we_b"/>
           </PORTMAPS>
         </BUSINTERFACE>
       </BUSINTERFACES>
@@ -1459,7 +1406,7 @@
         <PARAMETER NAME="C_EN_SAFETY_CKT" VALUE="1"/>
         <PARAMETER NAME="C_EN_SHUTDOWN_PIN" VALUE="0"/>
         <PARAMETER NAME="C_EN_SLEEP_PIN" VALUE="0"/>
-        <PARAMETER NAME="C_EST_POWER_SUMMARY" VALUE="Estimated Power for IP     :     5.9298999999999999 mW"/>
+        <PARAMETER NAME="C_EST_POWER_SUMMARY" VALUE="Estimated Power for IP     :     5.9299 mW"/>
         <PARAMETER NAME="C_FAMILY" VALUE="artix7"/>
         <PARAMETER NAME="C_HAS_AXI_ID" VALUE="0"/>
         <PARAMETER NAME="C_HAS_ENA" VALUE="1"/>
@@ -1591,9 +1538,9 @@
             <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_addr_a"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="addrb" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_addr_b">
+        <PORT DIR="I" LEFT="31" NAME="addrb" RIGHT="0" SIGIS="undef" SIGNAME="blk_mem_gen_1_addrb">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_addr_b"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="bram_addrb"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="clka" SIGIS="clk" SIGNAME="axi_bram_ctrl_1_bram_clk_a">
@@ -1601,9 +1548,9 @@
             <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_clk_a"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="clkb" SIGIS="clk" SIGNAME="axi_bram_ctrl_1_bram_clk_b">
+        <PORT DIR="I" NAME="clkb" SIGIS="clk" SIGNAME="blk_mem_gen_1_clkb">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_clk_b"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="bram_clkb"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="31" NAME="dina" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_wrdata_a">
@@ -1611,9 +1558,9 @@
             <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_wrdata_a"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="dinb" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_wrdata_b">
+        <PORT DIR="I" LEFT="31" NAME="dinb" RIGHT="0" SIGIS="undef" SIGNAME="blk_mem_gen_1_dinb">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_wrdata_b"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="bram_dinb"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="31" NAME="douta" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_rddata_a">
@@ -1621,9 +1568,9 @@
             <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_rddata_a"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="31" NAME="doutb" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_rddata_b">
+        <PORT DIR="O" LEFT="31" NAME="doutb" RIGHT="0" SIGIS="undef" SIGNAME="blk_mem_gen_1_doutb">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_rddata_b"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="bram_doutb"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="ena" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_en_a">
@@ -1631,9 +1578,9 @@
             <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_en_a"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="enb" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_en_b">
+        <PORT DIR="I" NAME="enb" SIGIS="undef" SIGNAME="blk_mem_gen_1_enb">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_en_b"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="bram_enb"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="rsta" SIGIS="rst" SIGNAME="axi_bram_ctrl_1_bram_rst_a">
@@ -1642,9 +1589,9 @@
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="rsta_busy" SIGIS="undef"/>
-        <PORT DIR="I" NAME="rstb" SIGIS="rst" SIGNAME="axi_bram_ctrl_1_bram_rst_b">
+        <PORT DIR="I" NAME="rstb" SIGIS="rst" SIGNAME="blk_mem_gen_1_rstb">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_rst_b"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="bram_rstb"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="rstb_busy" SIGIS="undef"/>
@@ -1653,9 +1600,9 @@
             <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_we_a"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="3" NAME="web" RIGHT="0" SIGIS="undef" SIGNAME="axi_bram_ctrl_1_bram_we_b">
+        <PORT DIR="I" LEFT="3" NAME="web" RIGHT="0" SIGIS="undef" SIGNAME="blk_mem_gen_1_web">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="bram_we_b"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="bram_web"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -1678,7 +1625,7 @@
             <PORTMAP LOGICAL="WE" PHYSICAL="wea"/>
           </PORTMAPS>
         </BUSINTERFACE>
-        <BUSINTERFACE BUSNAME="axi_bram_ctrl_1_BRAM_PORTB" NAME="BRAM_PORTB" TYPE="TARGET" VLNV="xilinx.com:interface:bram:1.0">
+        <BUSINTERFACE BUSNAME="c2h_streamer_0_BRAM_PORTB" NAME="BRAM_PORTB" TYPE="TARGET" VLNV="xilinx.com:interface:bram:1.0">
           <PARAMETER NAME="MASTER_TYPE" VALUE="BRAM_CTRL"/>
           <PARAMETER NAME="MEM_ADDRESS_MODE" VALUE="BYTE_ADDRESS"/>
           <PARAMETER NAME="MEM_ECC" VALUE="NONE"/>
@@ -1694,6 +1641,130 @@
             <PORTMAP LOGICAL="EN" PHYSICAL="enb"/>
             <PORTMAP LOGICAL="RST" PHYSICAL="rstb"/>
             <PORTMAP LOGICAL="WE" PHYSICAL="web"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="1" FULLNAME="/c2h_streamer_0" HWVERSION="1.0" INSTANCE="c2h_streamer_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="c2h_streamer" VLNV="xilinx.com:module_ref:c2h_streamer:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="ARM_ON_C2H" VALUE="1"/>
+        <PARAMETER NAME="DEFAULT_LEN_BYTES" VALUE="4096"/>
+        <PARAMETER NAME="TDATA_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_c2h_streamer_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="125000000" DIR="I" NAME="aclk" SIGIS="clk" SIGNAME="xdma_0_axi_aclk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="aresetn" POLARITY="ACTIVE_LOW" SIGIS="rst" SIGNAME="xdma_0_axi_aresetn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="bram_addrb" RIGHT="0" SIGIS="undef" SIGNAME="blk_mem_gen_1_addrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="addrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="bram_clkb" SIGIS="clk" SIGNAME="blk_mem_gen_1_clkb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="clkb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="bram_dinb" RIGHT="0" SIGIS="undef" SIGNAME="blk_mem_gen_1_dinb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="dinb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="bram_doutb" RIGHT="0" SIGIS="undef" SIGNAME="blk_mem_gen_1_doutb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="doutb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="bram_enb" SIGIS="undef" SIGNAME="blk_mem_gen_1_enb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="enb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="bram_rstb" SIGIS="rst" SIGNAME="blk_mem_gen_1_rstb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="rstb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="3" NAME="bram_web" RIGHT="0" SIGIS="undef" SIGNAME="blk_mem_gen_1_web">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="blk_mem_gen_1" PORT="web"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="63" NAME="m_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="c2h_streamer_0_m_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tdata_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="7" NAME="m_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="c2h_streamer_0_m_axis_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tkeep_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axis_tlast" SIGIS="undef" SIGNAME="c2h_streamer_0_m_axis_tlast">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tlast_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axis_tready" SIGIS="undef" SIGNAME="c2h_streamer_0_m_axis_tready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tready_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axis_tvalid" SIGIS="undef" SIGNAME="c2h_streamer_0_m_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tvalid_0"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="c2h_streamer_0_BRAM_PORTB" NAME="BRAM_PORTB" TYPE="INITIATOR" VLNV="xilinx.com:interface:bram:1.0">
+          <PARAMETER NAME="MASTER_TYPE" VALUE="BRAM_CTRL"/>
+          <PARAMETER NAME="MEM_ADDRESS_MODE" VALUE="BYTE_ADDRESS"/>
+          <PARAMETER NAME="MEM_ECC" VALUE="NONE"/>
+          <PARAMETER NAME="MEM_SIZE" VALUE="4096"/>
+          <PARAMETER NAME="MEM_WIDTH" VALUE="32"/>
+          <PARAMETER NAME="READ_LATENCY" VALUE="1"/>
+          <PARAMETER NAME="READ_WRITE_MODE" VALUE="READ_WRITE"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="ADDR" PHYSICAL="bram_addrb"/>
+            <PORTMAP LOGICAL="CLK" PHYSICAL="bram_clkb"/>
+            <PORTMAP LOGICAL="DIN" PHYSICAL="bram_dinb"/>
+            <PORTMAP LOGICAL="DOUT" PHYSICAL="bram_doutb"/>
+            <PORTMAP LOGICAL="EN" PHYSICAL="bram_enb"/>
+            <PORTMAP LOGICAL="RST" PHYSICAL="bram_rstb"/>
+            <PORTMAP LOGICAL="WE" PHYSICAL="bram_web"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+        <BUSINTERFACE BUSNAME="c2h_streamer_0_M_AXIS" NAME="M_AXIS" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="PHASE" VALUE="0.0"/>
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="m_axis_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="m_axis_tkeep"/>
+            <PORTMAP LOGICAL="TLAST" PHYSICAL="m_axis_tlast"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="m_axis_tready"/>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="m_axis_tvalid"/>
           </PORTMAPS>
         </BUSINTERFACE>
       </BUSINTERFACES>
@@ -1763,6 +1834,144 @@
         </PORT>
       </PORTS>
       <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="1" FULLNAME="/h2c_axis_sink_0" HWVERSION="1.0" INSTANCE="h2c_axis_sink_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="h2c_axis_sink" VLNV="xilinx.com:module_ref:h2c_axis_sink:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="TDATA_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_h2c_axis_sink_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="125000000" DIR="I" NAME="aclk" SIGIS="clk" SIGNAME="xdma_0_axi_aclk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="aresetn" POLARITY="ACTIVE_LOW" SIGIS="rst" SIGNAME="xdma_0_axi_aresetn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="63" NAME="s_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="h2c_axis_sink_0_s_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tdata_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="7" NAME="s_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="h2c_axis_sink_0_s_axis_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tkeep_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axis_tlast" SIGIS="undef" SIGNAME="h2c_axis_sink_0_s_axis_tlast">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tlast_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axis_tready" SIGIS="undef" SIGNAME="h2c_axis_sink_0_s_axis_tready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tready_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axis_tvalid" SIGIS="undef" SIGNAME="h2c_axis_sink_0_s_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tvalid_0"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="xdma_0_M_AXIS_H2C_0" NAME="S_AXIS" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="PHASE" VALUE="0.0"/>
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="s_axis_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="s_axis_tkeep"/>
+            <PORTMAP LOGICAL="TLAST" PHYSICAL="s_axis_tlast"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="s_axis_tready"/>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="s_axis_tvalid"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="1" FULLNAME="/h2c_axis_sink_1" HWVERSION="1.0" INSTANCE="h2c_axis_sink_1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="h2c_axis_sink" VLNV="xilinx.com:module_ref:h2c_axis_sink:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="TDATA_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_h2c_axis_sink_1_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="125000000" DIR="I" NAME="aclk" SIGIS="clk" SIGNAME="xdma_0_axi_aclk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="aresetn" POLARITY="ACTIVE_LOW" SIGIS="rst" SIGNAME="xdma_0_axi_aresetn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="63" NAME="s_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="h2c_axis_sink_1_s_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tdata_1"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="7" NAME="s_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="h2c_axis_sink_1_s_axis_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tkeep_1"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axis_tlast" SIGIS="undef" SIGNAME="h2c_axis_sink_1_s_axis_tlast">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tlast_1"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axis_tready" SIGIS="undef" SIGNAME="h2c_axis_sink_1_s_axis_tready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tready_1"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axis_tvalid" SIGIS="undef" SIGNAME="h2c_axis_sink_1_s_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tvalid_1"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="xdma_0_M_AXIS_H2C_1" NAME="S_AXIS" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="PHASE" VALUE="0.0"/>
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="s_axis_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="s_axis_tkeep"/>
+            <PORTMAP LOGICAL="TLAST" PHYSICAL="s_axis_tlast"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="s_axis_tready"/>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="s_axis_tvalid"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
     </MODULE>
     <MODULE COREREVISION="9" FULLNAME="/util_ds_buf" HWVERSION="2.2" INSTANCE="util_ds_buf" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="util_ds_buf" VLNV="xilinx.com:ip:util_ds_buf:2.2">
       <DOCUMENTS/>
@@ -3092,6 +3301,9 @@
             <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_ACLK"/>
             <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_ACLK"/>
             <CONNECTION INSTANCE="c_counter_binary_0" PORT="CLK"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_0" PORT="aclk"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_1" PORT="aclk"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="aclk"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="axi_aresetn" POLARITY="ACTIVE_LOW" SIGIS="rst" SIGNAME="xdma_0_axi_aresetn">
@@ -3101,6 +3313,9 @@
             <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_ARESETN"/>
             <CONNECTION INSTANCE="axi_bram_ctrl_1" PORT="s_axi_aresetn"/>
             <CONNECTION INSTANCE="External_Ports" PORT="user_resetn"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_0" PORT="aresetn"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_1" PORT="aresetn"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="aresetn"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="18" NAME="cfg_mgmt_addr" RIGHT="0" SIGIS="undef"/>
@@ -3206,54 +3421,54 @@
             <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_wvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="63" NAME="m_axis_h2c_tdata_0" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tdata_0">
+        <PORT DIR="O" LEFT="63" NAME="m_axis_h2c_tdata_0" RIGHT="0" SIGIS="undef" SIGNAME="h2c_axis_sink_0_s_axis_tdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tdata_0"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_0" PORT="s_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="63" NAME="m_axis_h2c_tdata_1" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tdata_1">
+        <PORT DIR="O" LEFT="63" NAME="m_axis_h2c_tdata_1" RIGHT="0" SIGIS="undef" SIGNAME="h2c_axis_sink_1_s_axis_tdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tdata_1"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_1" PORT="s_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="7" NAME="m_axis_h2c_tkeep_0" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tkeep_0">
+        <PORT DIR="O" LEFT="7" NAME="m_axis_h2c_tkeep_0" RIGHT="0" SIGIS="undef" SIGNAME="h2c_axis_sink_0_s_axis_tkeep">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tkeep_0"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_0" PORT="s_axis_tkeep"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="7" NAME="m_axis_h2c_tkeep_1" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tkeep_1">
+        <PORT DIR="O" LEFT="7" NAME="m_axis_h2c_tkeep_1" RIGHT="0" SIGIS="undef" SIGNAME="h2c_axis_sink_1_s_axis_tkeep">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tkeep_1"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_1" PORT="s_axis_tkeep"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="m_axis_h2c_tlast_0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tlast_0">
+        <PORT DIR="O" NAME="m_axis_h2c_tlast_0" SIGIS="undef" SIGNAME="h2c_axis_sink_0_s_axis_tlast">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tlast_0"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_0" PORT="s_axis_tlast"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="m_axis_h2c_tlast_1" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tlast_1">
+        <PORT DIR="O" NAME="m_axis_h2c_tlast_1" SIGIS="undef" SIGNAME="h2c_axis_sink_1_s_axis_tlast">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tlast_1"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_1" PORT="s_axis_tlast"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="m_axis_h2c_tready_0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tready_0">
+        <PORT DIR="I" NAME="m_axis_h2c_tready_0" SIGIS="undef" SIGNAME="h2c_axis_sink_0_s_axis_tready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tready_0"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_0" PORT="s_axis_tready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="m_axis_h2c_tready_1" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tready_1">
+        <PORT DIR="I" NAME="m_axis_h2c_tready_1" SIGIS="undef" SIGNAME="h2c_axis_sink_1_s_axis_tready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tready_1"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_1" PORT="s_axis_tready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="m_axis_h2c_tvalid_0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tvalid_0">
+        <PORT DIR="O" NAME="m_axis_h2c_tvalid_0" SIGIS="undef" SIGNAME="h2c_axis_sink_0_s_axis_tvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tvalid_0"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_0" PORT="s_axis_tvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="m_axis_h2c_tvalid_1" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tvalid_1">
+        <PORT DIR="O" NAME="m_axis_h2c_tvalid_1" SIGIS="undef" SIGNAME="h2c_axis_sink_1_s_axis_tvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tvalid_1"/>
+            <CONNECTION INSTANCE="h2c_axis_sink_1" PORT="s_axis_tvalid"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="msi_enable" SIGIS="undef"/>
@@ -3278,56 +3493,36 @@
             <CONNECTION INSTANCE="design_1_imp" PORT="pcie_7x_mgt_rtl_0_txp"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="63" NAME="s_axis_c2h_tdata_0" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tdata_0">
+        <PORT DIR="I" LEFT="63" NAME="s_axis_c2h_tdata_0" RIGHT="0" SIGIS="undef" SIGNAME="c2h_streamer_0_m_axis_tdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tdata_0"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="m_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="63" NAME="s_axis_c2h_tdata_1" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tdata_1">
+        <PORT DIR="I" LEFT="63" NAME="s_axis_c2h_tdata_1" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="I" LEFT="7" NAME="s_axis_c2h_tkeep_0" RIGHT="0" SIGIS="undef" SIGNAME="c2h_streamer_0_m_axis_tkeep">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tdata_1"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="m_axis_tkeep"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="7" NAME="s_axis_c2h_tkeep_0" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tkeep_0">
+        <PORT DIR="I" LEFT="7" NAME="s_axis_c2h_tkeep_1" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="I" NAME="s_axis_c2h_tlast_0" SIGIS="undef" SIGNAME="c2h_streamer_0_m_axis_tlast">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tkeep_0"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="m_axis_tlast"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="7" NAME="s_axis_c2h_tkeep_1" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tkeep_1">
+        <PORT DIR="I" NAME="s_axis_c2h_tlast_1" SIGIS="undef"/>
+        <PORT DIR="O" NAME="s_axis_c2h_tready_0" SIGIS="undef" SIGNAME="c2h_streamer_0_m_axis_tready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tkeep_1"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="m_axis_tready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s_axis_c2h_tlast_0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tlast_0">
+        <PORT DIR="O" NAME="s_axis_c2h_tready_1" SIGIS="undef"/>
+        <PORT DIR="I" NAME="s_axis_c2h_tvalid_0" SIGIS="undef" SIGNAME="c2h_streamer_0_m_axis_tvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tlast_0"/>
+            <CONNECTION INSTANCE="c2h_streamer_0" PORT="m_axis_tvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s_axis_c2h_tlast_1" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tlast_1">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tlast_1"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s_axis_c2h_tready_0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tready_0">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tready_0"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s_axis_c2h_tready_1" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tready_1">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tready_1"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s_axis_c2h_tvalid_0" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tvalid_0">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tvalid_0"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s_axis_c2h_tvalid_1" SIGIS="undef" SIGNAME="xdma_0_s_axis_c2h_tvalid_1">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tvalid_1"/>
-          </CONNECTIONS>
-        </PORT>
+        <PORT DIR="I" NAME="s_axis_c2h_tvalid_1" SIGIS="undef"/>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="sys_clk" SIGIS="clk" SIGNAME="util_ds_buf_IBUF_OUT">
           <CONNECTIONS>
             <CONNECTION INSTANCE="util_ds_buf" PORT="IBUF_OUT"/>
@@ -3405,7 +3600,7 @@
             <PORTMAP LOGICAL="WVALID" PHYSICAL="m_axil_wvalid"/>
           </PORTMAPS>
         </BUSINTERFACE>
-        <BUSINTERFACE BUSNAME="xdma_0_M_AXIS_H2C_0" NAME="S_AXIS_C2H_0" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
+        <BUSINTERFACE BUSNAME="c2h_streamer_0_M_AXIS" NAME="S_AXIS_C2H_0" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
           <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
@@ -3449,7 +3644,7 @@
             <PORTMAP LOGICAL="TVALID" PHYSICAL="m_axis_h2c_tvalid_0"/>
           </PORTMAPS>
         </BUSINTERFACE>
-        <BUSINTERFACE BUSNAME="xdma_0_M_AXIS_H2C_1" NAME="S_AXIS_C2H_1" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
+        <BUSINTERFACE BUSNAME="__NOC__" NAME="S_AXIS_C2H_1" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
           <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
           <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
@@ -3519,7 +3714,8 @@
       </MEMORYMAP>
       <PERIPHERALS>
         <PERIPHERAL INSTANCE="axi_bram_ctrl_1"/>
-        <PERIPHERAL INSTANCE="xdma_0"/>
+        <PERIPHERAL INSTANCE="h2c_axis_sink_0"/>
+        <PERIPHERAL INSTANCE="h2c_axis_sink_1"/>
       </PERIPHERALS>
     </MODULE>
     <MODULE COREREVISION="0" FULLNAME="/xlconstant_1" HWVERSION="2.0" INSTANCE="xlconstant_1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:2.0">

@@ -56,7 +56,11 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param checkpoint.writeSynthRtdsInDcp 1
 set_param general.usePosixSpawnForFork 1
+set_param synth.incrementalSynthesisCache /tmp/.Xil_kokunev/Vivado-495273-emerald/incrSyn
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a200tfbg484-2
 
@@ -73,7 +77,13 @@ set_property ip_output_repo /home/kokunev/data/git_root/alinx/alinx_streamer_1/a
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_verilog -library xil_defaultlib /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/hdl/design_1_wrapper.v
+read_verilog -library xil_defaultlib {
+  /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.srcs/sources_1/rtl/c2h_pattern_source.v
+  /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.srcs/sources_1/rtl/stream_ctrl_regs.v
+  /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.srcs/sources_1/rtl/c2h_streamer.v
+  /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.srcs/sources_1/rtl/h2c_axis_sink.v
+  /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/hdl/design_1_wrapper.v
+}
 add_files /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.srcs/sources_1/bd/design_1/design_1.bd
 set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_xdma_0_0/ip_4/pcie2_fifo_generator_tgt_brdg.xdc]
 set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_xdma_0_0/ip_3/pcie2_fifo_generator_dma_cpl.xdc]

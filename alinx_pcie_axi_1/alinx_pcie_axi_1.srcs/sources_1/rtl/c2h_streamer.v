@@ -1,0 +1,88 @@
+`timescale 1ns / 1ps
+
+// Top-level streamer: BRAM port-B control + pattern AXI-Stream source.
+module c2h_streamer #(
+    parameter integer TDATA_WIDTH       = 64,
+    parameter integer DEFAULT_LEN_BYTES = 4096,
+    parameter         ARM_ON_C2H        = 1
+) (
+    input  wire                     aclk,
+    input  wire                     aresetn,
+    // BRAM port B (custom master; same byte-address space as host port A)
+    (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME BRAM_PORTB, MASTER_TYPE BRAM_CTRL, MEM_ADDRESS_MODE BYTE_ADDRESS, MEM_SIZE 4096, MEM_WIDTH 32, MEM_ECC NONE, READ_WRITE_MODE READ_WRITE, READ_LATENCY 1" *)
+    (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 BRAM_PORTB CLK" *)
+    output wire                     bram_clkb,
+    (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 BRAM_PORTB RST" *)
+    output wire                     bram_rstb,
+    (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 BRAM_PORTB EN" *)
+    output wire                     bram_enb,
+    (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 BRAM_PORTB WE" *)
+    output wire [3:0]               bram_web,
+    (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 BRAM_PORTB ADDR" *)
+    output wire [31:0]              bram_addrb,
+    (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 BRAM_PORTB DIN" *)
+    output wire [31:0]              bram_dinb,
+    (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 BRAM_PORTB DOUT" *)
+    input  wire [31:0]              bram_doutb,
+    // AXI-Stream master to XDMA S_AXIS_C2H
+    (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS TDATA" *)
+    output wire [TDATA_WIDTH-1:0]   m_axis_tdata,
+    (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS TKEEP" *)
+    output wire [TDATA_WIDTH/8-1:0] m_axis_tkeep,
+    (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS TLAST" *)
+    output wire                     m_axis_tlast,
+    (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS TVALID" *)
+    output wire                     m_axis_tvalid,
+    (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS TREADY" *)
+    input  wire                     m_axis_tready
+);
+
+    wire        src_start;
+    wire [31:0] src_length;
+    wire [63:0] src_seed;
+    wire        src_busy;
+    wire        src_done;
+    wire [31:0] src_beat_count;
+
+    assign bram_clkb = aclk;
+    assign bram_rstb = ~aresetn;
+
+    stream_ctrl_regs #(
+        .DEFAULT_LEN_BYTES(DEFAULT_LEN_BYTES)
+    ) u_ctrl (
+        .aclk          (aclk),
+        .aresetn       (aresetn),
+        .bram_enb      (bram_enb),
+        .bram_web      (bram_web),
+        .bram_addrb    (bram_addrb),
+        .bram_dinb     (bram_dinb),
+        .bram_doutb    (bram_doutb),
+        .start         (src_start),
+        .length_bytes  (src_length),
+        .seed          (src_seed),
+        .src_busy      (src_busy),
+        .src_done      (src_done),
+        .src_beat_count(src_beat_count)
+    );
+
+    c2h_pattern_source #(
+        .TDATA_WIDTH       (TDATA_WIDTH),
+        .DEFAULT_LEN_BYTES (DEFAULT_LEN_BYTES),
+        .ARM_ON_C2H        (ARM_ON_C2H)
+    ) u_source (
+        .aclk           (aclk),
+        .aresetn        (aresetn),
+        .start          (src_start),
+        .length_bytes   (src_length),
+        .seed           (src_seed),
+        .busy           (src_busy),
+        .done           (src_done),
+        .beat_count     (src_beat_count),
+        .m_axis_tdata   (m_axis_tdata),
+        .m_axis_tkeep   (m_axis_tkeep),
+        .m_axis_tlast   (m_axis_tlast),
+        .m_axis_tvalid  (m_axis_tvalid),
+        .m_axis_tready  (m_axis_tready)
+    );
+
+endmodule
