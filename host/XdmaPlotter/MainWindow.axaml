@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="640"
+        x:Class="XdmaPlotter.MainWindow"
+        Title="XDMA Stream Plotter"
+        Width="1000" Height="640">
+  <DockPanel Margin="12">
+    <StackPanel DockPanel.Dock="Top" Spacing="8" Margin="0,0,0,12">
+      <StackPanel Orientation="Horizontal" Spacing="12">
+        <TextBlock VerticalAlignment="Center" Text="Device"/>
+        <NumericUpDown x:Name="DeviceBox" Width="100" Minimum="0" Maximum="7" Value="0"
+                       FormatString="0" Increment="1"/>
+        <TextBlock VerticalAlignment="Center" Text="Channel"/>
+        <NumericUpDown x:Name="ChannelBox" Width="100" Minimum="0" Maximum="1" Value="0"
+                       FormatString="0" Increment="1"/>
+        <TextBlock VerticalAlignment="Center" Text="Bytes"/>
+        <TextBox x:Name="BytesBox" Width="100" Text="4096"/>
+        <TextBlock VerticalAlignment="Center" Text="Dtype"/>
+        <ComboBox x:Name="DtypeBox" Width="90" SelectedIndex="0">
+          <ComboBoxItem Content="u64"/>
+          <ComboBoxItem Content="u32"/>
+          <ComboBoxItem Content="i16"/>
+        </ComboBox>
+        <CheckBox x:Name="ArmPatternBox" IsChecked="True" Content="Arm pattern (BRAM)"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal" Spacing="12">
+        <Button x:Name="CaptureButton" Content="Capture" Width="100" Click="OnCaptureClick"/>
+        <Button x:Name="ClearButton" Content="Clear" Width="80" Click="OnClearClick"/>
+        <TextBlock x:Name="StatusText" VerticalAlignment="Center"
+                   Text="Idle — open /dev/xdmaN_c2h_M and plot samples"/>
+      </StackPanel>
+    </StackPanel>
+    <ScottPlot:AvaPlot x:Name="AvaPlot1"/>
+  </DockPanel>
+</Window>

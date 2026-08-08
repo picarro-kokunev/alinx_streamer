@@ -1,3 +1,8 @@
 alinx_pcie_axi_1/alinx_pcie_axi_1.cache/
 *.dcp
 host/__pycache__/
+host/XdmaPlotter/bin/
+host/XdmaPlotter/obj/
+*.user
+*.suo
+.vs/
