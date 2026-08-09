@@ -11,12 +11,14 @@
         "TDATA_WIDTH": [ { "value": "64", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "DEFAULT_LEN_BYTES": [ { "value": "4096", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "ARM_ON_C2H": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "EXPORT_DEBUG": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "Component_Name": [ { "value": "design_1_c2h_streamer_0_0", "resolve_type": "user", "usage": "all" } ]
       },
       "model_parameters": {
         "TDATA_WIDTH": [ { "value": "64", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "DEFAULT_LEN_BYTES": [ { "value": "4096", "resolve_type": "generated", "format": "long", "usage": "all" } ],
-        "ARM_ON_C2H": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ]
+        "ARM_ON_C2H": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "EXPORT_DEBUG": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ]
       },
       "project_parameters": {
         "ARCHITECTURE": [ { "value": "artix7", "resolve_type": "generated", "usage": "all" } ],
@@ -57,7 +59,15 @@
         "m_axis_tkeep": [ { "direction": "out", "size_left": "7", "size_right": "0" } ],
         "m_axis_tlast": [ { "direction": "out" } ],
         "m_axis_tvalid": [ { "direction": "out" } ],
-        "m_axis_tready": [ { "direction": "in", "driver_value": "1" } ]
+        "m_axis_tready": [ { "direction": "in", "driver_value": "1" } ],
+        "dbg_start": [ { "direction": "out" } ],
+        "dbg_busy": [ { "direction": "out" } ],
+        "dbg_done": [ { "direction": "out" } ],
+        "dbg_beat_count": [ { "direction": "out", "size_left": "31", "size_right": "0" } ],
+        "dbg_length_bytes": [ { "direction": "out", "size_left": "31", "size_right": "0" } ],
+        "dbg_seed": [ { "direction": "out", "size_left": "63", "size_right": "0" } ],
+        "dbg_ctrl_state": [ { "direction": "out", "size_left": "2", "size_right": "0" } ],
+        "dbg_src_state": [ { "direction": "out", "size_left": "1", "size_right": "0" } ]
       },
       "interfaces": {
         "BRAM_PORTB": {
@@ -143,5 +153,5 @@
       }
     }
   },
-  "checksum": "ed6ca769"
+  "checksum": "b6d3052f"
 }

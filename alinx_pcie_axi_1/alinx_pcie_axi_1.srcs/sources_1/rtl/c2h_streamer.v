@@ -4,8 +4,10 @@
 module c2h_streamer #(
     parameter integer TDATA_WIDTH       = 64,
     parameter integer DEFAULT_LEN_BYTES = 4096,
-    parameter         ARM_ON_C2H        = 1
-) (
+    parameter         ARM_ON_C2H        = 1,
+    parameter         EXPORT_DEBUG        = 1   // optional: tie off in production
+) 
+(
     input  wire                     aclk,
     input  wire                     aresetn,
     // BRAM port B (custom master; same byte-address space as host port A)
@@ -34,7 +36,18 @@ module c2h_streamer #(
     (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS TVALID" *)
     output wire                     m_axis_tvalid,
     (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS TREADY" *)
-    input  wire                     m_axis_tready
+    input  wire                     m_axis_tready,
+
+    // ILA debug (present when EXPORT_DEBUG=1)
+    output wire        dbg_start,
+    output wire        dbg_busy,
+    output wire        dbg_done,
+    output wire [31:0] dbg_beat_count,
+    output wire [31:0] dbg_length_bytes,
+    output wire [63:0] dbg_seed,
+    output wire [2:0]  dbg_ctrl_state,
+    output wire [1:0]  dbg_src_state    
+
 );
 
     wire        src_start;
@@ -43,6 +56,14 @@ module c2h_streamer #(
     wire        src_busy;
     wire        src_done;
     wire [31:0] src_beat_count;
+
+    // debug ports
+    wire [2:0] ctrl_state;
+    wire [1:0] src_state;
+
+    // ... u_ctrl: add .dbg_state(ctrl_state) ...
+    // ... u_source: add .dbg_state(src_state) ...
+
 
     assign bram_clkb = aclk;
     assign bram_rstb = ~aresetn;
@@ -62,7 +83,8 @@ module c2h_streamer #(
         .seed          (src_seed),
         .src_busy      (src_busy),
         .src_done      (src_done),
-        .src_beat_count(src_beat_count)
+        .src_beat_count(src_beat_count),
+        .dbg_state      (ctrl_state)
     );
 
     c2h_pattern_source #(
@@ -82,7 +104,17 @@ module c2h_streamer #(
         .m_axis_tkeep   (m_axis_tkeep),
         .m_axis_tlast   (m_axis_tlast),
         .m_axis_tvalid  (m_axis_tvalid),
-        .m_axis_tready  (m_axis_tready)
+        .m_axis_tready  (m_axis_tready),
+        .dbg_state      (src_state)        
     );
-
+    if (EXPORT_DEBUG) begin : gen_dbg
+        assign dbg_start        = src_start;
+        assign dbg_busy         = src_busy;
+        assign dbg_done         = src_done;
+        assign dbg_beat_count   = src_beat_count;
+        assign dbg_length_bytes = src_length;
+        assign dbg_seed         = src_seed;
+        assign dbg_ctrl_state   = ctrl_state;
+        assign dbg_src_state    = src_state;
+    end
 endmodule

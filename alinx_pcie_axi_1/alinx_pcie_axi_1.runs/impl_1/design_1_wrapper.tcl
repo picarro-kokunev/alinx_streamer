@@ -97,6 +97,7 @@ proc step_failed { step } {
 OPTRACE "impl_1" END { }
 }
 
+set_msg_config -id {HDL-1065} -limit 10000
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-638} -limit 10000
 
@@ -109,7 +110,7 @@ set rc [catch {
   set_param checkpoint.writeSynthRtdsInDcp 1
   set_param chipscope.maxJobs 5
   set_param general.usePosixSpawnForFork 1
-  set_param synth.incrementalSynthesisCache /tmp/.Xil_kokunev/Vivado-495273-emerald/incrSyn
+  set_param synth.incrementalSynthesisCache ./.Xil/Vivado-1389421-emerald/incrSyn
   set_param runs.launchOptions { -jobs 10  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7a200tfbg484-2

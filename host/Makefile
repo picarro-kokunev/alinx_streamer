@@ -5,4 +5,7 @@ CONFIG ?= Release
 plotter:
 	$(DOTNET) build XdmaPlotter/XdmaPlotter.csproj -c $(CONFIG)
 
-all: plotter
+run: plotter
+	$(DOTNET) run  --project XdmaPlotter/XdmaPlotter.csproj -c $(CONFIG)
+
+all: plotter run

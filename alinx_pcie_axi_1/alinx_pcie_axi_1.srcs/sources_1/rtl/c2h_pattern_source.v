@@ -19,7 +19,8 @@ module c2h_pattern_source #(
     output reg  [TDATA_WIDTH/8-1:0] m_axis_tkeep,
     output reg                      m_axis_tlast,
     output reg                      m_axis_tvalid,
-    input  wire                     m_axis_tready
+    input  wire                     m_axis_tready,
+    output wire [1:0]               dbg_state
 );
 
     localparam integer BEAT_BYTES = TDATA_WIDTH / 8;
@@ -98,5 +99,6 @@ module c2h_pattern_source #(
             endcase
         end
     end
+    assign dbg_state = state;    
 
 endmodule

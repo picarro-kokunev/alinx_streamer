@@ -52,7 +52,7 @@
 
 (* X_CORE_INFO = "c2h_streamer,Vivado 2025.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_c2h_streamer_0_0,c2h_streamer,{}" *)
-(* CORE_GENERATION_INFO = "design_1_c2h_streamer_0_0,c2h_streamer,{x_ipProduct=Vivado 2025.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=c2h_streamer,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,TDATA_WIDTH=64,DEFAULT_LEN_BYTES=4096,ARM_ON_C2H=1}" *)
+(* CORE_GENERATION_INFO = "design_1_c2h_streamer_0_0,c2h_streamer,{x_ipProduct=Vivado 2025.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=c2h_streamer,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,TDATA_WIDTH=64,DEFAULT_LEN_BYTES=4096,ARM_ON_C2H=1,EXPORT_DEBUG=1}" *)
 (* IP_DEFINITION_SOURCE = "module_ref" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_c2h_streamer_0_0 (
@@ -69,7 +69,15 @@ module design_1_c2h_streamer_0_0 (
   m_axis_tkeep,
   m_axis_tlast,
   m_axis_tvalid,
-  m_axis_tready
+  m_axis_tready,
+  dbg_start,
+  dbg_busy,
+  dbg_done,
+  dbg_beat_count,
+  dbg_length_bytes,
+  dbg_seed,
+  dbg_ctrl_state,
+  dbg_src_state
 );
 
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 aclk CLK" *)
@@ -108,11 +116,20 @@ output wire m_axis_tlast;
 output wire m_axis_tvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS TREADY" *)
 input wire m_axis_tready;
+output wire dbg_start;
+output wire dbg_busy;
+output wire dbg_done;
+output wire [31 : 0] dbg_beat_count;
+output wire [31 : 0] dbg_length_bytes;
+output wire [63 : 0] dbg_seed;
+output wire [2 : 0] dbg_ctrl_state;
+output wire [1 : 0] dbg_src_state;
 
   c2h_streamer #(
     .TDATA_WIDTH(64),
     .DEFAULT_LEN_BYTES(4096),
-    .ARM_ON_C2H(1)
+    .ARM_ON_C2H(1),
+    .EXPORT_DEBUG(1)
   ) inst (
     .aclk(aclk),
     .aresetn(aresetn),
@@ -127,6 +144,14 @@ input wire m_axis_tready;
     .m_axis_tkeep(m_axis_tkeep),
     .m_axis_tlast(m_axis_tlast),
     .m_axis_tvalid(m_axis_tvalid),
-    .m_axis_tready(m_axis_tready)
+    .m_axis_tready(m_axis_tready),
+    .dbg_start(dbg_start),
+    .dbg_busy(dbg_busy),
+    .dbg_done(dbg_done),
+    .dbg_beat_count(dbg_beat_count),
+    .dbg_length_bytes(dbg_length_bytes),
+    .dbg_seed(dbg_seed),
+    .dbg_ctrl_state(dbg_ctrl_state),
+    .dbg_src_state(dbg_src_state)
   );
 endmodule

@@ -52,31 +52,31 @@
 						"ARLEN": { "actual": "M00_AXI_arlen[7:0]"},
 						"ARLOCK": { "actual": "M00_AXI_arlock[0:0]"},
 						"ARPROT": { "actual": "M00_AXI_arprot[2:0]"},
-						"ARREADY": { "actual": "M00_AXI_arready"},
+						"ARREADY": { "actual": "M00_AXI_arready[0:0]"},
 						"ARSIZE": { "actual": "M00_AXI_arsize[2:0]"},
-						"ARVALID": { "actual": "M00_AXI_arvalid"},
+						"ARVALID": { "actual": "M00_AXI_arvalid[0:0]"},
 						"AWADDR": { "actual": "M00_AXI_awaddr[31:0]"},
 						"AWBURST": { "actual": "M00_AXI_awburst[1:0]"},
 						"AWCACHE": { "actual": "M00_AXI_awcache[3:0]"},
 						"AWLEN": { "actual": "M00_AXI_awlen[7:0]"},
 						"AWLOCK": { "actual": "M00_AXI_awlock[0:0]"},
 						"AWPROT": { "actual": "M00_AXI_awprot[2:0]"},
-						"AWREADY": { "actual": "M00_AXI_awready"},
+						"AWREADY": { "actual": "M00_AXI_awready[0:0]"},
 						"AWSIZE": { "actual": "M00_AXI_awsize[2:0]"},
-						"AWVALID": { "actual": "M00_AXI_awvalid"},
-						"BREADY": { "actual": "M00_AXI_bready"},
+						"AWVALID": { "actual": "M00_AXI_awvalid[0:0]"},
+						"BREADY": { "actual": "M00_AXI_bready[0:0]"},
 						"BRESP": { "actual": "M00_AXI_bresp[1:0]"},
-						"BVALID": { "actual": "M00_AXI_bvalid"},
+						"BVALID": { "actual": "M00_AXI_bvalid[0:0]"},
 						"RDATA": { "actual": "M00_AXI_rdata[31:0]"},
-						"RLAST": { "actual": "M00_AXI_rlast"},
-						"RREADY": { "actual": "M00_AXI_rready"},
+						"RLAST": { "actual": "M00_AXI_rlast[0:0]"},
+						"RREADY": { "actual": "M00_AXI_rready[0:0]"},
 						"RRESP": { "actual": "M00_AXI_rresp[1:0]"},
-						"RVALID": { "actual": "M00_AXI_rvalid"},
+						"RVALID": { "actual": "M00_AXI_rvalid[0:0]"},
 						"WDATA": { "actual": "M00_AXI_wdata[31:0]"},
-						"WLAST": { "actual": "M00_AXI_wlast"},
-						"WREADY": { "actual": "M00_AXI_wready"},
+						"WLAST": { "actual": "M00_AXI_wlast[0:0]"},
+						"WREADY": { "actual": "M00_AXI_wready[0:0]"},
 						"WSTRB": { "actual": "M00_AXI_wstrb[3:0]"},
-						"WVALID": { "actual": "M00_AXI_wvalid"}
+						"WVALID": { "actual": "M00_AXI_wvalid[0:0]"}
 					}
 				},
 				"/axi_interconnect_0/S00_AXI": {
@@ -237,7 +237,7 @@
 						"WVALID": { "actual": "s_axi_wvalid"}
 					}
 				},
-				"/c2h_streamer_0/M_AXIS": {
+				"/axis_register_slice_0/M_AXIS": {
 					"interface": "xilinx.com:interface:axis:1.0",
 					"ports": {
 						"ACLK": { "actual": "aclk"},
@@ -249,7 +249,7 @@
 						"TVALID": { "actual": "m_axis_tvalid"}
 					}
 				},
-				"/h2c_axis_sink_0/S_AXIS": {
+				"/axis_register_slice_0/S_AXIS": {
 					"interface": "xilinx.com:interface:axis:1.0",
 					"ports": {
 						"ACLK": { "actual": "aclk"},
@@ -261,40 +261,16 @@
 						"TVALID": { "actual": "s_axis_tvalid"}
 					}
 				},
-				"/h2c_axis_sink_1/S_AXIS": {
+				"/c2h_streamer_0/M_AXIS": {
 					"interface": "xilinx.com:interface:axis:1.0",
 					"ports": {
 						"ACLK": { "actual": "aclk"},
 						"ARESETN": { "actual": "aresetn"},
-						"TDATA": { "actual": "s_axis_tdata[63:0]"},
-						"TKEEP": { "actual": "s_axis_tkeep[7:0]"},
-						"TLAST": { "actual": "s_axis_tlast"},
-						"TREADY": { "actual": "s_axis_tready"},
-						"TVALID": { "actual": "s_axis_tvalid"}
-					}
-				},
-				"/xdma_0/M_AXIS_H2C_0": {
-					"interface": "xilinx.com:interface:axis:1.0",
-					"ports": {
-						"ACLK": { "actual": "axi_aclk"},
-						"ARESETN": { "actual": "axi_aresetn"},
-						"TDATA": { "actual": "m_axis_h2c_tdata_0[63:0]"},
-						"TKEEP": { "actual": "m_axis_h2c_tkeep_0[7:0]"},
-						"TLAST": { "actual": "m_axis_h2c_tlast_0"},
-						"TREADY": { "actual": "m_axis_h2c_tready_0"},
-						"TVALID": { "actual": "m_axis_h2c_tvalid_0"}
-					}
-				},
-				"/xdma_0/M_AXIS_H2C_1": {
-					"interface": "xilinx.com:interface:axis:1.0",
-					"ports": {
-						"ACLK": { "actual": "axi_aclk"},
-						"ARESETN": { "actual": "axi_aresetn"},
-						"TDATA": { "actual": "m_axis_h2c_tdata_1[63:0]"},
-						"TKEEP": { "actual": "m_axis_h2c_tkeep_1[7:0]"},
-						"TLAST": { "actual": "m_axis_h2c_tlast_1"},
-						"TREADY": { "actual": "m_axis_h2c_tready_1"},
-						"TVALID": { "actual": "m_axis_h2c_tvalid_1"}
+						"TDATA": { "actual": "m_axis_tdata[63:0]"},
+						"TKEEP": { "actual": "m_axis_tkeep[7:0]"},
+						"TLAST": { "actual": "m_axis_tlast"},
+						"TREADY": { "actual": "m_axis_tready"},
+						"TVALID": { "actual": "m_axis_tvalid"}
 					}
 				},
 				"/xdma_0/M_AXI_LITE": {

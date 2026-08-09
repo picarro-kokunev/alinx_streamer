@@ -25,7 +25,8 @@ module stream_ctrl_regs #(
     output reg  [63:0] seed,
     input  wire        src_busy,
     input  wire        src_done,
-    input  wire [31:0] src_beat_count
+    input  wire [31:0] src_beat_count,
+    output wire [2:0] dbg_state   // assign dbg_state = state;    
 );
 
     localparam [31:0] OFF_CTRL     = 32'h00;
@@ -151,5 +152,6 @@ module stream_ctrl_regs #(
             endcase
         end
     end
+    assign dbg_state = state;    
 
 endmodule

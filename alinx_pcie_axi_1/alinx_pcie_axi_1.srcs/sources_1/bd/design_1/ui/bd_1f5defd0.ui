@@ -1,49 +1,59 @@
 {
    "ActiveEmotionalView":"Default View",
-   "Default View_ScaleFactor":"0.771374",
-   "Default View_TopLeft":"-110,-296",
+   "Default View_ScaleFactor":"0.548896",
+   "Default View_TopLeft":"-109,-47",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.8.0 2024-04-26 e1825d835c VDI=44 GEI=38 GUI=JA:21.0 TLS
 #  -string -flagsOSRD
-preplace port pcie_7x_mgt_rtl_0 -pg 1 -lvl 6 -x 1570 -y 140 -defaultsOSRD
-preplace port pcie_clk -pg 1 -lvl 0 -x 0 -y 130 -defaultsOSRD
-preplace port port-id_sys_rst_n -pg 1 -lvl 0 -x 0 -y 200 -defaultsOSRD
-preplace port port-id_user_resetn -pg 1 -lvl 6 -x 1570 -y 270 -defaultsOSRD
-preplace port port-id_user_lnk_up -pg 1 -lvl 6 -x 1570 -y 170 -defaultsOSRD
-preplace portBus LED -pg 1 -lvl 6 -x 1570 -y 210 -defaultsOSRD
-preplace inst xdma_0 -pg 1 -lvl 2 -x 480 -y 170 -defaultsOSRD
-preplace inst util_ds_buf -pg 1 -lvl 1 -x 160 -y 130 -defaultsOSRD
-preplace inst axi_bram_ctrl_1 -pg 1 -lvl 4 -x 1160 -y 350 -defaultsOSRD
-preplace inst blk_mem_gen_1 -pg 1 -lvl 5 -x 1430 -y 350 -defaultsOSRD
-preplace inst axi_interconnect_0 -pg 1 -lvl 3 -x 840 -y 310 -defaultsOSRD
-preplace inst xlslice_0 -pg 1 -lvl 5 -x 1430 -y 210 -defaultsOSRD
-preplace inst c_counter_binary_0 -pg 1 -lvl 4 -x 1160 -y 210 -defaultsOSRD
-preplace inst xlconstant_1 -pg 1 -lvl 1 -x 160 -y 260 -defaultsOSRD
-preplace inst c2h_streamer_0 -pg 1 -lvl 3 -x 840 -y -50 -defaultsOSRD
-preplace inst h2c_axis_sink_0 -pg 1 -lvl 3 -x 840 -y 510 -defaultsOSRD
-preplace inst h2c_axis_sink_1 -pg 1 -lvl 3 -x 840 -y 670 -defaultsOSRD
-preplace netloc c_counter_binary_0_Q 1 4 1 NJ 210
-preplace netloc sys_rst_n 1 0 2 NJ 200 NJ
-preplace netloc util_ds_buf_IBUF_OUT 1 1 1 300J 120n
-preplace netloc xdma_0_axi_aclk 1 2 2 660 190 1010
-preplace netloc xdma_0_axi_aresetn 1 2 4 670 180 1020 270 NJ 270 NJ
-preplace netloc xdma_0_user_lnk_up 1 2 4 680J 150 NJ 150 NJ 150 1550J
-preplace netloc xlconstant_1_dout 1 1 1 310J 220n
-preplace netloc xlslice_0_Dout 1 5 1 NJ 210
-preplace netloc S00_AXI_1 1 2 1 690 80n
-preplace netloc axi_bram_ctrl_1_BRAM_PORTA 1 4 1 1310 340n
-preplace netloc axi_bram_ctrl_1_BRAM_PORTB 1 3 2 N -60 1300
-preplace netloc axi_interconnect_0_M00_AXI 1 3 1 990 310n
-preplace netloc c2h_streamer_0_M_AXIS 1 1 3 320 20 NJ 20 990
-preplace netloc pcie_clk 1 0 1 NJ 130
-preplace netloc xdma_0_M_AXIS_H2C_0 1 2 1 650 100n
-preplace netloc xdma_0_M_AXIS_H2C_1 1 2 1 640 120n
-preplace netloc xdma_0_pcie_mgt 1 2 4 NJ 140 NJ 140 NJ 140 NJ
-levelinfo -pg 1 0 160 480 840 1160 1430 1570
-pagesize -pg 1 -db -bbox -sgen -120 -120 1740 750
+preplace port pcie_7x_mgt_rtl_0 -pg 1 -lvl 7 -x 1940 -y 600 -defaultsOSRD
+preplace port pcie_clk -pg 1 -lvl 0 -x 0 -y 590 -defaultsOSRD
+preplace port port-id_sys_rst_n -pg 1 -lvl 0 -x 0 -y 660 -defaultsOSRD
+preplace port port-id_user_resetn -pg 1 -lvl 7 -x 1940 -y 730 -defaultsOSRD
+preplace port port-id_user_lnk_up -pg 1 -lvl 7 -x 1940 -y 630 -defaultsOSRD
+preplace portBus LED -pg 1 -lvl 7 -x 1940 -y 670 -defaultsOSRD
+preplace inst xdma_0 -pg 1 -lvl 3 -x 880 -y 640 -defaultsOSRD
+preplace inst util_ds_buf -pg 1 -lvl 2 -x 570 -y 590 -defaultsOSRD
+preplace inst axi_bram_ctrl_1 -pg 1 -lvl 5 -x 1540 -y 810 -defaultsOSRD
+preplace inst blk_mem_gen_1 -pg 1 -lvl 6 -x 1800 -y 210 -defaultsOSRD
+preplace inst axi_interconnect_0 -pg 1 -lvl 4 -x 1240 -y 790 -defaultsOSRD
+preplace inst xlslice_0 -pg 1 -lvl 6 -x 1800 -y 670 -defaultsOSRD
+preplace inst c_counter_binary_0 -pg 1 -lvl 5 -x 1540 -y 670 -defaultsOSRD
+preplace inst xlconstant_1 -pg 1 -lvl 2 -x 570 -y 720 -defaultsOSRD
+preplace inst c2h_streamer_0 -pg 1 -lvl 1 -x 180 -y 310 -defaultsOSRD
+preplace inst system_ila_1 -pg 1 -lvl 4 -x 1240 -y 450 -defaultsOSRD
+preplace inst axis_register_slice_0 -pg 1 -lvl 2 -x 570 -y 390 -defaultsOSRD
+preplace inst xlconcat_0 -pg 1 -lvl 3 -x 880 -y 110 -defaultsOSRD
+preplace netloc c_counter_binary_0_Q 1 5 1 NJ 670
+preplace netloc sys_rst_n 1 0 3 NJ 660 NJ 660 NJ
+preplace netloc util_ds_buf_IBUF_OUT 1 2 1 710J 580n
+preplace netloc xdma_0_axi_aclk 1 0 5 30 160 380 280 NJ 280 1060 670 1390
+preplace netloc xdma_0_axi_aresetn 1 0 7 30 460 430 310 NJ 310 1040 910 1400 730 NJ 730 NJ
+preplace netloc xdma_0_user_lnk_up 1 3 4 1070J 610 NJ 610 NJ 610 1920J
+preplace netloc xlconstant_1_dout 1 2 1 720J 680n
+preplace netloc xlslice_0_Dout 1 6 1 NJ 670
+preplace netloc c2h_streamer_0_dbg_beat_count 1 1 2 360J 260 710
+preplace netloc c2h_streamer_0_dbg_start 1 1 2 330J 80 N
+preplace netloc c2h_streamer_0_dbg_busy 1 1 2 350J 270 720
+preplace netloc c2h_streamer_0_dbg_done 1 1 2 340J 120 N
+preplace netloc c2h_streamer_0_dbg_ctrl_state 1 1 2 390J 140 N
+preplace netloc c2h_streamer_0_dbg_src_state 1 1 2 400J 160 N
+preplace netloc c2h_streamer_0_dbg_length_bytes 1 1 3 410 290 NJ 290 1070J
+preplace netloc xlconcat_0_dout 1 3 1 1090 110n
+preplace netloc c2h_streamer_0_dbg_seed 1 1 3 420 300 NJ 300 1050J
+preplace netloc S00_AXI_1 1 3 1 1080 390n
+preplace netloc axi_bram_ctrl_1_BRAM_PORTA 1 5 1 1680 200n
+preplace netloc axi_bram_ctrl_1_BRAM_PORTB 1 1 5 NJ 220 NJ 220 NJ 220 NJ 220 N
+preplace netloc axi_interconnect_0_M00_AXI 1 4 1 N 790
+preplace netloc pcie_clk 1 0 2 NJ 590 NJ
+preplace netloc xdma_0_pcie_mgt 1 3 4 NJ 600 NJ 600 NJ 600 NJ
+preplace netloc c2h_streamer_0_M_AXIS 1 1 1 370 240n
+preplace netloc axis_register_slice_0_M_AXIS 1 2 2 720 410 N
+levelinfo -pg 1 0 180 570 880 1240 1540 1800 1940
+pagesize -pg 1 -db -bbox -sgen -110 0 2110 930
 "
 }
 {
+   "da_axi4_cnt":"1",
    "da_board_cnt":"3",
    "da_xdma_cnt":"1"
 }

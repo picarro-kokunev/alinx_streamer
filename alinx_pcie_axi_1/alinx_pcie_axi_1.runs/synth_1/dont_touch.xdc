@@ -33,9 +33,6 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_ax
 # IP: bd/design_1/ip/design_1_blk_mem_gen_1_0/design_1_blk_mem_gen_1_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_blk_mem_gen_1_0 || ORIG_REF_NAME==design_1_blk_mem_gen_1_0} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_axi_interconnect_0_imp_auto_pc_0/design_1_axi_interconnect_0_imp_auto_pc_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_axi_interconnect_0_imp_auto_pc_0 || ORIG_REF_NAME==design_1_axi_interconnect_0_imp_auto_pc_0} -quiet] -quiet
-
 # IP: bd/design_1/ip/design_1_axi_interconnect_0_0/design_1_axi_interconnect_0_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_axi_interconnect_0_0 || ORIG_REF_NAME==design_1_axi_interconnect_0_0} -quiet] -quiet
 
@@ -45,11 +42,41 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_c_
 # IP: bd/design_1/ip/design_1_c2h_streamer_0_0/design_1_c2h_streamer_0_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_c2h_streamer_0_0 || ORIG_REF_NAME==design_1_c2h_streamer_0_0} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_h2c_axis_sink_0_0/design_1_h2c_axis_sink_0_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_h2c_axis_sink_0_0 || ORIG_REF_NAME==design_1_h2c_axis_sink_0_0} -quiet] -quiet
+# IP: bd/design_1/ip/design_1_system_ila_1_0/design_1_system_ila_1_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_system_ila_1_0 || ORIG_REF_NAME==design_1_system_ila_1_0} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_h2c_axis_sink_1_0/design_1_h2c_axis_sink_1_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_h2c_axis_sink_1_0 || ORIG_REF_NAME==design_1_h2c_axis_sink_1_0} -quiet] -quiet
+# Block Designs: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/bd_365d.bd
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==bd_365d || ORIG_REF_NAME==bd_365d} -quiet] -quiet
+
+# IP: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/bd_365d_ila_lib_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==bd_365d_ila_lib_0 || ORIG_REF_NAME==bd_365d_ila_lib_0} -quiet] -quiet
+
+# IP: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_1/bd_365d_g_inst_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==bd_365d_g_inst_0 || ORIG_REF_NAME==bd_365d_g_inst_0} -quiet] -quiet
+
+# IP: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_2/bd_365d_slot_0_aw_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==bd_365d_slot_0_aw_0 || ORIG_REF_NAME==bd_365d_slot_0_aw_0} -quiet] -quiet
+
+# IP: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_3/bd_365d_slot_0_w_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==bd_365d_slot_0_w_0 || ORIG_REF_NAME==bd_365d_slot_0_w_0} -quiet] -quiet
+
+# IP: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_4/bd_365d_slot_0_b_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==bd_365d_slot_0_b_0 || ORIG_REF_NAME==bd_365d_slot_0_b_0} -quiet] -quiet
+
+# IP: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_5/bd_365d_slot_0_ar_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==bd_365d_slot_0_ar_0 || ORIG_REF_NAME==bd_365d_slot_0_ar_0} -quiet] -quiet
+
+# IP: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_6/bd_365d_slot_0_r_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==bd_365d_slot_0_r_0 || ORIG_REF_NAME==bd_365d_slot_0_r_0} -quiet] -quiet
+
+# IP: bd/design_1/ip/design_1_axis_register_slice_0_0/design_1_axis_register_slice_0_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_axis_register_slice_0_0 || ORIG_REF_NAME==design_1_axis_register_slice_0_0} -quiet] -quiet
+
+# IP: bd/design_1/ip/design_1_xlconcat_0_0/design_1_xlconcat_0_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_xlconcat_0_0 || ORIG_REF_NAME==design_1_xlconcat_0_0} -quiet] -quiet
+
+# IP: bd/design_1/ip/design_1_axi_interconnect_0_imp_auto_pc_0/design_1_axi_interconnect_0_imp_auto_pc_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_axi_interconnect_0_imp_auto_pc_0 || ORIG_REF_NAME==design_1_axi_interconnect_0_imp_auto_pc_0} -quiet] -quiet
 
 # XDC: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_xdma_0_0/ip_4/pcie2_fifo_generator_tgt_brdg.xdc
 set_property KEEP_HIERARCHY SOFT [get_cells [split [join [get_cells -hier -filter {REF_NAME==pcie2_fifo_generator_tgt_brdg || ORIG_REF_NAME==pcie2_fifo_generator_tgt_brdg} -quiet] {/U0 } ]/U0 ] -quiet] -quiet
@@ -83,6 +110,21 @@ set_property KEEP_HIERARCHY SOFT [get_cells [split [join [get_cells -hier -filte
 set_property KEEP_HIERARCHY SOFT [get_cells [split [join [get_cells -hier -filter {REF_NAME==design_1_util_ds_buf_0 || ORIG_REF_NAME==design_1_util_ds_buf_0} -quiet] {/U0 } ]/U0 ] -quiet] -quiet
 
 # XDC: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_blk_mem_gen_1_0/design_1_blk_mem_gen_1_0_ooc.xdc
+
+# XDC: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/bd_365d_ooc.xdc
+
+# XDC: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila_impl.xdc
+set_property KEEP_HIERARCHY SOFT [get_cells [split [join [get_cells -hier -filter {REF_NAME==bd_365d_ila_lib_0 || ORIG_REF_NAME==bd_365d_ila_lib_0} -quiet] {/inst } ]/inst ] -quiet] -quiet
+
+# XDC: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila.xdc
+#dup# set_property KEEP_HIERARCHY SOFT [get_cells [split [join [get_cells -hier -filter {REF_NAME==bd_365d_ila_lib_0 || ORIG_REF_NAME==bd_365d_ila_lib_0} -quiet] {/inst } ]/inst ] -quiet] -quiet
+
+# XDC: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/bd_365d_ila_lib_0_ooc.xdc
+
+# XDC: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/design_1_system_ila_1_0_ooc.xdc
+
+# XDC: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_axis_register_slice_0_0/design_1_axis_register_slice_0_0_clocks.xdc
+set_property KEEP_HIERARCHY SOFT [get_cells [split [join [get_cells -hier -filter {REF_NAME==design_1_axis_register_slice_0_0 || ORIG_REF_NAME==design_1_axis_register_slice_0_0} -quiet] {/inst } ]/inst ] -quiet] -quiet
 
 # XDC: /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_axi_interconnect_0_imp_auto_pc_0/design_1_axi_interconnect_0_imp_auto_pc_0_ooc.xdc
 

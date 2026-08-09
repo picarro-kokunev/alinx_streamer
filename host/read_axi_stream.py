@@ -368,6 +368,12 @@ def cmd_bram(args: argparse.Namespace) -> int:
         print(f"BRAM+0x{args.offset:X} = 0x{value:08X}")
     return 0
 
+def read_bram(offset: int = 0, device: int = DEFAULT_DEVICE) -> int:
+    with UserBar(device) as bar:
+        value = bar.read_u32(offset)
+        print(f"BRAM+0x{offset:X} = 0x{value:08X}")
+    return 0
+
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(

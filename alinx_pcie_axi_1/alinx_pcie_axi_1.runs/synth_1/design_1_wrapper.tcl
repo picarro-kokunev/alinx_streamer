@@ -57,8 +57,10 @@ if {$::dispatch::connected} {
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param checkpoint.writeSynthRtdsInDcp 1
+set_param chipscope.maxJobs 5
 set_param general.usePosixSpawnForFork 1
-set_param synth.incrementalSynthesisCache /tmp/.Xil_kokunev/Vivado-495273-emerald/incrSyn
+set_param synth.incrementalSynthesisCache ./.Xil/Vivado-1389421-emerald/incrSyn
+set_msg_config -id {HDL-1065} -limit 10000
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
@@ -81,7 +83,6 @@ read_verilog -library xil_defaultlib {
   /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.srcs/sources_1/rtl/c2h_pattern_source.v
   /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.srcs/sources_1/rtl/stream_ctrl_regs.v
   /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.srcs/sources_1/rtl/c2h_streamer.v
-  /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.srcs/sources_1/rtl/h2c_axis_sink.v
   /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/hdl/design_1_wrapper.v
 }
 add_files /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.srcs/sources_1/bd/design_1/design_1.bd
@@ -98,6 +99,13 @@ set_property used_in_implementation false [get_files -all /home/kokunev/data/git
 set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_util_ds_buf_0/design_1_util_ds_buf_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_util_ds_buf_0/design_1_util_ds_buf_0_board.xdc]
 set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_blk_mem_gen_1_0/design_1_blk_mem_gen_1_0_ooc.xdc]
+set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/bd_365d_ooc.xdc]
+set_property used_in_synthesis false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila_impl.xdc]
+set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila_impl.xdc]
+set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/ila_v6_2/constraints/ila.xdc]
+set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/bd_0/ip/ip_0/bd_365d_ila_lib_0_ooc.xdc]
+set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_system_ila_1_0/design_1_system_ila_1_0_ooc.xdc]
+set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_axis_register_slice_0_0/design_1_axis_register_slice_0_0_clocks.xdc]
 set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/ip/design_1_axi_interconnect_0_imp_auto_pc_0/design_1_axi_interconnect_0_imp_auto_pc_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all /home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.gen/sources_1/bd/design_1/design_1_ooc.xdc]
 

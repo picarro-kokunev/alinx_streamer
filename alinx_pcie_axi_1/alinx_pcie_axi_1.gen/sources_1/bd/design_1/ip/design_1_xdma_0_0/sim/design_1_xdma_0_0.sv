@@ -103,17 +103,7 @@ module design_1_xdma_0_0 (
   m_axis_h2c_tlast_0,
   m_axis_h2c_tvalid_0,
   m_axis_h2c_tready_0,
-  m_axis_h2c_tkeep_0,
-  s_axis_c2h_tdata_1,
-  s_axis_c2h_tlast_1,
-  s_axis_c2h_tvalid_1,
-  s_axis_c2h_tready_1,
-  s_axis_c2h_tkeep_1,
-  m_axis_h2c_tdata_1,
-  m_axis_h2c_tlast_1,
-  m_axis_h2c_tvalid_1,
-  m_axis_h2c_tready_1,
-  m_axis_h2c_tkeep_1
+  m_axis_h2c_tkeep_0
 );
 
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.SYS_CLK CLK" *)
@@ -230,30 +220,6 @@ output wire m_axis_h2c_tvalid_0;
 input wire m_axis_h2c_tready_0;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS_H2C_0 TKEEP" *)
 output wire [7 : 0] m_axis_h2c_tkeep_0;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS_C2H_1 TDATA" *)
-(* X_INTERFACE_MODE = "slave" *)
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S_AXIS_C2H_1, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN design_1_xdma_0_0_axi_aclk, LAYERED_METADATA undef, INSERT_VIP 0" *)
-input wire [63 : 0] s_axis_c2h_tdata_1;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS_C2H_1 TLAST" *)
-input wire s_axis_c2h_tlast_1;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS_C2H_1 TVALID" *)
-input wire s_axis_c2h_tvalid_1;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS_C2H_1 TREADY" *)
-output wire s_axis_c2h_tready_1;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS_C2H_1 TKEEP" *)
-input wire [7 : 0] s_axis_c2h_tkeep_1;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS_H2C_1 TDATA" *)
-(* X_INTERFACE_MODE = "master" *)
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M_AXIS_H2C_1, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN design_1_xdma_0_0_axi_aclk, LAYERED_METADATA undef, INSERT_VIP 0" *)
-output wire [63 : 0] m_axis_h2c_tdata_1;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS_H2C_1 TLAST" *)
-output wire m_axis_h2c_tlast_1;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS_H2C_1 TVALID" *)
-output wire m_axis_h2c_tvalid_1;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS_H2C_1 TREADY" *)
-input wire m_axis_h2c_tready_1;
-(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS_H2C_1 TKEEP" *)
-output wire [7 : 0] m_axis_h2c_tkeep_1;
 
   design_1_xdma_0_0_core_top #(
     .COMPONENT_NAME("xdma_0"),
@@ -332,8 +298,8 @@ output wire [7 : 0] m_axis_h2c_tkeep_1;
     .XDMA_PCIE_64BIT_EN("xdma_pcie_64bit_en"),
     .XDMA_AXILITE_MASTER("TRUE"),
     .XDMA_AXIST_BYPASS("FALSE"),
-    .XDMA_RNUM_CHNL(2),
-    .XDMA_WNUM_CHNL(2),
+    .XDMA_RNUM_CHNL(1),
+    .XDMA_WNUM_CHNL(1),
     .XDMA_AXILITE_SLAVE("FALSE"),
     .XDMA_NUM_USR_IRQ(1),
     .XDMA_RNUM_RIDS(32),
@@ -345,7 +311,7 @@ output wire [7 : 0] m_axis_h2c_tkeep_1;
     .XDMA_NUM_PCIE_TAG(64),
     .EN_AXI_MASTER_IF("TRUE"),
     .EN_WCHNL_0("TRUE"),
-    .EN_WCHNL_1("TRUE"),
+    .EN_WCHNL_1("FALSE"),
     .EN_WCHNL_2("FALSE"),
     .EN_WCHNL_3("FALSE"),
     .EN_WCHNL_4("FALSE"),
@@ -353,7 +319,7 @@ output wire [7 : 0] m_axis_h2c_tkeep_1;
     .EN_WCHNL_6("FALSE"),
     .EN_WCHNL_7("FALSE"),
     .EN_RCHNL_0("TRUE"),
-    .EN_RCHNL_1("TRUE"),
+    .EN_RCHNL_1("FALSE"),
     .EN_RCHNL_2("FALSE"),
     .EN_RCHNL_3("FALSE"),
     .EN_RCHNL_4("FALSE"),
@@ -535,8 +501,8 @@ output wire [7 : 0] m_axis_h2c_tkeep_1;
     .VF_BARLITE_INT_PF1(6'H01),
     .VF_BARLITE_INT_PF2(6'H01),
     .VF_BARLITE_INT_PF3(6'H01),
-    .C_C2H_NUM_CHNL(2),
-    .C_H2C_NUM_CHNL(2),
+    .C_C2H_NUM_CHNL(1),
+    .C_H2C_NUM_CHNL(1),
     .H2C_XDMA_CHNL(8'H0F),
     .C2H_XDMA_CHNL(8'H0F),
     .AXISTEN_IF_ENABLE_MSG_ROUTE(18'H00000),
@@ -779,18 +745,18 @@ output wire [7 : 0] m_axis_h2c_tkeep_1;
     .m_axis_h2c_tready_0(m_axis_h2c_tready_0),
     .m_axis_h2c_tuser_0(),
     .m_axis_h2c_tkeep_0(m_axis_h2c_tkeep_0),
-    .s_axis_c2h_tdata_1(s_axis_c2h_tdata_1),
-    .s_axis_c2h_tlast_1(s_axis_c2h_tlast_1),
-    .s_axis_c2h_tvalid_1(s_axis_c2h_tvalid_1),
-    .s_axis_c2h_tready_1(s_axis_c2h_tready_1),
+    .s_axis_c2h_tdata_1(64'B0),
+    .s_axis_c2h_tlast_1(1'B0),
+    .s_axis_c2h_tvalid_1(1'B0),
+    .s_axis_c2h_tready_1(),
     .s_axis_c2h_tuser_1(8'B0),
-    .s_axis_c2h_tkeep_1(s_axis_c2h_tkeep_1),
-    .m_axis_h2c_tdata_1(m_axis_h2c_tdata_1),
-    .m_axis_h2c_tlast_1(m_axis_h2c_tlast_1),
-    .m_axis_h2c_tvalid_1(m_axis_h2c_tvalid_1),
-    .m_axis_h2c_tready_1(m_axis_h2c_tready_1),
+    .s_axis_c2h_tkeep_1(8'B0),
+    .m_axis_h2c_tdata_1(),
+    .m_axis_h2c_tlast_1(),
+    .m_axis_h2c_tvalid_1(),
+    .m_axis_h2c_tready_1(1'B0),
     .m_axis_h2c_tuser_1(),
-    .m_axis_h2c_tkeep_1(m_axis_h2c_tkeep_1),
+    .m_axis_h2c_tkeep_1(),
     .s_axis_c2h_tdata_2(64'B0),
     .s_axis_c2h_tlast_2(1'B0),
     .s_axis_c2h_tvalid_2(1'B0),
