@@ -5,23 +5,24 @@ Read samples from the alinx_streamer XDMA AXI-Stream path.
 Hardware (design_1):
   Host PCIe ──► xdma_0 (AXI Stream mode, Gen2 x2, 64-bit @ 125 MHz)
                   │
-                  ├─ c2h_streamer_0 ──► S_AXIS_C2H_0  (pattern source)
+                  ├─ c2h_streamer_0 ──► S_AXIS_C2H_0  (memory sequence source)
                   ├─ h2c_axis_sink_* ◄── M_AXIS_H2C_* (discard)
-                  └─ M_AXI_LITE   ──► BRAM (4 KiB @ 0x0, port A host / port B FPGA)
+                  └─ M_AXI_LITE
+                       ├─ control BRAM  (4 KiB @ 0x0000)
+                       └─ pattern BRAM  (4 KiB @ 0x1000)
 
-BRAM register map (stream control via port B):
+Control BRAM register map:
   0x00 CTRL [0]=start   0x04 LENGTH   0x08 STATUS   0x0C BEAT_CNT
-  0x10 SEED_LO          0x14 SEED_HI
+  0x10 SEQ_LEN          0x14 REPEAT
+  Total transfer = SEQ_LEN * REPEAT when REPEAT != 0; else LENGTH.
+
+Pattern BRAM (@ 0x1000): host-writable sequence played by c2h_mem_source
+and wrapped every SEQ_LEN bytes for REPEAT periods.
 
 Device nodes (Xilinx dma_ip_drivers xdma):
   /dev/xdma0_h2c_{0,1}   host → card (AXIS)
   /dev/xdma0_c2h_{0,1}   card → host (AXIS)
-  /dev/xdma0_user        AXI-Lite BAR (BRAM)
-
-Current bitstream drives S_AXIS_C2H_0 from c2h_pattern_source (ascending
-64-bit counter).  ARM_ON_C2H is enabled: opening a C2H read also arms the
-source when LENGTH is set in BRAM (default 4096).  Use the pattern subcommand
-or write BRAM regs manually, then read C2H.
+  /dev/xdma0_user        AXI-Lite BAR (BRAMs)
 """
 
 from __future__ import annotations
@@ -38,14 +39,17 @@ from typing import Iterable, List, Optional, Sequence, Tuple
 
 # AXI Stream beat width from XDMA IP configuration
 AXIS_BYTES_PER_BEAT = 8  # 64-bit TDATA
-BRAM_SIZE = 4096
+CTRL_BRAM_SIZE = 4096
+PATTERN_BRAM_BASE = 0x1000
+PATTERN_BRAM_SIZE = 4096
+USER_BAR_SIZE = PATTERN_BRAM_BASE + PATTERN_BRAM_SIZE  # 8 KiB mapped window
 # Stream control register offsets (see stream_ctrl_regs.v)
 REG_CTRL     = 0x00
 REG_LENGTH   = 0x04
 REG_STATUS   = 0x08
 REG_BEAT_CNT = 0x0C
-REG_SEED_LO  = 0x10
-REG_SEED_HI  = 0x14
+REG_SEQ_LEN  = 0x10
+REG_REPEAT   = 0x14
 DEFAULT_DEVICE = 0
 DEFAULT_CHANNEL = 0
 
@@ -231,9 +235,9 @@ def loopback_transfer(
 
 
 class UserBar:
-    """AXI-Lite user BAR (/dev/xdmaN_user) — 4 KiB BRAM at offset 0."""
+    """AXI-Lite user BAR (/dev/xdmaN_user) — control @0 + pattern @0x1000."""
 
-    def __init__(self, device: int = DEFAULT_DEVICE, size: int = BRAM_SIZE):
+    def __init__(self, device: int = DEFAULT_DEVICE, size: int = USER_BAR_SIZE):
         self.path = device_path("user", device)
         require_device(self.path)
         self._fd = os.open(self.path, os.O_RDWR)
@@ -258,6 +262,9 @@ class UserBar:
     def read_bytes(self, offset: int, nbytes: int) -> bytes:
         return bytes(self._mm[offset : offset + nbytes])
 
+    def write_bytes(self, offset: int, data: bytes) -> None:
+        self._mm[offset : offset + len(data)] = data
+
 
 def print_preview(samples: Iterable, limit: int = 16) -> None:
     items = list(samples) if not hasattr(samples, "__len__") else samples
@@ -271,36 +278,82 @@ def print_preview(samples: Iterable, limit: int = 16) -> None:
     print(f"  samples[{n}]: [{preview}]{more}")
 
 
-def arm_pattern_source(
-    nbytes: int,
+def load_pattern_bram(
+    sequence: bytes,
     device: int = DEFAULT_DEVICE,
-    seed: int = 0,
+    offset: int = 0,
 ) -> None:
-    """Program BRAM control regs and pulse start."""
-    nbytes = align_down(nbytes)
+    """Write sequence bytes into pattern BRAM (offset within the 4 KiB window)."""
+    if len(sequence) % AXIS_BYTES_PER_BEAT:
+        raise ValueError("sequence length must be a multiple of 8 bytes")
+    if offset + len(sequence) > PATTERN_BRAM_SIZE:
+        raise ValueError(
+            f"sequence ({len(sequence)} B @+{offset}) exceeds pattern BRAM "
+            f"({PATTERN_BRAM_SIZE} B)"
+        )
     with UserBar(device) as bar:
-        bar.write_u32(REG_LENGTH, nbytes)
-        bar.write_u32(REG_SEED_LO, seed & 0xFFFFFFFF)
-        bar.write_u32(REG_SEED_HI, (seed >> 32) & 0xFFFFFFFF)
+        bar.write_bytes(PATTERN_BRAM_BASE + offset, sequence)
+
+
+def arm_mem_source(
+    seq_len: int,
+    repeat: int,
+    device: int = DEFAULT_DEVICE,
+) -> int:
+    """Program SEQ_LEN/REPEAT (and LENGTH fallback) then pulse start.
+
+    Returns total transfer size in bytes (seq_len * repeat).
+    """
+    seq_len = align_down(seq_len)
+    if seq_len < AXIS_BYTES_PER_BEAT:
+        raise ValueError("seq_len must be >= 8")
+    if repeat < 1:
+        raise ValueError("repeat must be >= 1")
+    total = seq_len * repeat
+    with UserBar(device) as bar:
+        bar.write_u32(REG_LENGTH, total)
+        bar.write_u32(REG_SEQ_LEN, seq_len)
+        bar.write_u32(REG_REPEAT, repeat)
         bar.write_u32(REG_CTRL, 1)
+    return total
 
 
-def cmd_pattern(args: argparse.Namespace) -> int:
-    nbytes = align_down(args.bytes)
-    # Arm C2H read first so XDMA asserts tready, then pulse FPGA start.
+def make_sequence(nbytes: int, pattern: str = "count") -> bytes:
+    """Build a sequence to load into pattern BRAM."""
+    return make_test_payload(nbytes, pattern=pattern)
+
+
+def cmd_mem(args: argparse.Namespace) -> int:
+    """Load pattern BRAM, arm SEQ_LEN/REPEAT, capture C2H."""
+    seq_len = align_down(args.seq_len if args.seq_len is not None else args.bytes)
+    repeat = args.repeat
+    total = seq_len * repeat
+
+    if args.file:
+        sequence = Path(args.file).read_bytes()
+        sequence = sequence[: align_down(len(sequence))]
+        if not sequence:
+            raise ValueError("sequence file is empty / too short")
+        seq_len = len(sequence)
+        total = seq_len * repeat
+    else:
+        sequence = make_sequence(seq_len, pattern=args.pattern)
+
+    load_pattern_bram(sequence, args.device)
+
     err: List[BaseException] = []
     rx_box: List[bytes] = []
 
     def reader() -> None:
         try:
-            rx_box.append(read_c2h(nbytes, args.device, args.channel, timeout_s=args.timeout))
+            rx_box.append(read_c2h(total, args.device, args.channel, timeout_s=args.timeout))
         except BaseException as exc:  # noqa: BLE001
             err.append(exc)
 
     t = threading.Thread(target=reader, name="c2h-reader", daemon=True)
     t.start()
     time.sleep(0.05)
-    arm_pattern_source(nbytes, args.device, seed=args.seed)
+    arm_mem_source(seq_len, repeat, args.device)
     t.join(timeout=args.timeout + 1.0)
     if err:
         raise err[0]
@@ -308,13 +361,25 @@ def cmd_pattern(args: argparse.Namespace) -> int:
         raise TimeoutError("C2H reader did not complete")
     rx = rx_box[0]
     samples = parse_beats(rx, args.dtype)
-    print(f"Pattern capture: {len(rx)} bytes from ch{args.channel}")
+    print(
+        f"Mem sequence capture: {len(rx)} bytes "
+        f"(seq_len={seq_len}, repeat={repeat}) from ch{args.channel}"
+    )
     if args.dtype != "raw":
         print_preview(samples, args.preview)
     if args.output:
         Path(args.output).write_bytes(rx)
         print(f"Wrote raw bytes to {args.output}")
     return 0
+
+
+def cmd_pattern(args: argparse.Namespace) -> int:
+    """Backward-compatible alias: one-shot mem sequence of -n bytes, repeat=1."""
+    args.seq_len = args.bytes
+    args.repeat = 1
+    args.file = None
+    args.pattern = "count"
+    return cmd_mem(args)
 
 
 def cmd_c2h(args: argparse.Namespace) -> int:
@@ -381,18 +446,21 @@ def build_parser() -> argparse.ArgumentParser:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 examples:
-  # Current bitstream: H2C↔C2H loopback smoke test
-  sudo python3 read_axi_stream.py loopback -n 4096
+  # Load a 64-beat sequence into pattern BRAM and play it 10 times
+  sudo python3 read_axi_stream.py mem -n 512 --repeat 10 --dtype u64
 
-  # FPGA pattern source on S_AXIS_C2H_0 (BRAM-armed or ARM_ON_C2H default length)
+  # Same, from a raw binary file (length must be multiple of 8)
+  sudo python3 read_axi_stream.py mem --file seq.bin --repeat 4 -o capture.bin
+
+  # One-shot (repeat=1) convenience alias
   sudo python3 read_axi_stream.py pattern -n 4096 --dtype u64
 
-  # Raw C2H read (arms transfer; pattern may auto-start if ARM_ON_C2H=1)
-  sudo python3 read_axi_stream.py c2h -n 1M --dtype u64 -o capture.bin
+  # Raw C2H read (may auto-start if ARM_ON_C2H=1 and defaults are set)
+  sudo python3 read_axi_stream.py c2h -n 4096 --dtype u64 -o capture.bin
 
-  # AXI-Lite BRAM peek/poke (4 KiB @ BAR user offset 0)
-  sudo python3 read_axi_stream.py bram --offset 0 --write 0xA5A5A5A5
-  sudo python3 read_axi_stream.py bram --offset 0
+  # Control BRAM peek/poke (@0); pattern BRAM is @0x1000
+  sudo python3 read_axi_stream.py bram --offset 0x10 --write 512
+  sudo python3 read_axi_stream.py bram --offset 0x1000
 """,
     )
     p.add_argument("-d", "--device", type=int, default=DEFAULT_DEVICE, help="xdma device index")
@@ -416,11 +484,38 @@ examples:
 
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    sp = sub.add_parser("c2h", help="read from C2H (FPGA pattern source)")
+    sp = sub.add_parser("c2h", help="read from C2H (FPGA mem sequence source)")
     sp.set_defaults(func=cmd_c2h)
 
-    sp = sub.add_parser("pattern", help="arm BRAM regs + read C2H pattern")
-    sp.add_argument("--seed", type=lambda s: int(s, 0), default=0, help="64-bit seed")
+    sp = sub.add_parser(
+        "mem",
+        help="load pattern BRAM + arm SEQ_LEN/REPEAT + read C2H",
+    )
+    sp.add_argument(
+        "--seq-len",
+        type=parse_size,
+        default=None,
+        help="sequence length in bytes (default: -n/--bytes)",
+    )
+    sp.add_argument(
+        "--repeat",
+        type=int,
+        default=1,
+        help="how many times to play the sequence (default: 1)",
+    )
+    sp.add_argument(
+        "--file",
+        help="raw binary sequence to load (overrides generated pattern)",
+    )
+    sp.add_argument(
+        "--pattern",
+        choices=("count", "ramp16", "zeros", "ff"),
+        default="count",
+        help="generated sequence if --file not set",
+    )
+    sp.set_defaults(func=cmd_mem)
+
+    sp = sub.add_parser("pattern", help="alias: mem with repeat=1, count pattern")
     sp.set_defaults(func=cmd_pattern)
 
     sp = sub.add_parser("loopback", help="H2C write + C2H read (current design)")
@@ -432,7 +527,7 @@ examples:
     )
     sp.set_defaults(func=cmd_loopback)
 
-    sp = sub.add_parser("bram", help="read/write 4 KiB AXI-Lite BRAM")
+    sp = sub.add_parser("bram", help="read/write AXI-Lite user BAR (ctrl+pattern)")
     sp.add_argument("--offset", type=lambda s: int(s, 0), default=0)
     sp.add_argument("--write", type=lambda s: int(s, 0), default=None)
     sp.set_defaults(func=cmd_bram)

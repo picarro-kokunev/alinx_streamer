@@ -198,6 +198,6 @@ XMSC_MODULE_EXPORT(design_1_xlconcat_0_0);
 
 #ifdef RIVIERA
 SC_MODULE_EXPORT(design_1_xlconcat_0_0);
-SC_REGISTER_BV(40);
+SC_REGISTER_BV(41);
 #endif
 

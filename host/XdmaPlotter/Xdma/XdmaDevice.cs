@@ -11,14 +11,20 @@ namespace XdmaPlotter.Xdma;
 public static class XdmaPaths
 {
     public const int AxisBytesPerBeat = 8;
-    public const int BramSize = 4096;
+    public const int CtrlBramSize = 4096;
+    public const int PatternBramBase = 0x1000;
+    public const int PatternBramSize = 4096;
+    public const int UserBarSize = PatternBramBase + PatternBramSize;
+
+    /// <summary>Legacy alias for control BRAM size.</summary>
+    public const int BramSize = CtrlBramSize;
 
     public const int RegCtrl = 0x00;
     public const int RegLength = 0x04;
     public const int RegStatus = 0x08;
     public const int RegBeatCnt = 0x0C;
-    public const int RegSeedLo = 0x10;
-    public const int RegSeedHi = 0x14;
+    public const int RegSeqLen = 0x10;
+    public const int RegRepeat = 0x14;
 
     public static string C2h(int device, int channel) => $"/dev/xdma{device}_c2h_{channel}";
     public static string H2c(int device, int channel) => $"/dev/xdma{device}_h2c_{channel}";
@@ -34,7 +40,7 @@ public sealed class UserBar : IDisposable
     private readonly MemoryMappedViewAccessor _view;
     private bool _disposed;
 
-    public UserBar(int device, int size = XdmaPaths.BramSize)
+    public UserBar(int device, int size = XdmaPaths.UserBarSize)
     {
         string path = XdmaPaths.User(device);
         if (!File.Exists(path))
@@ -50,6 +56,9 @@ public sealed class UserBar : IDisposable
     public uint ReadU32(int offset) => _view.ReadUInt32(offset);
 
     public void WriteU32(int offset, uint value) => _view.Write(offset, value);
+
+    public void WriteBytes(int offset, ReadOnlySpan<byte> data) =>
+        _view.WriteArray(offset, data.ToArray(), 0, data.Length);
 
     public void Dispose()
     {
@@ -112,15 +121,41 @@ public static class XdmaStream
         return buffer;
     }
 
-    /// <summary>Program BRAM stream regs and pulse start (pattern source).</summary>
+    /// <summary>Load sequence into pattern BRAM at 0x1000.</summary>
+    public static void LoadPatternBram(ReadOnlySpan<byte> sequence, int device, int offset = 0)
+    {
+        if (sequence.Length % XdmaPaths.AxisBytesPerBeat != 0)
+            throw new ArgumentException("sequence length must be a multiple of 8 bytes");
+        if (offset + sequence.Length > XdmaPaths.PatternBramSize)
+            throw new ArgumentException("sequence exceeds pattern BRAM size");
+
+        using var bar = new UserBar(device);
+        bar.WriteBytes(XdmaPaths.PatternBramBase + offset, sequence);
+    }
+
+    /// <summary>Program SEQ_LEN/REPEAT and pulse start (memory sequence source).</summary>
+    public static int ArmMemSource(int seqLen, int repeat, int device)
+    {
+        seqLen = XdmaPaths.AlignDown(seqLen);
+        if (seqLen < XdmaPaths.AxisBytesPerBeat)
+            throw new ArgumentOutOfRangeException(nameof(seqLen));
+        if (repeat < 1)
+            throw new ArgumentOutOfRangeException(nameof(repeat));
+
+        int total = seqLen * repeat;
+        using var bar = new UserBar(device);
+        bar.WriteU32(XdmaPaths.RegLength, (uint)total);
+        bar.WriteU32(XdmaPaths.RegSeqLen, (uint)seqLen);
+        bar.WriteU32(XdmaPaths.RegRepeat, (uint)repeat);
+        bar.WriteU32(XdmaPaths.RegCtrl, 1);
+        return total;
+    }
+
+    /// <summary>Legacy: arm a one-shot transfer of nbytes (repeat=1).</summary>
     public static void ArmPatternSource(int nbytes, int device, ulong seed = 0)
     {
-        nbytes = XdmaPaths.AlignDown(nbytes);
-        using var bar = new UserBar(device);
-        bar.WriteU32(XdmaPaths.RegLength, (uint)nbytes);
-        bar.WriteU32(XdmaPaths.RegSeedLo, (uint)(seed & 0xFFFF_FFFFUL));
-        bar.WriteU32(XdmaPaths.RegSeedHi, (uint)(seed >> 32));
-        bar.WriteU32(XdmaPaths.RegCtrl, 1);
+        _ = seed; // seed replaced by SEQ_LEN/REPEAT in mem streamer
+        ArmMemSource(nbytes, repeat: 1, device);
     }
 
     /// <summary>
@@ -134,10 +169,33 @@ public static class XdmaStream
         TimeSpan? timeout = null,
         CancellationToken cancellationToken = default)
     {
+        _ = seed;
         nbytes = XdmaPaths.AlignDown(nbytes);
         var readTask = ReadC2hAsync(nbytes, device, channel, timeout, cancellationToken);
         await Task.Delay(50, cancellationToken).ConfigureAwait(false);
-        ArmPatternSource(nbytes, device, seed);
+        ArmMemSource(nbytes, repeat: 1, device);
+        return await readTask.ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Load sequence, play it <paramref name="repeat"/> times, capture C2H.
+    /// </summary>
+    public static async Task<byte[]> CaptureMemSequenceAsync(
+        ReadOnlySpan<byte> sequence,
+        int repeat,
+        int device,
+        int channel,
+        TimeSpan? timeout = null,
+        CancellationToken cancellationToken = default)
+    {
+        int seqLen = XdmaPaths.AlignDown(sequence.Length);
+        if (seqLen < XdmaPaths.AxisBytesPerBeat)
+            throw new ArgumentException("sequence too short");
+        LoadPatternBram(sequence[..seqLen], device);
+        int total = seqLen * repeat;
+        var readTask = ReadC2hAsync(total, device, channel, timeout, cancellationToken);
+        await Task.Delay(50, cancellationToken).ConfigureAwait(false);
+        ArmMemSource(seqLen, repeat, device);
         return await readTask.ConfigureAwait(false);
     }
 

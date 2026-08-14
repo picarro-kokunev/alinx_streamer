@@ -18,7 +18,7 @@
 #define IN1_WIDTH 1
 #define IN2_WIDTH 1
 #define IN3_WIDTH 1
-#define IN4_WIDTH 3
+#define IN4_WIDTH 4
 #define IN5_WIDTH 2
 #define IN6_WIDTH 1
 #define IN7_WIDTH 1
@@ -172,7 +172,7 @@ class design_1_xlconcat_0_0_core : public sc_module
    
     void concate_input_port_values()
     {
-        sc_bv <40> portConcateVal;
+        sc_bv <41> portConcateVal;
             portConcateVal.range(0,0) =  In0.read();
             portConcateVal.range(1,1) =  In1.read();
             portConcateVal.range(2,2) =  In2.read();
@@ -188,7 +188,7 @@ class design_1_xlconcat_0_0_core : public sc_module
         sc_in< sc_bv<IN3_WIDTH> >   In3;
         sc_in< sc_bv<IN4_WIDTH> >   In4;
         sc_in< sc_bv<IN5_WIDTH> >   In5;
-        sc_out< sc_bv <40> >  dout;
+        sc_out< sc_bv <41> >  dout;
 
 };
 

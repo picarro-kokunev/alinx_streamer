@@ -67,16 +67,16 @@ input wire [31 : 0] In0;
 input wire [0 : 0] In1;
 input wire [0 : 0] In2;
 input wire [0 : 0] In3;
-input wire [2 : 0] In4;
+input wire [3 : 0] In4;
 input wire [1 : 0] In5;
-output wire [39 : 0] dout;
+output wire [40 : 0] dout;
 
   xlconcat_v2_1_7_xlconcat #(
     .IN0_WIDTH(32),
     .IN1_WIDTH(1),
     .IN2_WIDTH(1),
     .IN3_WIDTH(1),
-    .IN4_WIDTH(3),
+    .IN4_WIDTH(4),
     .IN5_WIDTH(2),
     .IN6_WIDTH(1),
     .IN7_WIDTH(1),
@@ -200,7 +200,7 @@ output wire [39 : 0] dout;
     .IN125_WIDTH(1),
     .IN126_WIDTH(1),
     .IN127_WIDTH(1),
-    .dout_width(40),
+    .dout_width(41),
     .NUM_PORTS(6)
   ) inst (
     .In0(In0),

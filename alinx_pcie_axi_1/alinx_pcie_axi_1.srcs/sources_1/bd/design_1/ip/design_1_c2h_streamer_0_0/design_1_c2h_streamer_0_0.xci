@@ -10,6 +10,8 @@
       "component_parameters": {
         "TDATA_WIDTH": [ { "value": "64", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "DEFAULT_LEN_BYTES": [ { "value": "4096", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "DEFAULT_SEQ_BYTES": [ { "value": "4096", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "DEFAULT_REPEAT": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "ARM_ON_C2H": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "EXPORT_DEBUG": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "Component_Name": [ { "value": "design_1_c2h_streamer_0_0", "resolve_type": "user", "usage": "all" } ]
@@ -17,6 +19,8 @@
       "model_parameters": {
         "TDATA_WIDTH": [ { "value": "64", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "DEFAULT_LEN_BYTES": [ { "value": "4096", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "DEFAULT_SEQ_BYTES": [ { "value": "4096", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "DEFAULT_REPEAT": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "ARM_ON_C2H": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "EXPORT_DEBUG": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ]
       },
@@ -55,6 +59,13 @@
         "bram_addrb": [ { "direction": "out", "size_left": "31", "size_right": "0" } ],
         "bram_dinb": [ { "direction": "out", "size_left": "31", "size_right": "0" } ],
         "bram_doutb": [ { "direction": "in", "size_left": "31", "size_right": "0", "driver_value": "8" } ],
+        "pat_clkb": [ { "direction": "out" } ],
+        "pat_rstb": [ { "direction": "out" } ],
+        "pat_enb": [ { "direction": "out" } ],
+        "pat_web": [ { "direction": "out", "size_left": "7", "size_right": "0" } ],
+        "pat_addrb": [ { "direction": "out", "size_left": "31", "size_right": "0" } ],
+        "pat_dinb": [ { "direction": "out", "size_left": "63", "size_right": "0" } ],
+        "pat_doutb": [ { "direction": "in", "size_left": "63", "size_right": "0", "driver_value": "8" } ],
         "m_axis_tdata": [ { "direction": "out", "size_left": "63", "size_right": "0" } ],
         "m_axis_tkeep": [ { "direction": "out", "size_left": "7", "size_right": "0" } ],
         "m_axis_tlast": [ { "direction": "out" } ],
@@ -66,7 +77,7 @@
         "dbg_beat_count": [ { "direction": "out", "size_left": "31", "size_right": "0" } ],
         "dbg_length_bytes": [ { "direction": "out", "size_left": "31", "size_right": "0" } ],
         "dbg_seed": [ { "direction": "out", "size_left": "63", "size_right": "0" } ],
-        "dbg_ctrl_state": [ { "direction": "out", "size_left": "2", "size_right": "0" } ],
+        "dbg_ctrl_state": [ { "direction": "out", "size_left": "3", "size_right": "0" } ],
         "dbg_src_state": [ { "direction": "out", "size_left": "1", "size_right": "0" } ]
       },
       "interfaces": {
@@ -91,6 +102,29 @@
             "ADDR": [ { "physical_name": "bram_addrb" } ],
             "CLK": [ { "physical_name": "bram_clkb" } ],
             "RST": [ { "physical_name": "bram_rstb" } ]
+          }
+        },
+        "PATTERN_BRAM": {
+          "vlnv": "xilinx.com:interface:bram:1.0",
+          "abstraction_type": "xilinx.com:interface:bram_rtl:1.0",
+          "mode": "master",
+          "parameters": {
+            "MASTER_TYPE": [ { "value": "BRAM_CTRL", "value_src": "constant", "value_permission": "bd_and_user", "usage": "all" } ],
+            "MEM_ADDRESS_MODE": [ { "value": "BYTE_ADDRESS", "value_src": "constant", "value_permission": "bd_and_user", "usage": "all" } ],
+            "MEM_SIZE": [ { "value": "4096", "value_src": "constant", "value_permission": "bd_and_user", "format": "long", "usage": "all" } ],
+            "MEM_WIDTH": [ { "value": "64", "value_src": "constant", "value_permission": "bd_and_user", "format": "long", "usage": "all" } ],
+            "MEM_ECC": [ { "value": "NONE", "value_src": "constant", "value_permission": "bd_and_user", "usage": "all" } ],
+            "READ_WRITE_MODE": [ { "value": "READ_ONLY", "value_src": "constant", "value_permission": "bd_and_user", "usage": "all" } ],
+            "READ_LATENCY": [ { "value": "1", "value_src": "constant", "value_permission": "bd_and_user", "format": "long", "usage": "all" } ]
+          },
+          "port_maps": {
+            "EN": [ { "physical_name": "pat_enb" } ],
+            "DOUT": [ { "physical_name": "pat_doutb" } ],
+            "DIN": [ { "physical_name": "pat_dinb" } ],
+            "WE": [ { "physical_name": "pat_web" } ],
+            "ADDR": [ { "physical_name": "pat_addrb" } ],
+            "CLK": [ { "physical_name": "pat_clkb" } ],
+            "RST": [ { "physical_name": "pat_rstb" } ]
           }
         },
         "M_AXIS": {
@@ -153,5 +187,5 @@
       }
     }
   },
-  "checksum": "b6d3052f"
+  "checksum": "2951bdbe"
 }

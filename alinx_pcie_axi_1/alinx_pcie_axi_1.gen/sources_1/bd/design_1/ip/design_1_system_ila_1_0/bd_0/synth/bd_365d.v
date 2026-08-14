@@ -63,7 +63,7 @@ module bd_365d
   (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_1_AXIS TREADY" *) input SLOT_1_AXIS_tready;
   (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 SLOT_1_AXIS TVALID" *) input SLOT_1_AXIS_tvalid;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK, ASSOCIATED_BUSIF SLOT_0_AXI:SLOT_1_AXIS, ASSOCIATED_RESET resetn, CLK_DOMAIN design_1_xdma_0_0_axi_aclk, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) input clk;
-  input [39:0]probe0;
+  input [40:0]probe0;
   input [31:0]probe1;
   input [63:0]probe2;
   (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.RESETN RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.RESETN, INSERT_VIP 0, POLARITY ACTIVE_LOW" *) input resetn;
@@ -126,7 +126,7 @@ module bd_365d
   wire net_slot_1_axis_tlast;
   wire net_slot_1_axis_tready;
   wire net_slot_1_axis_tvalid;
-  wire [39:0]probe0;
+  wire [40:0]probe0;
   wire [31:0]probe1;
   wire [63:0]probe2;
   wire resetn;

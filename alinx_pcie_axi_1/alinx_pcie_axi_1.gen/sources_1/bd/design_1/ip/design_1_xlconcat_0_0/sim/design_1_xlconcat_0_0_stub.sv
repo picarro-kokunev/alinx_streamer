@@ -70,9 +70,9 @@ module design_1_xlconcat_0_0 (
   input bit [0 : 0] In1,
   input bit [0 : 0] In2,
   input bit [0 : 0] In3,
-  input bit [2 : 0] In4,
+  input bit [3 : 0] In4,
   input bit [1 : 0] In5,
-  output bit [39 : 0] dout
+  output bit [40 : 0] dout
 );
 endmodule
 `endif
@@ -86,8 +86,8 @@ module design_1_xlconcat_0_0 (In0,In1,In2,In3,In4,In5,dout)
   input bit [0 : 0] In1;
   input bit [0 : 0] In2;
   input bit [0 : 0] In3;
-  input bit [2 : 0] In4;
+  input bit [3 : 0] In4;
   input bit [1 : 0] In5;
-  output wire [39 : 0] dout;
+  output wire [40 : 0] dout;
 endmodule
 `endif

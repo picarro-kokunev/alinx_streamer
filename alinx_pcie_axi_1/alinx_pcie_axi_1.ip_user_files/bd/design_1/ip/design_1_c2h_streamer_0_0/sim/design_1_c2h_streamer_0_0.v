@@ -64,6 +64,13 @@ module design_1_c2h_streamer_0_0 (
   bram_addrb,
   bram_dinb,
   bram_doutb,
+  pat_clkb,
+  pat_rstb,
+  pat_enb,
+  pat_web,
+  pat_addrb,
+  pat_dinb,
+  pat_doutb,
   m_axis_tdata,
   m_axis_tkeep,
   m_axis_tlast,
@@ -103,6 +110,22 @@ output wire [31 : 0] bram_addrb;
 output wire [31 : 0] bram_dinb;
 (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 BRAM_PORTB DOUT" *)
 input wire [31 : 0] bram_doutb;
+(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 PATTERN_BRAM CLK" *)
+(* X_INTERFACE_MODE = "master" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME PATTERN_BRAM, MASTER_TYPE BRAM_CTRL, MEM_ADDRESS_MODE BYTE_ADDRESS, MEM_SIZE 4096, MEM_WIDTH 64, MEM_ECC NONE, READ_WRITE_MODE READ_ONLY, READ_LATENCY 1" *)
+output wire pat_clkb;
+(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 PATTERN_BRAM RST" *)
+output wire pat_rstb;
+(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 PATTERN_BRAM EN" *)
+output wire pat_enb;
+(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 PATTERN_BRAM WE" *)
+output wire [7 : 0] pat_web;
+(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 PATTERN_BRAM ADDR" *)
+output wire [31 : 0] pat_addrb;
+(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 PATTERN_BRAM DIN" *)
+output wire [63 : 0] pat_dinb;
+(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 PATTERN_BRAM DOUT" *)
+input wire [63 : 0] pat_doutb;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS TDATA" *)
 (* X_INTERFACE_MODE = "master" *)
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M_AXIS, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN design_1_xdma_0_0_axi_aclk, LAYERED_METADATA undef, INSERT_VIP 0" *)
@@ -121,12 +144,14 @@ output wire dbg_done;
 output wire [31 : 0] dbg_beat_count;
 output wire [31 : 0] dbg_length_bytes;
 output wire [63 : 0] dbg_seed;
-output wire [2 : 0] dbg_ctrl_state;
+output wire [3 : 0] dbg_ctrl_state;
 output wire [1 : 0] dbg_src_state;
 
   c2h_streamer #(
     .TDATA_WIDTH(64),
     .DEFAULT_LEN_BYTES(4096),
+    .DEFAULT_SEQ_BYTES(4096),
+    .DEFAULT_REPEAT(1),
     .ARM_ON_C2H(1),
     .EXPORT_DEBUG(1)
   ) inst (
@@ -139,6 +164,13 @@ output wire [1 : 0] dbg_src_state;
     .bram_addrb(bram_addrb),
     .bram_dinb(bram_dinb),
     .bram_doutb(bram_doutb),
+    .pat_clkb(pat_clkb),
+    .pat_rstb(pat_rstb),
+    .pat_enb(pat_enb),
+    .pat_web(pat_web),
+    .pat_addrb(pat_addrb),
+    .pat_dinb(pat_dinb),
+    .pat_doutb(pat_doutb),
     .m_axis_tdata(m_axis_tdata),
     .m_axis_tkeep(m_axis_tkeep),
     .m_axis_tlast(m_axis_tlast),

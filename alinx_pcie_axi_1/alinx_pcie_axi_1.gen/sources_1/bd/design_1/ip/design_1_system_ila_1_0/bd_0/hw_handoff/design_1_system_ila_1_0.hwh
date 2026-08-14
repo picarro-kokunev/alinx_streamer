@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sun Aug  9 14:13:46 2026" VIVADOVERSION="2025.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Aug 11 19:33:30 2026" VIVADOVERSION="2025.2">
 
   <SYSTEMINFO ARCH="artix7" DEVICE="7a200t" NAME="bd_365d" PACKAGE="fbg484" SPEEDGRADE="-2"/>
 
@@ -130,7 +130,7 @@
         <CONNECTION INSTANCE="g_inst" PORT="aclk"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="I" LEFT="39" NAME="probe0" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_probe0">
+    <PORT DIR="I" LEFT="40" NAME="probe0" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_probe0">
       <CONNECTIONS>
         <CONNECTION INSTANCE="ila_lib" PORT="probe0"/>
       </CONNECTIONS>
@@ -2044,7 +2044,7 @@
         <PARAMETER NAME="C_PIPE_IFACE" VALUE="1"/>
         <PARAMETER NAME="C_PROBE0_MU_CNT" VALUE="1"/>
         <PARAMETER NAME="C_PROBE0_TYPE" VALUE="0"/>
-        <PARAMETER NAME="C_PROBE0_WIDTH" VALUE="40"/>
+        <PARAMETER NAME="C_PROBE0_WIDTH" VALUE="41"/>
         <PARAMETER NAME="C_PROBE1000_MU_CNT" VALUE="1"/>
         <PARAMETER NAME="C_PROBE1000_TYPE" VALUE="0"/>
         <PARAMETER NAME="C_PROBE1000_WIDTH" VALUE="1"/>
@@ -5153,7 +5153,7 @@
             <CONNECTION INSTANCE="External_Ports" PORT="clk"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="39" NAME="probe0" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_probe0">
+        <PORT DIR="I" LEFT="40" NAME="probe0" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_probe0">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="probe0"/>
           </CONNECTIONS>

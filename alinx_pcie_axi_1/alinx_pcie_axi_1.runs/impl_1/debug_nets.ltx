@@ -32,7 +32,7 @@
                                 "direction": "IN",
                                 "isVector": true,
                                 "leftIndex": 0,
-                                "rightIndex": 39,
+                                "rightIndex": 40,
                                 "portIndex": 0,
                                 "nets": [
                                     {
@@ -40,11 +40,15 @@
                                         "isBus": true,
                                         "subnets": [
                                             {
-                                                "name": "design_1_i/system_ila_1/inst/probe0[39]"
+                                                "name": "design_1_i/system_ila_1/inst/probe0[40]",
+                                                "parentNetId": 0
                                             },
                                             {
-                                                "name": "design_1_i/system_ila_1/inst/probe0[38]",
+                                                "name": "design_1_i/system_ila_1/inst/probe0[39]",
                                                 "parentNetId": 1
+                                            },
+                                            {
+                                                "name": "design_1_i/system_ila_1/inst/probe0[38]"
                                             },
                                             {
                                                 "name": "design_1_i/system_ila_1/inst/probe0[37]"
@@ -1597,7 +1601,7 @@
                             {
                                 "name": "SLOT_0_AXI",
                                 "vlnv": "xilinx.com:interface:aximm:1.0",
-                                "connectedBus": "S00_AXI_1",
+                                "connectedBus": "xdma_0_M_AXI_LITE",
                                 "protocol": "AXI4LITE",
                                 "port_maps": [
                                     {
@@ -1838,7 +1842,7 @@
                                             "id": 0,
                                             "name": "probe0",
                                             "leftBit": 0,
-                                            "width": 40
+                                            "width": 41
                                         }
                                     }
                                 ]
@@ -1880,19 +1884,46 @@
                 ],
                 "parent_nets": [
                     {
-                        "id": 1,
-                        "name": "design_1_i/c2h_streamer_0/inst/u_source/DI[0]",
+                        "id": 0,
+                        "name": "design_1_i/c2h_streamer_0/inst/u_source/FSM_onehot_state_reg[2]_0",
                         "state_reg": [
                             {
-                                "name": "design_1_i/c2h_streamer_0/inst/u_source/FSM_sequential_state_reg",
+                                "name": "design_1_i/c2h_streamer_0/inst/u_source/FSM_onehot_state_reg[2]",
                                 "states": [
                                     {
                                         "name": "ST_IDLE",
-                                        "val": "0"
+                                        "val": "001"
+                                    },
+                                    {
+                                        "name": "ST_LOAD",
+                                        "val": "010"
                                     },
                                     {
                                         "name": "ST_RUN",
-                                        "val": "1"
+                                        "val": "100"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 1,
+                        "name": "design_1_i/c2h_streamer_0/inst/u_source/FSM_onehot_state_reg[1]_0",
+                        "state_reg": [
+                            {
+                                "name": "design_1_i/c2h_streamer_0/inst/u_source/FSM_onehot_state_reg[1]",
+                                "states": [
+                                    {
+                                        "name": "ST_IDLE",
+                                        "val": "001"
+                                    },
+                                    {
+                                        "name": "ST_LOAD",
+                                        "val": "010"
+                                    },
+                                    {
+                                        "name": "ST_RUN",
+                                        "val": "100"
                                     }
                                 ]
                             }

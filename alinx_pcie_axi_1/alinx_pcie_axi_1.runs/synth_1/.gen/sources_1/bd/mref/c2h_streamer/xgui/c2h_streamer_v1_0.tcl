@@ -5,6 +5,8 @@ proc init_gui { IPINST } {
   set Page_0 [ipgui::add_page $IPINST -name "Page 0"]
   ipgui::add_param $IPINST -name "ARM_ON_C2H" -parent ${Page_0}
   ipgui::add_param $IPINST -name "DEFAULT_LEN_BYTES" -parent ${Page_0}
+  ipgui::add_param $IPINST -name "DEFAULT_REPEAT" -parent ${Page_0}
+  ipgui::add_param $IPINST -name "DEFAULT_SEQ_BYTES" -parent ${Page_0}
   ipgui::add_param $IPINST -name "EXPORT_DEBUG" -parent ${Page_0}
   ipgui::add_param $IPINST -name "TDATA_WIDTH" -parent ${Page_0}
 
@@ -26,6 +28,24 @@ proc update_PARAM_VALUE.DEFAULT_LEN_BYTES { PARAM_VALUE.DEFAULT_LEN_BYTES } {
 
 proc validate_PARAM_VALUE.DEFAULT_LEN_BYTES { PARAM_VALUE.DEFAULT_LEN_BYTES } {
 	# Procedure called to validate DEFAULT_LEN_BYTES
+	return true
+}
+
+proc update_PARAM_VALUE.DEFAULT_REPEAT { PARAM_VALUE.DEFAULT_REPEAT } {
+	# Procedure called to update DEFAULT_REPEAT when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.DEFAULT_REPEAT { PARAM_VALUE.DEFAULT_REPEAT } {
+	# Procedure called to validate DEFAULT_REPEAT
+	return true
+}
+
+proc update_PARAM_VALUE.DEFAULT_SEQ_BYTES { PARAM_VALUE.DEFAULT_SEQ_BYTES } {
+	# Procedure called to update DEFAULT_SEQ_BYTES when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.DEFAULT_SEQ_BYTES { PARAM_VALUE.DEFAULT_SEQ_BYTES } {
+	# Procedure called to validate DEFAULT_SEQ_BYTES
 	return true
 }
 
@@ -56,6 +76,16 @@ proc update_MODELPARAM_VALUE.TDATA_WIDTH { MODELPARAM_VALUE.TDATA_WIDTH PARAM_VA
 proc update_MODELPARAM_VALUE.DEFAULT_LEN_BYTES { MODELPARAM_VALUE.DEFAULT_LEN_BYTES PARAM_VALUE.DEFAULT_LEN_BYTES } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
 	set_property value [get_property value ${PARAM_VALUE.DEFAULT_LEN_BYTES}] ${MODELPARAM_VALUE.DEFAULT_LEN_BYTES}
+}
+
+proc update_MODELPARAM_VALUE.DEFAULT_SEQ_BYTES { MODELPARAM_VALUE.DEFAULT_SEQ_BYTES PARAM_VALUE.DEFAULT_SEQ_BYTES } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.DEFAULT_SEQ_BYTES}] ${MODELPARAM_VALUE.DEFAULT_SEQ_BYTES}
+}
+
+proc update_MODELPARAM_VALUE.DEFAULT_REPEAT { MODELPARAM_VALUE.DEFAULT_REPEAT PARAM_VALUE.DEFAULT_REPEAT } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.DEFAULT_REPEAT}] ${MODELPARAM_VALUE.DEFAULT_REPEAT}
 }
 
 proc update_MODELPARAM_VALUE.ARM_ON_C2H { MODELPARAM_VALUE.ARM_ON_C2H PARAM_VALUE.ARM_ON_C2H } {

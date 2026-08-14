@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xCFA04969D250BCF",
+      "boundary_crc": "0x2C38EE8A78FFDB78",
       "design_src": "SBD",
       "device": "xc7a200tfbg484-2",
       "name": "bd_365d",
@@ -261,7 +261,7 @@
       },
       "probe0": {
         "direction": "I",
-        "left": "39",
+        "left": "40",
         "right": "0"
       },
       "probe1": {
@@ -332,7 +332,7 @@
             "value": "0"
           },
           "C_PROBE0_WIDTH": {
-            "value": "40"
+            "value": "41"
           },
           "C_PROBE10_TYPE": {
             "value": "0"

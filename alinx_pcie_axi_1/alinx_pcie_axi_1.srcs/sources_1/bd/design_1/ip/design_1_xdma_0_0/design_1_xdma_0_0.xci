@@ -10,12 +10,12 @@
       "component_parameters": {
         "Component_Name": [ { "value": "design_1_xdma_0_0", "resolve_type": "user", "usage": "all" } ],
         "functional_mode": [ { "value": "DMA", "resolve_type": "user", "enabled": false, "usage": "all" } ],
-        "mode_selection": [ { "value": "Basic", "resolve_type": "user", "usage": "all" } ],
+        "mode_selection": [ { "value": "Basic", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "device_port_type": [ { "value": "PCI_Express_Endpoint_device", "resolve_type": "user", "enabled": false, "usage": "all" } ],
-        "pcie_blk_locn": [ { "value": "X0Y0", "resolve_type": "user", "usage": "all" } ],
+        "pcie_blk_locn": [ { "value": "X0Y0", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "pl_link_cap_max_link_width": [ { "value": "X2", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "pl_link_cap_max_link_speed": [ { "value": "5.0_GT/s", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
-        "ref_clk_freq": [ { "value": "100_MHz", "resolve_type": "user", "usage": "all" } ],
+        "ref_clk_freq": [ { "value": "100_MHz", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "drp_clk_sel": [ { "value": "Internal", "resolve_type": "user", "enabled": false, "usage": "all" } ],
         "free_run_freq": [ { "value": "100_MHz", "resolve_type": "user", "usage": "all" } ],
         "axi_addr_width": [ { "value": "64", "resolve_type": "user", "format": "long", "enabled": false, "usage": "all" } ],
@@ -32,8 +32,8 @@
         "mcap_fpga_bitstream_version": [ { "value": "00000000", "resolve_type": "user", "enabled": false, "usage": "all" } ],
         "ext_startup_primitive": [ { "value": "false", "resolve_type": "user", "format": "bool", "enabled": false, "usage": "all" } ],
         "enable_code": [ { "value": "0000", "resolve_type": "user", "usage": "all" } ],
-        "vendor_id": [ { "value": "10EE", "resolve_type": "user", "usage": "all" } ],
-        "pf0_device_id": [ { "value": "7022", "resolve_type": "user", "usage": "all" } ],
+        "vendor_id": [ { "value": "10EE", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
+        "pf0_device_id": [ { "value": "7022", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "pf0_revision_id": [ { "value": "00", "resolve_type": "user", "usage": "all" } ],
         "pf0_subsystem_vendor_id": [ { "value": "10EE", "resolve_type": "user", "usage": "all" } ],
         "pf0_subsystem_id": [ { "value": "0007", "resolve_type": "user", "usage": "all" } ],
@@ -45,8 +45,8 @@
         "pf0_class_code_interface": [ { "value": "01", "resolve_type": "user", "usage": "all" } ],
         "pf0_class_code": [ { "value": "070001", "resolve_type": "user", "enabled": false, "usage": "all" } ],
         "axilite_master_en": [ { "value": "true", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
-        "axilite_master_size": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
-        "axilite_master_scale": [ { "value": "Megabytes", "resolve_type": "user", "usage": "all" } ],
+        "axilite_master_size": [ { "value": "1", "value_src": "user", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "axilite_master_scale": [ { "value": "Megabytes", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "enh_xdma_en": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
         "xdma_en": [ { "value": "true", "resolve_type": "user", "enabled": false, "usage": "all" } ],
         "xdma_size": [ { "value": "64", "resolve_type": "user", "format": "long", "enabled": false, "usage": "all" } ],
@@ -76,7 +76,7 @@
         "xdma_rnum_chnl": [ { "value": "1", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "xdma_wnum_chnl": [ { "value": "1", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "xdma_axilite_slave": [ { "value": "false", "resolve_type": "user", "usage": "all" } ],
-        "xdma_num_usr_irq": [ { "value": "1", "resolve_type": "user", "usage": "all" } ],
+        "xdma_num_usr_irq": [ { "value": "1", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "xdma_rnum_rids": [ { "value": "32", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "xdma_wnum_rids": [ { "value": "16", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "SYS_RST_N_BOARD_INTERFACE": [ { "value": "Custom", "resolve_type": "user", "usage": "all" } ],
@@ -1374,7 +1374,7 @@
             "FREQ_HZ": [ { "value": "100000000", "value_src": "user", "value_permission": "bd", "resolve_type": "generated", "format": "long", "is_ips_inferred": true, "is_static_object": false } ],
             "FREQ_TOLERANCE_HZ": [ { "value": "0", "value_permission": "bd", "resolve_type": "generated", "format": "long", "is_ips_inferred": true, "is_static_object": false } ],
             "PHASE": [ { "value": "0.0", "value_permission": "bd", "resolve_type": "generated", "format": "float", "is_ips_inferred": true, "is_static_object": false } ],
-            "CLK_DOMAIN": [ { "value": "design_1_util_ds_buf_0_IBUF_OUT", "value_permission": "bd", "resolve_type": "generated", "is_ips_inferred": true, "is_static_object": false } ],
+            "CLK_DOMAIN": [ { "value": "design_1_util_ds_buf_0_IBUF_OUT", "value_src": "default_prop", "value_permission": "bd", "resolve_type": "generated", "is_ips_inferred": true, "is_static_object": false } ],
             "ASSOCIATED_BUSIF": [ { "value": "", "value_permission": "bd", "resolve_type": "generated", "is_ips_inferred": true, "is_static_object": false } ],
             "ASSOCIATED_PORT": [ { "value": "", "value_permission": "bd", "resolve_type": "generated", "is_ips_inferred": true, "is_static_object": false } ],
             "ASSOCIATED_RESET": [ { "value": "", "value_permission": "bd", "resolve_type": "generated", "is_ips_inferred": true, "is_static_object": false } ],
@@ -1631,5 +1631,5 @@
       }
     }
   },
-  "checksum": "ba7fcfd9"
+  "checksum": "6847babc"
 }

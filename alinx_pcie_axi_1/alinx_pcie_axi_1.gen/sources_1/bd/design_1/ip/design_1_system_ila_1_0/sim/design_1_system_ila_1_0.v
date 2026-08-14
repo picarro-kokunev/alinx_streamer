@@ -89,7 +89,7 @@ module design_1_system_ila_1_0 (
 (* X_INTERFACE_MODE = "slave" *)
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.clk, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN design_1_xdma_0_0_axi_aclk, ASSOCIATED_BUSIF SLOT_0_AXI:SLOT_1_AXIS, ASSOCIATED_RESET resetn, INSERT_VIP 0" *)
 input wire clk;
-input wire [39 : 0] probe0;
+input wire [40 : 0] probe0;
 input wire [31 : 0] probe1;
 input wire [63 : 0] probe2;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI AWADDR" *)
