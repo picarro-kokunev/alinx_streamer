@@ -57,8 +57,12 @@ public sealed class UserBar : IDisposable
 
     public void WriteU32(int offset, uint value) => _view.Write(offset, value);
 
-    public void WriteBytes(int offset, ReadOnlySpan<byte> data) =>
-        _view.WriteArray(offset, data.ToArray(), 0, data.Length);
+    public void WriteBytes(int offset, ReadOnlySpan<byte> data)
+    {
+        // MemoryMappedViewAccessor has no Span overload; copy once into a buffer.
+        byte[] buf = data.ToArray();
+        _view.WriteArray(offset, buf, 0, buf.Length);
+    }
 
     public void Dispose()
     {
@@ -151,6 +155,20 @@ public static class XdmaStream
         return total;
     }
 
+    /// <summary>Build ascending uint64 LE beats (same as Python pattern=count).</summary>
+    public static byte[] MakeCountSequence(int nbytes)
+    {
+        nbytes = XdmaPaths.AlignDown(nbytes);
+        if (nbytes < XdmaPaths.AxisBytesPerBeat)
+            throw new ArgumentOutOfRangeException(nameof(nbytes), "size must be >= 8");
+
+        int beats = nbytes / 8;
+        var buf = new byte[nbytes];
+        for (int i = 0; i < beats; i++)
+            BinaryPrimitives.WriteUInt64LittleEndian(buf.AsSpan(i * 8, 8), (ulong)i);
+        return buf;
+    }
+
     /// <summary>Legacy: arm a one-shot transfer of nbytes (repeat=1).</summary>
     public static void ArmPatternSource(int nbytes, int device, ulong seed = 0)
     {
@@ -159,9 +177,10 @@ public static class XdmaStream
     }
 
     /// <summary>
-    /// Arm C2H read first (so XDMA asserts tready), then pulse FPGA start via BRAM.
+    /// Load a count sequence of <paramref name="nbytes"/>, arm (repeat=1), capture C2H.
+    /// Matches Python <c>pattern</c> / one-shot <c>mem</c>.
     /// </summary>
-    public static async Task<byte[]> CapturePatternAsync(
+    public static Task<byte[]> CapturePatternAsync(
         int nbytes,
         int device,
         int channel,
@@ -170,29 +189,33 @@ public static class XdmaStream
         CancellationToken cancellationToken = default)
     {
         _ = seed;
-        nbytes = XdmaPaths.AlignDown(nbytes);
-        var readTask = ReadC2hAsync(nbytes, device, channel, timeout, cancellationToken);
-        await Task.Delay(50, cancellationToken).ConfigureAwait(false);
-        ArmMemSource(nbytes, repeat: 1, device);
-        return await readTask.ConfigureAwait(false);
+        byte[] sequence = MakeCountSequence(nbytes);
+        return CaptureMemSequenceAsync(
+            sequence, device, channel, repeat: 1, timeout, cancellationToken);
     }
 
     /// <summary>
-    /// Load sequence, play it <paramref name="repeat"/> times, capture C2H.
+    /// Load sequence into pattern BRAM, play it <paramref name="repeat"/> times, capture C2H.
+    /// Parameter order matches sibling capture APIs: payload, device, channel, then options.
     /// </summary>
     public static async Task<byte[]> CaptureMemSequenceAsync(
-        ReadOnlySpan<byte> sequence,
-        int repeat,
+        byte[] sequence,
         int device,
         int channel,
+        int repeat = 1,
         TimeSpan? timeout = null,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(sequence);
+        if (repeat < 1)
+            throw new ArgumentOutOfRangeException(nameof(repeat), "repeat must be >= 1");
+
         int seqLen = XdmaPaths.AlignDown(sequence.Length);
         if (seqLen < XdmaPaths.AxisBytesPerBeat)
-            throw new ArgumentException("sequence too short");
-        LoadPatternBram(sequence[..seqLen], device);
-        int total = seqLen * repeat;
+            throw new ArgumentException("sequence too short (need multiple of 8, >= 8)", nameof(sequence));
+
+        LoadPatternBram(sequence.AsSpan(0, seqLen), device);
+        int total = checked(seqLen * repeat);
         var readTask = ReadC2hAsync(total, device, channel, timeout, cancellationToken);
         await Task.Delay(50, cancellationToken).ConfigureAwait(false);
         ArmMemSource(seqLen, repeat, device);

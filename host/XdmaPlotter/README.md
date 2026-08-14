@@ -14,6 +14,10 @@ Needs access to `/dev/xdma*` (same as `host/read_axi_stream.py`).
 
 ## UI
 
-- **Capture** — read C2H (`/dev/xdmaN_c2h_M`); with **Arm pattern** checked, starts the reader then pulses BRAM CTRL (same order as Python `pattern`)
-- **Bytes** — transfer size, multiple of 8 (supports `K`/`M` suffixes)
+- **Capture** — with **Arm pattern** checked: load count sequence into pattern BRAM @ `0x1000`, arm `SEQ_LEN`/`REPEAT`, then C2H read (Python `pattern` / `mem`). Unchecked: raw C2H only.
+- **Bytes** — transfer / sequence size, multiple of 8 (supports `K`/`M` suffixes)
 - **Dtype** — `u64` / `u32` / `i16` beat interpretation
+
+## API note
+
+`CaptureMemSequenceAsync(sequence, device, channel, repeat = 1, …)` — uses `byte[]` (not `Span`) because async methods cannot take `ReadOnlySpan<T>`.
