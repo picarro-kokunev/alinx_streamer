@@ -27,18 +27,26 @@ public partial class MainWindow : Window
         CaptureButton.IsEnabled = false;
         SetStatus("Capturing…");
 
+        int device = (int)(DeviceBox.Value ?? 0);
+        int channel = (int)(ChannelBox.Value ?? 0);
+
         try
         {
-            int device = (int)(DeviceBox.Value ?? 0);
-            int channel = (int)(ChannelBox.Value ?? 0);
             int nbytes = ParseBytes(BytesBox.Text);
+            int repeat = (int)(RepeatBox.Value ?? 1);
+            if (repeat < 1)
+                throw new ArgumentOutOfRangeException(nameof(repeat), "repeat must be >= 1");
+
             string dtype = GetSelectedDtype();
-            bool armPattern = ArmPatternBox.IsChecked == true;
+            bool armMem = ArmPatternBox.IsChecked == true;
             var timeout = TimeSpan.FromSeconds(10);
 
-            byte[] raw = armPattern
-                ? await XdmaStream.CapturePatternAsync(nbytes, device, channel, timeout: timeout)
-                : await XdmaStream.ReadC2hAsync(nbytes, device, channel, timeout);
+            // Matches Python: mem = count sequence + repeat; raw c2h = ReadC2h only.
+            byte[] raw = armMem
+                ? await XdmaStream.CaptureMemSequenceAsync(
+                    XdmaStream.MakeCountSequence(nbytes),
+                    device, channel, repeat, timeout)
+                : await XdmaStream.ReadC2hAsync(nbytes * repeat, device, channel, timeout);
 
             double[] samples = XdmaStream.ParseBeatsAsDoubles(raw, dtype);
             double[] plotted = Downsample(samples, MaxPlotPoints);
@@ -48,6 +56,7 @@ public partial class MainWindow : Window
                 PlotSamples(plotted);
                 SetStatus(
                     $"OK — {raw.Length} bytes, {samples.Length} samples" +
+                    (armMem ? $" (seq={nbytes}, repeat={repeat})" : string.Empty) +
                     (plotted.Length < samples.Length
                         ? $" (showing {plotted.Length} downsampled)"
                         : string.Empty) +
@@ -56,7 +65,20 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            SetStatus($"Error: {ex.Message}");
+            string detail = ex.Message;
+            if (!detail.Contains("FPGA regs", StringComparison.Ordinal))
+            {
+                try
+                {
+                    detail += $"; FPGA regs: {XdmaStream.DumpStreamStatus(device)}";
+                }
+                catch
+                {
+                    // ignore status peek failures
+                }
+            }
+
+            SetStatus($"Error: {detail}");
         }
         finally
         {
@@ -93,7 +115,7 @@ public partial class MainWindow : Window
     private static int ParseBytes(string? text)
     {
         if (string.IsNullOrWhiteSpace(text))
-            return 4096;
+            return 512;
 
         text = text.Trim().ToLowerInvariant();
         int mult = 1;
@@ -108,10 +130,10 @@ public partial class MainWindow : Window
             text = text[..^1];
         }
 
-        if (!int.TryParse(text, out int value) || value < XdmaPaths.AxisBytesPerBeat)
-            throw new FormatException("Bytes must be an integer >= 8 (suffixes K/M ok)");
+        if (!int.TryParse(text, out int value))
+            throw new FormatException("Bytes must be an integer (suffixes K/M ok)");
 
-        return XdmaPaths.AlignDown(value * mult);
+        return XdmaPaths.RequireAxisAligned(value * mult, "Bytes");
     }
 
     /// <summary>Keep first/last and evenly spaced mid points for plotting.</summary>

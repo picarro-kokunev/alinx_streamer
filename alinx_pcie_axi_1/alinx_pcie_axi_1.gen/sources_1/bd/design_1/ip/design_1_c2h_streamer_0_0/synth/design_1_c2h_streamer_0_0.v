@@ -52,7 +52,7 @@
 
 (* X_CORE_INFO = "c2h_streamer,Vivado 2025.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_c2h_streamer_0_0,c2h_streamer,{}" *)
-(* CORE_GENERATION_INFO = "design_1_c2h_streamer_0_0,c2h_streamer,{x_ipProduct=Vivado 2025.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=c2h_streamer,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,TDATA_WIDTH=64,DEFAULT_LEN_BYTES=4096,DEFAULT_SEQ_BYTES=4096,DEFAULT_REPEAT=1,ARM_ON_C2H=1,EXPORT_DEBUG=1}" *)
+(* CORE_GENERATION_INFO = "design_1_c2h_streamer_0_0,c2h_streamer,{x_ipProduct=Vivado 2025.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=c2h_streamer,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,TDATA_WIDTH=64,DEFAULT_LEN_BYTES=4096,DEFAULT_SEQ_BYTES=4096,DEFAULT_REPEAT=1,ARM_ON_C2H=0,EXPORT_DEBUG=1}" *)
 (* IP_DEFINITION_SOURCE = "module_ref" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_c2h_streamer_0_0 (
@@ -153,7 +153,7 @@ output wire [1 : 0] dbg_src_state;
     .DEFAULT_LEN_BYTES(4096),
     .DEFAULT_SEQ_BYTES(4096),
     .DEFAULT_REPEAT(1),
-    .ARM_ON_C2H(1),
+    .ARM_ON_C2H(0),
     .EXPORT_DEBUG(1)
   ) inst (
     .aclk(aclk),

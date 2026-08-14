@@ -152,7 +152,7 @@ output wire [1 : 0] dbg_src_state;
     .DEFAULT_LEN_BYTES(4096),
     .DEFAULT_SEQ_BYTES(4096),
     .DEFAULT_REPEAT(1),
-    .ARM_ON_C2H(1),
+    .ARM_ON_C2H(0),
     .EXPORT_DEBUG(1)
   ) inst (
     .aclk(aclk),

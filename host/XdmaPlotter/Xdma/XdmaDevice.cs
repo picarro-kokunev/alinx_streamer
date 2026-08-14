@@ -32,6 +32,14 @@ public static class XdmaPaths
 
     public static int AlignDown(int nbytes, int align = AxisBytesPerBeat) =>
         nbytes - (nbytes % align);
+
+    public static int RequireAxisAligned(int nbytes, string what = "size")
+    {
+        if (nbytes < AxisBytesPerBeat || nbytes % AxisBytesPerBeat != 0)
+            throw new ArgumentException(
+                $"{what} must be a multiple of {AxisBytesPerBeat} and >= {AxisBytesPerBeat} (got {nbytes})");
+        return nbytes;
+    }
 }
 
 public sealed class UserBar : IDisposable
@@ -64,6 +72,17 @@ public sealed class UserBar : IDisposable
         _view.WriteArray(offset, buf, 0, buf.Length);
     }
 
+    public string DumpStreamStatus()
+    {
+        uint status = ReadU32(XdmaPaths.RegStatus);
+        uint beats = ReadU32(XdmaPaths.RegBeatCnt);
+        uint length = ReadU32(XdmaPaths.RegLength);
+        uint seqLen = ReadU32(XdmaPaths.RegSeqLen);
+        uint repeat = ReadU32(XdmaPaths.RegRepeat);
+        return $"STATUS=0x{status:X8} (busy={status & 1} done={(status >> 1) & 1}) " +
+               $"BEAT_CNT={beats} LENGTH={length} SEQ_LEN={seqLen} REPEAT={repeat}";
+    }
+
     public void Dispose()
     {
         if (_disposed) return;
@@ -82,9 +101,7 @@ public static class XdmaStream
         TimeSpan? timeout = null,
         CancellationToken cancellationToken = default)
     {
-        nbytes = XdmaPaths.AlignDown(nbytes);
-        if (nbytes < XdmaPaths.AxisBytesPerBeat)
-            throw new ArgumentOutOfRangeException(nameof(nbytes), "size must be >= 8 and multiple of 8");
+        nbytes = XdmaPaths.RequireAxisAligned(nbytes, nameof(nbytes));
 
         string path = XdmaPaths.C2h(device, channel);
         if (!File.Exists(path))
@@ -140,13 +157,11 @@ public static class XdmaStream
     /// <summary>Program SEQ_LEN/REPEAT and pulse start (memory sequence source).</summary>
     public static int ArmMemSource(int seqLen, int repeat, int device)
     {
-        seqLen = XdmaPaths.AlignDown(seqLen);
-        if (seqLen < XdmaPaths.AxisBytesPerBeat)
-            throw new ArgumentOutOfRangeException(nameof(seqLen));
+        seqLen = XdmaPaths.RequireAxisAligned(seqLen, nameof(seqLen));
         if (repeat < 1)
-            throw new ArgumentOutOfRangeException(nameof(repeat));
+            throw new ArgumentOutOfRangeException(nameof(repeat), "repeat must be >= 1");
 
-        int total = seqLen * repeat;
+        int total = checked(seqLen * repeat);
         using var bar = new UserBar(device);
         bar.WriteU32(XdmaPaths.RegLength, (uint)total);
         bar.WriteU32(XdmaPaths.RegSeqLen, (uint)seqLen);
@@ -158,9 +173,7 @@ public static class XdmaStream
     /// <summary>Build ascending uint64 LE beats (same as Python pattern=count).</summary>
     public static byte[] MakeCountSequence(int nbytes)
     {
-        nbytes = XdmaPaths.AlignDown(nbytes);
-        if (nbytes < XdmaPaths.AxisBytesPerBeat)
-            throw new ArgumentOutOfRangeException(nameof(nbytes), "size must be >= 8");
+        nbytes = XdmaPaths.RequireAxisAligned(nbytes, nameof(nbytes));
 
         int beats = nbytes / 8;
         var buf = new byte[nbytes];
@@ -196,7 +209,7 @@ public static class XdmaStream
 
     /// <summary>
     /// Load sequence into pattern BRAM, play it <paramref name="repeat"/> times, capture C2H.
-    /// Parameter order matches sibling capture APIs: payload, device, channel, then options.
+    /// Order matches Python cmd_mem with ARM_ON_C2H=0: load → C2H read → CTRL arm.
     /// </summary>
     public static async Task<byte[]> CaptureMemSequenceAsync(
         byte[] sequence,
@@ -210,18 +223,39 @@ public static class XdmaStream
         if (repeat < 1)
             throw new ArgumentOutOfRangeException(nameof(repeat), "repeat must be >= 1");
 
-        int seqLen = XdmaPaths.AlignDown(sequence.Length);
-        if (seqLen < XdmaPaths.AxisBytesPerBeat)
-            throw new ArgumentException("sequence too short (need multiple of 8, >= 8)", nameof(sequence));
-
+        int seqLen = XdmaPaths.RequireAxisAligned(sequence.Length, "sequence length");
         LoadPatternBram(sequence.AsSpan(0, seqLen), device);
         int total = checked(seqLen * repeat);
-        var readTask = ReadC2hAsync(total, device, channel, timeout, cancellationToken);
-        await Task.Delay(50, cancellationToken).ConfigureAwait(false);
-        ArmMemSource(seqLen, repeat, device);
-        return await readTask.ConfigureAwait(false);
+
+        try
+        {
+            var readTask = ReadC2hAsync(total, device, channel, timeout, cancellationToken);
+            await Task.Delay(50, cancellationToken).ConfigureAwait(false);
+            ArmMemSource(seqLen, repeat, device);
+            return await readTask.ConfigureAwait(false);
+        }
+        catch (Exception ex) when (ex is TimeoutException or EndOfStreamException or OperationCanceledException)
+        {
+            string regs;
+            try
+            {
+                using var bar = new UserBar(device);
+                regs = bar.DumpStreamStatus();
+            }
+            catch (Exception statusEx)
+            {
+                regs = $"(could not read status: {statusEx.Message})";
+            }
+
+            throw new TimeoutException($"{ex.Message}; FPGA regs: {regs}", ex);
+        }
     }
 
+    public static string DumpStreamStatus(int device)
+    {
+        using var bar = new UserBar(device);
+        return bar.DumpStreamStatus();
+    }
     public static double[] ParseBeatsAsDoubles(ReadOnlySpan<byte> data, string dtype)
     {
         if (data.Length % XdmaPaths.AxisBytesPerBeat != 0)

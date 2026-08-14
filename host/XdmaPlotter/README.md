@@ -2,6 +2,9 @@
 
 Simple Avalonia UI for Linux: capture XDMA C2H stream samples and plot them.
 
+Matches `host/read_axi_stream.py` mem/pattern flow with **ARM_ON_C2H=0**:
+load pattern BRAM → open C2H → pulse CTRL (`SEQ_LEN`/`REPEAT`).
+
 ## Run
 
 ```bash
@@ -10,14 +13,18 @@ cd host/XdmaPlotter
 dotnet run -c Release
 ```
 
-Needs access to `/dev/xdma*` (same as `host/read_axi_stream.py`).
+Needs access to `/dev/xdma*` and a bitstream rebuilt with `ARM_ON_C2H=0`.
 
 ## UI
 
-- **Capture** — with **Arm pattern** checked: load count sequence into pattern BRAM @ `0x1000`, arm `SEQ_LEN`/`REPEAT`, then C2H read (Python `pattern` / `mem`). Unchecked: raw C2H only.
-- **Bytes** — transfer / sequence size, multiple of 8 (supports `K`/`M` suffixes)
-- **Dtype** — `u64` / `u32` / `i16` beat interpretation
+- **Capture** + **Arm mem** — count sequence into pattern BRAM @ `0x1000`, then C2H, then CTRL (Python `mem`)
+- **Bytes** — sequence length (multiple of 8; `K`/`M` ok)
+- **Repeat** — play count (`--repeat`)
+- **Dtype** — `u64` / `u32` / `i16`
+- On timeout/error, status line includes FPGA `STATUS` / `BEAT_CNT` when possible
 
-## API note
+Equivalent CLI:
 
-`CaptureMemSequenceAsync(sequence, device, channel, repeat = 1, …)` — uses `byte[]` (not `Span`) because async methods cannot take `ReadOnlySpan<T>`.
+```bash
+sudo python3 host/read_axi_stream.py -n 512 --dtype u64 mem --repeat 10
+```

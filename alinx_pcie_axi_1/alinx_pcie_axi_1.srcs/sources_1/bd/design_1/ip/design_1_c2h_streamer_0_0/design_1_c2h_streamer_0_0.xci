@@ -12,7 +12,7 @@
         "DEFAULT_LEN_BYTES": [ { "value": "4096", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "DEFAULT_SEQ_BYTES": [ { "value": "4096", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "DEFAULT_REPEAT": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
-        "ARM_ON_C2H": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "ARM_ON_C2H": [ { "value": "0", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "EXPORT_DEBUG": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "Component_Name": [ { "value": "design_1_c2h_streamer_0_0", "resolve_type": "user", "usage": "all" } ]
       },
@@ -21,7 +21,7 @@
         "DEFAULT_LEN_BYTES": [ { "value": "4096", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "DEFAULT_SEQ_BYTES": [ { "value": "4096", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "DEFAULT_REPEAT": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
-        "ARM_ON_C2H": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "ARM_ON_C2H": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "EXPORT_DEBUG": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ]
       },
       "project_parameters": {
@@ -187,5 +187,5 @@
       }
     }
   },
-  "checksum": "2951bdbe"
+  "checksum": "65edf472"
 }

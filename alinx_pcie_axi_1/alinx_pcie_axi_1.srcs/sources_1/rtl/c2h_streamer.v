@@ -7,7 +7,8 @@ module c2h_streamer #(
     parameter integer DEFAULT_LEN_BYTES = 4096,
     parameter integer DEFAULT_SEQ_BYTES = 4096,
     parameter integer DEFAULT_REPEAT    = 1,
-    parameter         ARM_ON_C2H        = 1,
+    // 0: start only via CTRL (host: open C2H, then pulse CTRL). Avoids race with stale LENGTH/SEQ.
+    parameter         ARM_ON_C2H        = 0,
     parameter         EXPORT_DEBUG      = 1
 ) (
     input  wire                     aclk,

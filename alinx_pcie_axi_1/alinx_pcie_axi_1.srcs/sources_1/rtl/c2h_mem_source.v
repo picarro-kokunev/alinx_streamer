@@ -7,7 +7,8 @@ module c2h_mem_source #(
     parameter integer TDATA_WIDTH       = 64,
     parameter integer DEFAULT_LEN_BYTES = 4096,
     parameter integer DEFAULT_SEQ_BYTES = 4096,
-    parameter         ARM_ON_C2H        = 1
+    // Default 0: require explicit CTRL start (see c2h_streamer).
+    parameter         ARM_ON_C2H        = 0
 ) (
     input  wire                     aclk,
     input  wire                     aresetn,

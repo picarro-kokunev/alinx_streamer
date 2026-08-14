@@ -17,20 +17,24 @@
         <NumericUpDown x:Name="ChannelBox" Width="100" Minimum="0" Maximum="1" Value="0"
                        FormatString="0" Increment="1"/>
         <TextBlock VerticalAlignment="Center" Text="Bytes"/>
-        <TextBox x:Name="BytesBox" Width="100" Text="4096"/>
+        <TextBox x:Name="BytesBox" Width="100" Text="512"/>
+        <TextBlock VerticalAlignment="Center" Text="Repeat"/>
+        <NumericUpDown x:Name="RepeatBox" Width="100" Minimum="1" Maximum="4096" Value="1"
+                       FormatString="0" Increment="1"/>
         <TextBlock VerticalAlignment="Center" Text="Dtype"/>
         <ComboBox x:Name="DtypeBox" Width="90" SelectedIndex="0">
           <ComboBoxItem Content="u64"/>
           <ComboBoxItem Content="u32"/>
           <ComboBoxItem Content="i16"/>
         </ComboBox>
-        <CheckBox x:Name="ArmPatternBox" IsChecked="True" Content="Arm pattern (BRAM)"/>
+        <CheckBox x:Name="ArmPatternBox" IsChecked="True"
+                  Content="Arm mem (C2H then CTRL)"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal" Spacing="12">
         <Button x:Name="CaptureButton" Content="Capture" Width="100" Click="OnCaptureClick"/>
         <Button x:Name="ClearButton" Content="Clear" Width="80" Click="OnClearClick"/>
         <TextBlock x:Name="StatusText" VerticalAlignment="Center"
-                   Text="Idle — open /dev/xdmaN_c2h_M and plot samples"/>
+                   Text="Idle — mem: load BRAM → C2H → CTRL (ARM_ON_C2H=0)"/>
       </StackPanel>
     </StackPanel>
     <ScottPlot:AvaPlot x:Name="AvaPlot1"/>

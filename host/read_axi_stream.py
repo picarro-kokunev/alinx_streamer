@@ -19,6 +19,9 @@ Control BRAM register map:
 Pattern BRAM (@ 0x1000): host-writable sequence played by c2h_mem_source
 and wrapped every SEQ_LEN bytes for REPEAT periods.
 
+Host arming (ARM_ON_C2H=0 in bitstream): open C2H read first, then write
+SEQ_LEN/REPEAT/LENGTH and pulse CTRL. Sizes must be multiples of 8.
+
 Device nodes (Xilinx dma_ip_drivers xdma):
   /dev/xdma0_h2c_{0,1}   host → card (AXIS)
   /dev/xdma0_c2h_{0,1}   card → host (AXIS)
@@ -69,6 +72,33 @@ def require_device(path: Path) -> None:
             f"{path} not found. Load the Xilinx xdma driver and confirm "
             f"lspci -d 10ee:7022 / ls /dev/xdma*"
         )
+
+
+def require_axis_aligned(nbytes: int, what: str = "size") -> int:
+    """Require a positive multiple of AXIS beat size; return nbytes unchanged."""
+    if nbytes < AXIS_BYTES_PER_BEAT or nbytes % AXIS_BYTES_PER_BEAT:
+        raise ValueError(
+            f"{what} must be a multiple of {AXIS_BYTES_PER_BEAT} and >= "
+            f"{AXIS_BYTES_PER_BEAT} (got {nbytes})"
+        )
+    return nbytes
+
+
+def dump_stream_status(device: int = DEFAULT_DEVICE) -> str:
+    """Read STATUS/BEAT_CNT for hang diagnosis."""
+    try:
+        with UserBar(device) as bar:
+            status = bar.read_u32(REG_STATUS)
+            beats = bar.read_u32(REG_BEAT_CNT)
+            length = bar.read_u32(REG_LENGTH)
+            seq_len = bar.read_u32(REG_SEQ_LEN)
+            repeat = bar.read_u32(REG_REPEAT)
+        return (
+            f"STATUS=0x{status:08X} (busy={status & 1} done={(status >> 1) & 1}) "
+            f"BEAT_CNT={beats} LENGTH={length} SEQ_LEN={seq_len} REPEAT={repeat}"
+        )
+    except OSError as exc:
+        return f"(could not read status: {exc})"
 
 
 def align_down(nbytes: int, align: int = AXIS_BYTES_PER_BEAT) -> int:
@@ -324,9 +354,17 @@ def make_sequence(nbytes: int, pattern: str = "count") -> bytes:
 
 
 def cmd_mem(args: argparse.Namespace) -> int:
-    """Load pattern BRAM, arm SEQ_LEN/REPEAT, capture C2H."""
-    seq_len = align_down(args.seq_len if args.seq_len is not None else args.bytes)
+    """Load pattern BRAM, arm SEQ_LEN/REPEAT, capture C2H.
+
+    Order (ARM_ON_C2H=0): load BRAM → start C2H reader → arm CTRL.
+    """
+    seq_len = require_axis_aligned(
+        args.seq_len if args.seq_len is not None else args.bytes,
+        "seq_len / -n",
+    )
     repeat = args.repeat
+    if repeat < 1:
+        raise ValueError("repeat must be >= 1")
     total = seq_len * repeat
 
     if args.file:
@@ -334,6 +372,7 @@ def cmd_mem(args: argparse.Namespace) -> int:
         sequence = sequence[: align_down(len(sequence))]
         if not sequence:
             raise ValueError("sequence file is empty / too short")
+        require_axis_aligned(len(sequence), "sequence file length")
         seq_len = len(sequence)
         total = seq_len * repeat
     else:
@@ -356,9 +395,21 @@ def cmd_mem(args: argparse.Namespace) -> int:
     arm_mem_source(seq_len, repeat, args.device)
     t.join(timeout=args.timeout + 1.0)
     if err:
-        raise err[0]
+        exc = err[0]
+        if isinstance(exc, (TimeoutError, EOFError)):
+            print(
+                f"error: {exc}\n  FPGA regs: {dump_stream_status(args.device)}",
+                file=sys.stderr,
+            )
+            return 1
+        raise exc
     if not rx_box:
-        raise TimeoutError("C2H reader did not complete")
+        print(
+            f"error: C2H reader did not complete\n"
+            f"  FPGA regs: {dump_stream_status(args.device)}",
+            file=sys.stderr,
+        )
+        return 1
     rx = rx_box[0]
     samples = parse_beats(rx, args.dtype)
     print(
@@ -447,16 +498,17 @@ def build_parser() -> argparse.ArgumentParser:
         epilog="""
 examples:
   # Load a 64-beat sequence into pattern BRAM and play it 10 times
-  sudo python3 read_axi_stream.py mem -n 512 --repeat 10 --dtype u64
+  # (sizes must be multiples of 8; ARM_ON_C2H=0 → C2H open then CTRL)
+  sudo python3 read_axi_stream.py -n 512 --dtype u64 mem --repeat 10
 
   # Same, from a raw binary file (length must be multiple of 8)
   sudo python3 read_axi_stream.py mem --file seq.bin --repeat 4 -o capture.bin
 
   # One-shot (repeat=1) convenience alias
-  sudo python3 read_axi_stream.py pattern -n 4096 --dtype u64
+  sudo python3 read_axi_stream.py -n 4096 --dtype u64 pattern
 
-  # Raw C2H read (may auto-start if ARM_ON_C2H=1 and defaults are set)
-  sudo python3 read_axi_stream.py c2h -n 4096 --dtype u64 -o capture.bin
+  # Raw C2H read (needs a prior CTRL arm / separate start when ARM_ON_C2H=0)
+  sudo python3 read_axi_stream.py -n 4096 --dtype u64 c2h -o capture.bin
 
   # Control BRAM peek/poke (@0); pattern BRAM is @0x1000
   sudo python3 read_axi_stream.py bram --offset 0x10 --write 512
@@ -545,8 +597,11 @@ def parse_size(text: str) -> int:
         mult = 1024 * 1024
         text = text[:-1]
     value = int(text, 0) * mult
-    if value < AXIS_BYTES_PER_BEAT:
-        raise argparse.ArgumentTypeError("size must be >= 8")
+    if value < AXIS_BYTES_PER_BEAT or value % AXIS_BYTES_PER_BEAT:
+        raise argparse.ArgumentTypeError(
+            f"size must be a multiple of {AXIS_BYTES_PER_BEAT} and >= "
+            f"{AXIS_BYTES_PER_BEAT} (got {value})"
+        )
     return value
 
 

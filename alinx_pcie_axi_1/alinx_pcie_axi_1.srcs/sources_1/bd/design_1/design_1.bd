@@ -1490,10 +1490,10 @@
           "axi_interconnect_0/M01_ACLK",
           "axi_bram_ctrl_1/s_axi_aclk",
           "axi_bram_ctrl_2/s_axi_aclk",
-          "c2h_streamer_0/aclk",
           "axis_register_slice_0/aclk",
           "system_ila_1/clk",
-          "c_counter_binary_0/CLK"
+          "c_counter_binary_0/CLK",
+          "c2h_streamer_0/aclk"
         ]
       },
       "xdma_0_axi_aresetn": {
@@ -1505,10 +1505,10 @@
           "axi_interconnect_0/M01_ARESETN",
           "axi_bram_ctrl_1/s_axi_aresetn",
           "axi_bram_ctrl_2/s_axi_aresetn",
-          "c2h_streamer_0/aresetn",
           "axis_register_slice_0/aresetn",
           "system_ila_1/resetn",
-          "user_resetn"
+          "user_resetn",
+          "c2h_streamer_0/aresetn"
         ]
       },
       "xdma_0_user_lnk_up": {

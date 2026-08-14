@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
-| Date         : Thu Aug 13 17:00:29 2026
+| Date         : Thu Aug 13 18:30:31 2026
 | Host         : emerald running 64-bit Ubuntu 26.04 LTS
 | Command      : report_utilization -file design_1_wrapper_utilization_synth.rpt -pb design_1_wrapper_utilization_synth.pb
 | Design       : design_1_wrapper
@@ -31,8 +31,8 @@ Table of Contents
 +----------------------------+-------+-------+------------+-----------+-------+
 |          Site Type         |  Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+-------+-------+------------+-----------+-------+
-| Slice LUTs*                | 17788 |     0 |          0 |    134600 | 13.22 |
-|   LUT as Logic             | 15165 |     0 |          0 |    134600 | 11.27 |
+| Slice LUTs*                | 17789 |     0 |          0 |    134600 | 13.22 |
+|   LUT as Logic             | 15166 |     0 |          0 |    134600 | 11.27 |
 |   LUT as Memory            |  2623 |     0 |          0 |     46200 |  5.68 |
 |     LUT as Distributed RAM |  1335 |     0 |            |           |       |
 |     LUT as Shift Register  |  1288 |     0 |            |           |       |
@@ -160,10 +160,10 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 |    Ref Name   |  Used |  Functional Category |
 +---------------+-------+----------------------+
 | FDRE          | 20551 |         Flop & Latch |
-| LUT6          |  5052 |                  LUT |
-| LUT3          |  3907 |                  LUT |
+| LUT6          |  5054 |                  LUT |
+| LUT3          |  3906 |                  LUT |
 | LUT4          |  3373 |                  LUT |
-| LUT5          |  2578 |                  LUT |
+| LUT5          |  2577 |                  LUT |
 | LUT2          |  2079 |                  LUT |
 | RAMD32        |  1742 |   Distributed Memory |
 | LUT1          |  1563 |                  LUT |

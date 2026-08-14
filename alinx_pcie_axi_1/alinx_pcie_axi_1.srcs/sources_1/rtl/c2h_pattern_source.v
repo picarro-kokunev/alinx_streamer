@@ -8,7 +8,7 @@
 module c2h_pattern_source #(
     parameter integer TDATA_WIDTH        = 64,
     parameter integer DEFAULT_LEN_BYTES  = 4096,
-    parameter         ARM_ON_C2H         = 1
+    parameter         ARM_ON_C2H         = 0
 ) (
     input  wire                     aclk,
     input  wire                     aresetn,

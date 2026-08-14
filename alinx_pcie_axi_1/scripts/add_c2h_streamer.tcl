@@ -59,6 +59,8 @@ if {$portb_net ne ""} {
 if {[get_bd_cells -quiet c2h_streamer_0] eq ""} {
     create_bd_cell -type module -reference c2h_streamer c2h_streamer_0
 }
+# Explicit CTRL start only (matches host mem/pattern: C2H open, then arm).
+set_property -dict [list CONFIG.ARM_ON_C2H {0}] [get_bd_cells c2h_streamer_0]
 if {[get_bd_cells -quiet h2c_axis_sink_0] eq ""} {
     create_bd_cell -type module -reference h2c_axis_sink h2c_axis_sink_0
 }
