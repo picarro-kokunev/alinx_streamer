@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
-//Date        : Thu Aug 13 18:26:00 2026
+//Date        : Sun Aug 16 17:21:30 2026
 //Host        : emerald running 64-bit Ubuntu 26.04 LTS
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -10,7 +10,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=19,numReposBlks=15,numNonXlnxBlks=0,numHierBlks=4,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=1,numPkgbdBlks=0,bdsource=USER,synth_mode=None}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=22,numReposBlks=18,numNonXlnxBlks=0,numHierBlks=4,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=2,numPkgbdBlks=0,bdsource=USER,synth_mode=None}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (LED,
     pcie_7x_mgt_rtl_0_rxn,
@@ -143,14 +143,17 @@ module design_1
   wire [1:0]c2h_streamer_0_dbg_src_state;
   wire c2h_streamer_0_dbg_start;
   wire [25:0]c_counter_binary_0_Q;
+  wire [0:0]ilvector_logic_0_Res;
   wire [1:0]pcie_7x_mgt_rtl_0_rxn;
   wire [1:0]pcie_7x_mgt_rtl_0_rxp;
   wire [1:0]pcie_7x_mgt_rtl_0_txn;
   wire [1:0]pcie_7x_mgt_rtl_0_txp;
   wire [0:0]pcie_clk_clk_n;
   wire [0:0]pcie_clk_clk_p;
+  wire self_pcie_reset_0_pcie_reset_n;
   wire sys_rst_n;
   wire user_lnk_up;
+  wire [0:0]util_ds_buf_0_BUFG_O;
   wire [0:0]util_ds_buf_IBUF_OUT;
   (* CONN_BUS_INFO = "xdma_0_M_AXI_LITE xilinx.com:interface:aximm:1.0 AXI4LITE ARADDR" *) (* DONT_TOUCH *) wire [31:0]xdma_0_M_AXI_LITE_ARADDR;
   (* CONN_BUS_INFO = "xdma_0_M_AXI_LITE xilinx.com:interface:aximm:1.0 AXI4LITE ARPROT" *) (* DONT_TOUCH *) wire [2:0]xdma_0_M_AXI_LITE_ARPROT;
@@ -425,6 +428,10 @@ module design_1
   design_1_c_counter_binary_0_0 c_counter_binary_0
        (.CLK(xdma_0_axi_aclk),
         .Q(c_counter_binary_0_Q));
+  assign ilvector_logic_0_Res = self_pcie_reset_0_pcie_reset_n & sys_rst_n;
+  design_1_self_pcie_reset_0_0 self_pcie_reset_0
+       (.clk(util_ds_buf_0_BUFG_O),
+        .pcie_reset_n(self_pcie_reset_0_pcie_reset_n));
   design_1_system_ila_1_0 system_ila_1
        (.SLOT_0_AXI_araddr(xdma_0_M_AXI_LITE_ARADDR),
         .SLOT_0_AXI_arprot(xdma_0_M_AXI_LITE_ARPROT),
@@ -459,6 +466,9 @@ module design_1
        (.IBUF_DS_N(pcie_clk_clk_n),
         .IBUF_DS_P(pcie_clk_clk_p),
         .IBUF_OUT(util_ds_buf_IBUF_OUT));
+  design_1_util_ds_buf_0_0 util_ds_buf_0
+       (.BUFG_I(util_ds_buf_IBUF_OUT),
+        .BUFG_O(util_ds_buf_0_BUFG_O));
   design_1_xdma_0_0 xdma_0
        (.axi_aclk(xdma_0_axi_aclk),
         .axi_aresetn(xdma_0_axi_aresetn),
@@ -498,7 +508,7 @@ module design_1
         .s_axis_c2h_tready_0(axis_register_slice_0_M_AXIS_TREADY),
         .s_axis_c2h_tvalid_0(axis_register_slice_0_M_AXIS_TVALID),
         .sys_clk(util_ds_buf_IBUF_OUT),
-        .sys_rst_n(sys_rst_n),
+        .sys_rst_n(ilvector_logic_0_Res),
         .user_lnk_up(user_lnk_up),
         .usr_irq_req(xlconstant_1_dout));
   design_1_xlconcat_0_0 xlconcat_0

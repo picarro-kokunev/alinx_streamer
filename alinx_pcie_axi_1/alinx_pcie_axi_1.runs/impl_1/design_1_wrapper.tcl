@@ -107,7 +107,7 @@ set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 5
   set_param general.usePosixSpawnForFork 1
-  set_param bd.open.in_stealth_mode 1
+  set_param bd.open.in_stealth_mode 2
   set_param runs.launchOptions { -jobs 10  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7a200tfbg484-2
