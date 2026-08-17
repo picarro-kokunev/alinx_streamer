@@ -19,13 +19,12 @@ set_property -dict {PACKAGE_PIN L13 IOSTANDARD LVCMOS33} [get_ports {LED[0]}]
 #set_property -dict { PACKAGE_PIN K14 IOSTANDARD LVCMOS33 } [get_ports {LED[2]}]
 #set_property -dict { PACKAGE_PIN K13 IOSTANDARD LVCMOS33 } [get_ports {LED[3]}]
 ###############################################################################
-set_property -dict { PACKAGE_PIN K14 IOSTANDARD LVCMOS33 } [get_ports {user_resetn}]
-set_property -dict { PACKAGE_PIN K13 IOSTANDARD LVCMOS33 } [get_ports {user_lnk_up}]
+set_property -dict {PACKAGE_PIN K14 IOSTANDARD LVCMOS33} [get_ports user_resetn]
+set_property -dict {PACKAGE_PIN K13 IOSTANDARD LVCMOS33} [get_ports user_lnk_up]
 
 set_false_path -from [get_ports sys_rst_n]
+# pcie_reset_reg asserted for _ms_ so don't carfe about couple of periods
+set_false_path -from [get_pins design_1_i/self_pcie_reset_0/inst/pcie_reset_reg_reg/C]
 ###############################################################################
 set_property -dict {PACKAGE_PIN F10} [get_ports pcie_clk_clk_p]
 create_clock -period 10.000 -name pcie_clk [get_ports pcie_clk_clk_p]
-
-
-set_property IOSTANDARD LVCMOS33 [get_ports user_resetn]
