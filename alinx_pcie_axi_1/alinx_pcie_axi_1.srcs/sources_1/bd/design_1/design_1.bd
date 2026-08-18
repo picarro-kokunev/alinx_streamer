@@ -22,7 +22,10 @@
       },
       "xlslice_0": "",
       "c_counter_binary_0": "",
-      "xlconstant_1": ""
+      "xlconstant_1": "",
+      "self_pcie_reset_0": "",
+      "util_ds_buf_0": "",
+      "ilvector_logic_0": ""
     },
     "interface_ports": {
       "pcie_7x_mgt_rtl_0": {
@@ -554,6 +557,73 @@
             "value": "0"
           }
         }
+      },
+      "self_pcie_reset_0": {
+        "vlnv": "xilinx.com:module_ref:self_pcie_reset:1.0",
+        "ip_revision": "1",
+        "xci_name": "design_1_self_pcie_reset_0_0",
+        "xci_path": "ip/design_1_self_pcie_reset_0_0/design_1_self_pcie_reset_0_0.xci",
+        "inst_hier_path": "self_pcie_reset_0",
+        "has_run_ip_tcl": "true",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "self_pcie_reset",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "design_1_util_ds_buf_0_IBUF_OUT",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "pcie_reset_n": {
+            "direction": "O",
+            "parameters": {
+              "PortType": {
+                "value": "undef",
+                "value_src": "ip_prop"
+              },
+              "PortType.PROP_SRC": {
+                "value": "false",
+                "value_src": "ip_prop"
+              }
+            }
+          }
+        }
+      },
+      "util_ds_buf_0": {
+        "vlnv": "xilinx.com:ip:util_ds_buf:2.2",
+        "ip_revision": "9",
+        "xci_name": "design_1_util_ds_buf_0_0",
+        "xci_path": "ip/design_1_util_ds_buf_0_0/design_1_util_ds_buf_0_0.xci",
+        "inst_hier_path": "util_ds_buf_0",
+        "has_run_ip_tcl": "true",
+        "parameters": {
+          "C_BUF_TYPE": {
+            "value": "BUFG"
+          }
+        }
+      },
+      "ilvector_logic_0": {
+        "vlnv": "xilinx.com:inline_hdl:ilvector_logic:1.0",
+        "parameters": {
+          "C_SIZE": {
+            "value": "1"
+          }
+        }
       }
     },
     "interface_nets": {
@@ -613,16 +683,35 @@
           "xlslice_0/Din"
         ]
       },
-      "sys_rst_n": {
+      "ilvector_logic_0_Res": {
+        "ports": [
+          "ilvector_logic_0/Res",
+          "xdma_0/sys_rst_n"
+        ]
+      },
+      "self_pcie_reset_0_pcie_reset_n": {
+        "ports": [
+          "self_pcie_reset_0/pcie_reset_n",
+          "ilvector_logic_0/Op1"
+        ]
+      },
+      "sys_rst_n_1": {
         "ports": [
           "sys_rst_n",
-          "xdma_0/sys_rst_n"
+          "ilvector_logic_0/Op2"
+        ]
+      },
+      "util_ds_buf_0_BUFG_O": {
+        "ports": [
+          "util_ds_buf_0/BUFG_O",
+          "self_pcie_reset_0/clk"
         ]
       },
       "util_ds_buf_IBUF_OUT": {
         "ports": [
           "util_ds_buf/IBUF_OUT",
-          "xdma_0/sys_clk"
+          "xdma_0/sys_clk",
+          "util_ds_buf_0/BUFG_I"
         ]
       },
       "xdma_0_axi_aclk": {

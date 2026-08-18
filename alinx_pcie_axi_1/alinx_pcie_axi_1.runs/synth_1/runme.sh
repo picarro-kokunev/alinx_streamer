@@ -21,7 +21,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='/home/kokunev/data/git_root/alinx/alinx_streamer_1/alinx_pcie_axi_1/alinx_pcie_axi_1.runs/synth_1'
+HD_PWD='/home/kokunev/data/git_root/alinx/alinx_streamer_5/alinx_pcie_axi_1/alinx_pcie_axi_1.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

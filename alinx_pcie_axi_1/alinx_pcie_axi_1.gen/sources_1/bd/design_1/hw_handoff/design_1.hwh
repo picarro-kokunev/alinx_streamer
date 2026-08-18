@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Aug  4 17:33:45 2026" VIVADOVERSION="2025.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Aug 18 12:02:36 2026" VIVADOVERSION="2025.2">
 
   <SYSTEMINFO ARCH="artix7" DEVICE="7a200t" NAME="design_1" PACKAGE="fbg484" SPEEDGRADE="-2"/>
 
@@ -41,7 +41,7 @@
     </PORT>
     <PORT DIR="I" NAME="sys_rst_n" POLARITY="ACTIVE_LOW" SIGIS="rst" SIGNAME="External_Ports_sys_rst_n">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="xdma_0" PORT="sys_rst_n"/>
+        <CONNECTION INSTANCE="ilvector_logic_0" PORT="Op2"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="O" NAME="user_lnk_up" SIGIS="undef" SIGNAME="xdma_0_user_lnk_up">
@@ -1764,6 +1764,55 @@
       </PORTS>
       <BUSINTERFACES/>
     </MODULE>
+    <MODULE COREREVISION="0" FULLNAME="/ilvector_logic_0" HWVERSION="2.0" INSTANCE="ilvector_logic_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="util_vector_logic" VLNV="xilinx.com:ip:util_vector_logic:2.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="C_OPERATION" VALUE="and"/>
+        <PARAMETER NAME="C_SIZE" VALUE="1"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_ilvector_logic_0_0"/>
+        <PARAMETER NAME="LOGO_FILE" VALUE="data/sym_andgate.png"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" LEFT="0" NAME="Op1" RIGHT="0" SIGIS="undef" SIGNAME="self_pcie_reset_0_pcie_reset_n">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="self_pcie_reset_0" PORT="pcie_reset_n"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="0" NAME="Op2" POLARITY="ACTIVE_LOW" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_sys_rst_n">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="sys_rst_n"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="0" NAME="Res" POLARITY="ACTIVE_LOW" RIGHT="0" SIGIS="undef" SIGNAME="ilvector_logic_0_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="sys_rst_n"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="1" FULLNAME="/self_pcie_reset_0" HWVERSION="1.0" INSTANCE="self_pcie_reset_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="self_pcie_reset" VLNV="xilinx.com:module_ref:self_pcie_reset:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="RESET_CNT_W" VALUE="19"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_self_pcie_reset_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="util_ds_buf_0_BUFG_O">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_ds_buf_0" PORT="BUFG_O"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="pcie_reset_n" SIGIS="undef" SIGNAME="self_pcie_reset_0_pcie_reset_n">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="ilvector_logic_0" PORT="Op1"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
     <MODULE COREREVISION="9" FULLNAME="/util_ds_buf" HWVERSION="2.2" INSTANCE="util_ds_buf" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="util_ds_buf" VLNV="xilinx.com:ip:util_ds_buf:2.2">
       <DOCUMENTS/>
       <PARAMETERS>
@@ -1797,6 +1846,7 @@
         <PORT CLKFREQUENCY="100000000" DIR="O" LEFT="0" NAME="IBUF_OUT" RIGHT="0" SIGIS="clk" SIGNAME="util_ds_buf_IBUF_OUT">
           <CONNECTIONS>
             <CONNECTION INSTANCE="xdma_0" PORT="sys_clk"/>
+            <CONNECTION INSTANCE="util_ds_buf_0" PORT="BUFG_I"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -1810,6 +1860,38 @@
           </PORTMAPS>
         </BUSINTERFACE>
       </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="9" FULLNAME="/util_ds_buf_0" HWVERSION="2.2" INSTANCE="util_ds_buf_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="util_ds_buf" VLNV="xilinx.com:ip:util_ds_buf:2.2">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="C_BUFGCE_DIV" VALUE="1"/>
+        <PARAMETER NAME="C_BUFG_GT_SYNC" VALUE="0"/>
+        <PARAMETER NAME="C_BUF_TYPE" VALUE="BUFG"/>
+        <PARAMETER NAME="C_DIVBY2" VALUE="0"/>
+        <PARAMETER NAME="C_OBUFDS_GTE5_ADV" VALUE="&quot;00&quot;"/>
+        <PARAMETER NAME="C_REFCLK_ICNTL_TX" VALUE="&quot;00000&quot;"/>
+        <PARAMETER NAME="C_SIM_DEVICE" VALUE="VERSAL_AI_CORE_ES1"/>
+        <PARAMETER NAME="C_SIZE" VALUE="1"/>
+        <PARAMETER NAME="BOARD_PARAMETER"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_util_ds_buf_0_0"/>
+        <PARAMETER NAME="DIFF_CLK_IN_BOARD_INTERFACE" VALUE="Custom"/>
+        <PARAMETER NAME="FREQ_HZ" VALUE="156250000"/>
+        <PARAMETER NAME="USE_BOARD_FLOW" VALUE="false"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" LEFT="0" NAME="BUFG_I" RIGHT="0" SIGIS="clk" SIGNAME="util_ds_buf_IBUF_OUT">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_ds_buf" PORT="IBUF_OUT"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="100000000" DIR="O" LEFT="0" NAME="BUFG_O" RIGHT="0" SIGIS="clk" SIGNAME="util_ds_buf_0_BUFG_O">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="self_pcie_reset_0" PORT="clk"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
     </MODULE>
     <MODULE COREREVISION="2" FULLNAME="/xdma_0" HWVERSION="4.2" INSTANCE="xdma_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xdma" VLNV="xilinx.com:ip:xdma:4.2">
       <DOCUMENTS>
@@ -3333,9 +3415,9 @@
             <CONNECTION INSTANCE="util_ds_buf" PORT="IBUF_OUT"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="sys_rst_n" POLARITY="ACTIVE_LOW" SIGIS="rst" SIGNAME="External_Ports_sys_rst_n">
+        <PORT DIR="I" NAME="sys_rst_n" POLARITY="ACTIVE_LOW" SIGIS="rst" SIGNAME="ilvector_logic_0_Res">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="sys_rst_n"/>
+            <CONNECTION INSTANCE="ilvector_logic_0" PORT="Res"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="user_lnk_up" SIGIS="undef" SIGNAME="xdma_0_user_lnk_up">
