@@ -1,0 +1,12 @@
+
+{ 
+    crc :  4228901840931302322  , 
+    ccp_crc :  0  , 
+    cmdline : " --incr --debug typical --relax --mt 8 -L xil_defaultlib -L blk_mem_gen_v8_4_12 -L fifo_generator_v13_2_14 -L xdma_v4_2_2 -L axi_bram_ctrl_v4_1_13 -L xbip_utils_v3_0_15 -L c_reg_fd_v12_0_11 -L xbip_dsp48_wrapper_v3_0_7 -L xbip_pipe_v3_0_11 -L c_addsub_v12_0_21 -L c_counter_binary_v12_0_22 -L generic_baseblocks_v2_1_2 -L axi_data_fifo_v2_1_36 -L axi_infrastructure_v1_1_0 -L axi_register_slice_v2_1_36 -L axi_protocol_converter_v2_1_37 -L uvm -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot design_1_wrapper_behav xil_defaultlib.design_1_wrapper xil_defaultlib.glbl" , 
+    buildDate : "Nov 14 2025" , 
+    buildTime : "12:36:23" , 
+    linkCmd : "/opt/Xilinx_2/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/g++ -Wa,-W  -O -fPIC  -m64  -Wl,--no-as-needed  -Wl,--unresolved-symbols=ignore-all  -o \"xsim.dir/design_1_wrapper_behav/xsimk\"   -Wl,--whole-archive \"xsim.dir/design_1_wrapper_behav/obj/xsim.lnx64.a\" -Wl,--no-whole-archive  -L\"/opt/Xilinx_2/2025.2/Vivado/lib/lnx64.o\" -lxv_simulator_kernel    -L/opt/Xilinx_2/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../lib64 -Wl,--disable-new-dtags -Wl,-rpath=/opt/Xilinx_2/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../lib64 -lxv_simbridge_kernel" , 
+    aggregate_nets : 
+    [ 
+    ] 
+} 

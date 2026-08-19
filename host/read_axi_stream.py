@@ -5,17 +5,21 @@ Read samples from the alinx_streamer XDMA AXI-Stream path.
 Hardware (design_1):
   Host PCIe ──► xdma_0 (AXI Stream mode, Gen2 x2, 64-bit @ 125 MHz)
                   │
-                  ├─ M_AXIS_H2C_n ──► S_AXIS_C2H_n   (loopback, n=0,1)
+                  ├─ M_AXIS_H2C_0 ──► S_AXIS_C2H_0   (loopback)
+                  ├─ samples_generator_0 ──► S_AXIS_C2H_1
                   └─ M_AXI_LITE   ──► BRAM (4 KiB @ 0x0)
+                        ▲
+                        └── samples_generator reads port B
+
+BRAM map:
+  0x00  CTRL       bit0 = run (1=start, 0=stop)
+  0x04  N_SAMPLES  number of int16 samples
+  0x10  samples    int16 LE, two samples per 32-bit word
 
 Device nodes (Xilinx dma_ip_drivers xdma):
   /dev/xdma0_h2c_{0,1}   host → card (AXIS)
   /dev/xdma0_c2h_{0,1}   card → host (AXIS)
   /dev/xdma0_user        AXI-Lite BAR (BRAM)
-
-Current bitstream loops H2C back to C2H, so a pure C2H read hangs unless
-something drives S_AXIS_C2H. Use --loopback to exercise the path today, or
---mode c2h once a sample source is connected on the FPGA.
 """
 
 from __future__ import annotations
@@ -35,6 +39,14 @@ AXIS_BYTES_PER_BEAT = 8  # 64-bit TDATA
 BRAM_SIZE = 4096
 DEFAULT_DEVICE = 0
 DEFAULT_CHANNEL = 0
+STREAM_CHANNEL = 1  # samples_generator drives C2H_1
+
+# BRAM register map (byte offsets)
+REG_CTRL = 0x00
+REG_N_SAMPLES = 0x04
+REG_STATUS = 0x08
+SAMPLE_BASE = 0x10
+MAX_SAMPLES = (BRAM_SIZE - SAMPLE_BASE) // 2
 
 
 def device_path(kind: str, device: int = DEFAULT_DEVICE, channel: int = 0) -> Path:
@@ -245,6 +257,79 @@ class UserBar:
     def read_bytes(self, offset: int, nbytes: int) -> bytes:
         return bytes(self._mm[offset : offset + nbytes])
 
+    def write_bytes(self, offset: int, data: bytes) -> None:
+        self._mm[offset : offset + len(data)] = data
+
+
+def pack_i16_samples(samples: Sequence[int]) -> bytes:
+    """Pack int16 values into BRAM words (two samples per 32-bit LE word)."""
+    if not samples:
+        raise ValueError("samples must not be empty")
+    if len(samples) > MAX_SAMPLES:
+        raise ValueError(f"at most {MAX_SAMPLES} samples fit in BRAM")
+    out = bytearray()
+    idx = 0
+    while idx < len(samples):
+        lo = samples[idx] & 0xFFFF
+        hi = (samples[idx + 1] & 0xFFFF) if idx + 1 < len(samples) else 0
+        out.extend(struct.pack("<HH", lo, hi))
+        idx += 2
+    return bytes(out)
+
+
+def make_i16_pattern(count: int, pattern: str = "ramp16") -> List[int]:
+    if count <= 0:
+        raise ValueError("count must be > 0")
+    if count > MAX_SAMPLES:
+        raise ValueError(f"at most {MAX_SAMPLES} samples fit in BRAM")
+    if pattern == "ramp16":
+        return [i & 0xFFFF for i in range(count)]
+    if pattern == "zeros":
+        return [0] * count
+    if pattern == "ff":
+        return [0xFFFF] * count
+    if pattern == "sine":
+        import math
+
+        return [int(32767 * math.sin(2 * math.pi * i / count)) & 0xFFFF for i in range(count)]
+    raise ValueError(f"unknown pattern {pattern!r}")
+
+
+def load_samples(
+    samples: Sequence[int],
+    device: int = DEFAULT_DEVICE,
+) -> int:
+    """Load N int16 samples into BRAM and set N_SAMPLES register."""
+    packed = pack_i16_samples(samples)
+    with UserBar(device) as bar:
+        bar.write_u32(REG_N_SAMPLES, len(samples))
+        bar.write_bytes(SAMPLE_BASE, packed)
+    return len(samples)
+
+
+def load_samples_from_file(path: Path, device: int = DEFAULT_DEVICE) -> int:
+    raw = path.read_bytes()
+    if len(raw) % 2:
+        raise ValueError("sample file length must be a multiple of 2 bytes (int16)")
+    count = len(raw) // 2
+    samples = list(struct.unpack(f"<{count}h", raw))
+    return load_samples(samples, device=device)
+
+
+def start_stream(device: int = DEFAULT_DEVICE) -> None:
+    with UserBar(device) as bar:
+        bar.write_u32(REG_CTRL, 1)
+
+
+def stop_stream(device: int = DEFAULT_DEVICE) -> None:
+    with UserBar(device) as bar:
+        bar.write_u32(REG_CTRL, 0)
+
+
+def stream_status(device: int = DEFAULT_DEVICE) -> int:
+    with UserBar(device) as bar:
+        return bar.read_u32(REG_CTRL) & 1
+
 
 def print_preview(samples: Iterable, limit: int = 16) -> None:
     items = list(samples) if not hasattr(samples, "__len__") else samples
@@ -310,21 +395,94 @@ def cmd_bram(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_load_samples(args: argparse.Namespace) -> int:
+    if args.file:
+        count = load_samples_from_file(Path(args.file), args.device)
+        print(f"Loaded {count} int16 samples from {args.file} into BRAM+0x{SAMPLE_BASE:X}")
+    else:
+        samples = make_i16_pattern(args.samples, args.pattern)
+        count = load_samples(samples, args.device)
+        print(f"Loaded {count} generated int16 samples ({args.pattern}) into BRAM+0x{SAMPLE_BASE:X}")
+    return 0
+
+
+def cmd_start_stream(args: argparse.Namespace) -> int:
+    start_stream(args.device)
+    print(f"Streaming started (REG_CTRL @ BRAM+0x{REG_CTRL:X} = 1)")
+    return 0
+
+
+def cmd_stop_stream(args: argparse.Namespace) -> int:
+    stop_stream(args.device)
+    print(f"Streaming stopped (REG_CTRL @ BRAM+0x{REG_CTRL:X} = 0)")
+    return 0
+
+
+def cmd_stream_capture(args: argparse.Namespace) -> int:
+    """Load samples, start generator, read C2H_1, then stop."""
+    if args.file:
+        load_samples_from_file(Path(args.file), args.device)
+    else:
+        load_samples(make_i16_pattern(args.samples, args.pattern), args.device)
+
+    err: List[BaseException] = []
+    rx_box: List[bytes] = []
+
+    def reader() -> None:
+        try:
+            rx_box.append(
+                read_c2h(args.bytes, args.device, STREAM_CHANNEL, timeout_s=args.timeout)
+            )
+        except BaseException as exc:  # noqa: BLE001
+            err.append(exc)
+
+    t = threading.Thread(target=reader, name="c2h1-reader", daemon=True)
+    t.start()
+    time.sleep(0.05)
+    start_stream(args.device)
+    try:
+        t.join(timeout=args.timeout + 1.0)
+    finally:
+        stop_stream(args.device)
+
+    if err:
+        raise err[0]
+    if not rx_box:
+        raise TimeoutError("C2H_1 reader did not complete")
+
+    data = rx_box[0]
+    print(f"Read {len(data)} bytes from {device_path('c2h', args.device, STREAM_CHANNEL)}")
+    samples = parse_beats(data, args.dtype)
+    if args.dtype != "raw":
+        print_preview(samples, args.preview)
+    if args.output:
+        Path(args.output).write_bytes(data)
+        print(f"Wrote raw bytes to {args.output}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         description="Read AXI-Stream samples from alinx_streamer XDMA",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 examples:
-  # Current bitstream: H2C↔C2H loopback smoke test
+  # Channel 0 loopback smoke test (unchanged)
   sudo python3 read_axi_stream.py loopback -n 4096
 
-  # After FPGA drives S_AXIS_C2H from a sample source:
-  sudo python3 read_axi_stream.py c2h -n 1M --dtype u64 -o capture.bin
+  # Load 1024 ramp samples, start generator, capture from C2H_1
+  sudo python3 read_axi_stream.py load-samples -S 1024 --pattern ramp16
+  sudo python3 read_axi_stream.py start-stream
+  sudo python3 read_axi_stream.py c2h -c 1 -n 8192 --dtype i16
 
-  # AXI-Lite BRAM peek/poke (4 KiB @ BAR user offset 0)
+  # One-shot: load + stream + capture
+  sudo python3 read_axi_stream.py stream-capture -S 256 --pattern ramp16 -n 4096 --dtype i16
+
+  # Stop streaming
+  sudo python3 read_axi_stream.py stop-stream
+
+  # BRAM peek/poke
   sudo python3 read_axi_stream.py bram --offset 0 --write 0xA5A5A5A5
-  sudo python3 read_axi_stream.py bram --offset 0
 """,
     )
     p.add_argument("-d", "--device", type=int, default=DEFAULT_DEVICE, help="xdma device index")
@@ -364,6 +522,48 @@ examples:
     sp.add_argument("--offset", type=lambda s: int(s, 0), default=0)
     sp.add_argument("--write", type=lambda s: int(s, 0), default=None)
     sp.set_defaults(func=cmd_bram)
+
+    sp = sub.add_parser("load-samples", help="load int16 samples into BRAM buffer")
+    sp.add_argument(
+        "-S",
+        "--samples",
+        type=int,
+        default=256,
+        help=f"number of int16 samples to generate (max {MAX_SAMPLES})",
+    )
+    sp.add_argument(
+        "--pattern",
+        choices=("ramp16", "zeros", "ff", "sine"),
+        default="ramp16",
+        help="generated sample pattern (ignored with --file)",
+    )
+    sp.add_argument("--file", help="raw int16 LE file to load")
+    sp.set_defaults(func=cmd_load_samples)
+
+    sp = sub.add_parser("start-stream", help="start samples_generator on C2H_1")
+    sp.set_defaults(func=cmd_start_stream)
+
+    sp = sub.add_parser("stop-stream", help="stop samples_generator")
+    sp.set_defaults(func=cmd_stop_stream)
+
+    sp = sub.add_parser(
+        "stream-capture",
+        help="load samples, start generator, read C2H_1, stop",
+    )
+    sp.add_argument(
+        "-S",
+        "--samples",
+        type=int,
+        default=256,
+        help="generate this many samples before capture",
+    )
+    sp.add_argument(
+        "--pattern",
+        choices=("ramp16", "zeros", "ff", "sine"),
+        default="ramp16",
+    )
+    sp.add_argument("--file", help="raw int16 LE file to load before capture")
+    sp.set_defaults(func=cmd_stream_capture)
 
     return p
 

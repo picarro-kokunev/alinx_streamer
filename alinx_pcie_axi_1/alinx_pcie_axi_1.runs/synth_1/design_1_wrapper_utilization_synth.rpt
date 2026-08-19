@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
-| Date         : Tue Aug 18 13:04:21 2026
+| Date         : Tue Aug 18 17:39:59 2026
 | Host         : emerald running 64-bit Ubuntu 26.04 LTS
 | Command      : report_utilization -file design_1_wrapper_utilization_synth.rpt -pb design_1_wrapper_utilization_synth.pb
 | Design       : design_1_wrapper
@@ -31,17 +31,17 @@ Table of Contents
 +----------------------------+-------+-------+------------+-----------+-------+
 |          Site Type         |  Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+-------+-------+------------+-----------+-------+
-| Slice LUTs*                | 18081 |     0 |          0 |    134600 | 13.43 |
-|   LUT as Logic             | 16228 |     0 |          0 |    134600 | 12.06 |
-|   LUT as Memory            |  1853 |     0 |          0 |     46200 |  4.01 |
-|     LUT as Distributed RAM |  1765 |     0 |            |           |       |
-|     LUT as Shift Register  |    88 |     0 |            |           |       |
-| Slice Registers            | 18237 |     0 |          0 |    269200 |  6.77 |
-|   Register as Flip Flop    | 18237 |     0 |          0 |    269200 |  6.77 |
+| Slice LUTs*                | 17737 |     0 |          0 |    134600 | 13.18 |
+|   LUT as Logic             | 15935 |     0 |          0 |    134600 | 11.84 |
+|   LUT as Memory            |  1802 |     0 |          0 |     46200 |  3.90 |
+|     LUT as Distributed RAM |  1717 |     0 |            |           |       |
+|     LUT as Shift Register  |    85 |     0 |            |           |       |
+| Slice Registers            | 18196 |     0 |          0 |    269200 |  6.76 |
+|   Register as Flip Flop    | 18196 |     0 |          0 |    269200 |  6.76 |
 |   Register as Latch        |     0 |     0 |          0 |    269200 |  0.00 |
 | F7 Muxes                   |   282 |     0 |          0 |     67300 |  0.42 |
 | F8 Muxes                   |    21 |     0 |          0 |     33650 |  0.06 |
-| Unique Control Sets        |   526 |       |          0 |     33650 |  1.56 |
+| Unique Control Sets        |   532 |       |          0 |     33650 |  1.58 |
 +----------------------------+-------+-------+------------+-----------+-------+
 * Warning! The Final LUT count, after physical optimizations and full implementation, is typically lower. Run opt_design after synthesis, if not already completed, for a more realistic count.
 Warning! LUT value is adjusted to account for LUT combining.
@@ -63,8 +63,8 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | 0     |          Yes |           - |            - |
 | 58    |          Yes |           - |          Set |
 | 56    |          Yes |           - |        Reset |
-| 187   |          Yes |         Set |            - |
-| 17936 |          Yes |       Reset |            - |
+| 186   |          Yes |         Set |            - |
+| 17896 |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -74,9 +74,9 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +-------------------+------+-------+------------+-----------+-------+
 |     Site Type     | Used | Fixed | Prohibited | Available | Util% |
 +-------------------+------+-------+------------+-----------+-------+
-| Block RAM Tile    | 27.5 |     0 |          0 |       365 |  7.53 |
-|   RAMB36/FIFO*    |   23 |     0 |          0 |       365 |  6.30 |
-|     RAMB36E1 only |   23 |       |            |           |       |
+| Block RAM Tile    | 28.5 |     0 |          0 |       365 |  7.81 |
+|   RAMB36/FIFO*    |   24 |     0 |          0 |       365 |  6.58 |
+|     RAMB36E1 only |   24 |       |            |           |       |
 |   RAMB18          |    9 |     0 |          0 |       730 |  1.23 |
 |     RAMB18E1 only |    9 |       |            |           |       |
 +-------------------+------+-------+------------+-----------+-------+
@@ -158,22 +158,22 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +---------------+-------+----------------------+
 |    Ref Name   |  Used |  Functional Category |
 +---------------+-------+----------------------+
-| FDRE          | 17936 |         Flop & Latch |
-| LUT6          |  5887 |                  LUT |
-| LUT3          |  4366 |                  LUT |
-| LUT5          |  3202 |                  LUT |
-| LUT4          |  2854 |                  LUT |
-| RAMD32        |  2538 |   Distributed Memory |
-| LUT2          |  1816 |                  LUT |
-| LUT1          |  1542 |                  LUT |
-| CARRY4        |   858 |           CarryLogic |
-| RAMS32        |   782 |   Distributed Memory |
+| FDRE          | 17896 |         Flop & Latch |
+| LUT6          |  5713 |                  LUT |
+| LUT3          |  4360 |                  LUT |
+| LUT5          |  3122 |                  LUT |
+| LUT4          |  2783 |                  LUT |
+| RAMD32        |  2466 |   Distributed Memory |
+| LUT2          |  1811 |                  LUT |
+| LUT1          |  1547 |                  LUT |
+| CARRY4        |   876 |           CarryLogic |
+| RAMS32        |   758 |   Distributed Memory |
 | MUXF7         |   282 |                MuxFx |
-| FDSE          |   187 |         Flop & Latch |
-| SRL16E        |    81 |   Distributed Memory |
+| FDSE          |   186 |         Flop & Latch |
+| SRL16E        |    78 |   Distributed Memory |
 | FDPE          |    58 |         Flop & Latch |
 | FDCE          |    56 |         Flop & Latch |
-| RAMB36E1      |    23 |         Block Memory |
+| RAMB36E1      |    24 |         Block Memory |
 | MUXF8         |    21 |                MuxFx |
 | RAMS64E       |     9 |   Distributed Memory |
 | RAMB18E1      |     9 |         Block Memory |

@@ -2,7 +2,7 @@
 //Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
-//Date        : Mon Aug  3 18:27:49 2026
+//Date        : Tue Aug 18 17:37:56 2026
 //Host        : emerald running 64-bit Ubuntu 26.04 LTS
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -10,7 +10,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=10,numReposBlks=8,numNonXlnxBlks=0,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_board_cnt=3,da_xdma_cnt=1,synth_mode=None}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=15,numReposBlks=13,numNonXlnxBlks=0,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=2,numPkgbdBlks=0,bdsource=USER,da_board_cnt=3,da_bram_cntlr_cnt=1,da_xdma_cnt=1,synth_mode=None}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (LED,
     pcie_7x_mgt_rtl_0_rxn,
@@ -99,26 +99,36 @@ module design_1
   wire [3:0]axi_interconnect_0_M00_AXI_WSTRB;
   wire axi_interconnect_0_M00_AXI_WVALID;
   wire [25:0]c_counter_binary_0_Q;
+  wire [0:0]ilvector_logic_0_Res;
   wire [1:0]pcie_7x_mgt_rtl_0_rxn;
   wire [1:0]pcie_7x_mgt_rtl_0_rxp;
   wire [1:0]pcie_7x_mgt_rtl_0_txn;
   wire [1:0]pcie_7x_mgt_rtl_0_txp;
   wire [0:0]pcie_clk_clk_n;
   wire [0:0]pcie_clk_clk_p;
+  wire [31:0]samples_generator_0_BRAM_PORTB_ADDR;
+  wire samples_generator_0_BRAM_PORTB_CLK;
+  wire [31:0]samples_generator_0_BRAM_PORTB_DIN;
+  wire [31:0]samples_generator_0_BRAM_PORTB_DOUT;
+  wire samples_generator_0_BRAM_PORTB_EN;
+  wire samples_generator_0_BRAM_PORTB_RST;
+  wire [3:0]samples_generator_0_BRAM_PORTB_WE;
+  wire [63:0]samples_generator_0_M_AXIS_TDATA;
+  wire [7:0]samples_generator_0_M_AXIS_TKEEP;
+  wire samples_generator_0_M_AXIS_TLAST;
+  wire samples_generator_0_M_AXIS_TREADY;
+  wire samples_generator_0_M_AXIS_TVALID;
+  wire self_pcie_reset_0_pcie_reset_n;
   wire sys_rst_n;
   wire user_lnk_up;
   wire user_resetn;
+  wire [0:0]util_ds_buf_0_BUFG_O;
   wire [0:0]util_ds_buf_IBUF_OUT;
   wire [63:0]xdma_0_M_AXIS_H2C_0_TDATA;
   wire [7:0]xdma_0_M_AXIS_H2C_0_TKEEP;
   wire xdma_0_M_AXIS_H2C_0_TLAST;
   wire xdma_0_M_AXIS_H2C_0_TREADY;
   wire xdma_0_M_AXIS_H2C_0_TVALID;
-  wire [63:0]xdma_0_M_AXIS_H2C_1_TDATA;
-  wire [7:0]xdma_0_M_AXIS_H2C_1_TKEEP;
-  wire xdma_0_M_AXIS_H2C_1_TLAST;
-  wire xdma_0_M_AXIS_H2C_1_TREADY;
-  wire xdma_0_M_AXIS_H2C_1_TVALID;
   wire xdma_0_axi_aclk;
   wire [0:0]xlconstant_1_dout;
 
@@ -170,6 +180,14 @@ module design_1
         .s_axi_wready(axi_interconnect_0_M00_AXI_WREADY),
         .s_axi_wstrb(axi_interconnect_0_M00_AXI_WSTRB),
         .s_axi_wvalid(axi_interconnect_0_M00_AXI_WVALID));
+  design_1_axi_bram_ctrl_1_bram_0 axi_bram_ctrl_1_bram
+       (.addra({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,axi_bram_ctrl_1_BRAM_PORTB_ADDR}),
+        .clka(axi_bram_ctrl_1_BRAM_PORTB_CLK),
+        .dina(axi_bram_ctrl_1_BRAM_PORTB_DIN),
+        .douta(axi_bram_ctrl_1_BRAM_PORTB_DOUT),
+        .ena(axi_bram_ctrl_1_BRAM_PORTB_EN),
+        .rsta(axi_bram_ctrl_1_BRAM_PORTB_RST),
+        .wea(axi_bram_ctrl_1_BRAM_PORTB_WE));
   design_1_axi_interconnect_0_0 axi_interconnect_0
        (.ACLK(xdma_0_axi_aclk),
         .ARESETN(user_resetn),
@@ -229,26 +247,48 @@ module design_1
         .S00_AXI_wvalid(S00_AXI_1_WVALID));
   design_1_blk_mem_gen_1_0 blk_mem_gen_1
        (.addra({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,axi_bram_ctrl_1_BRAM_PORTA_ADDR}),
-        .addrb({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,axi_bram_ctrl_1_BRAM_PORTB_ADDR}),
+        .addrb(samples_generator_0_BRAM_PORTB_ADDR),
         .clka(axi_bram_ctrl_1_BRAM_PORTA_CLK),
-        .clkb(axi_bram_ctrl_1_BRAM_PORTB_CLK),
+        .clkb(samples_generator_0_BRAM_PORTB_CLK),
         .dina(axi_bram_ctrl_1_BRAM_PORTA_DIN),
-        .dinb(axi_bram_ctrl_1_BRAM_PORTB_DIN),
+        .dinb(samples_generator_0_BRAM_PORTB_DIN),
         .douta(axi_bram_ctrl_1_BRAM_PORTA_DOUT),
-        .doutb(axi_bram_ctrl_1_BRAM_PORTB_DOUT),
+        .doutb(samples_generator_0_BRAM_PORTB_DOUT),
         .ena(axi_bram_ctrl_1_BRAM_PORTA_EN),
-        .enb(axi_bram_ctrl_1_BRAM_PORTB_EN),
+        .enb(samples_generator_0_BRAM_PORTB_EN),
         .rsta(axi_bram_ctrl_1_BRAM_PORTA_RST),
-        .rstb(axi_bram_ctrl_1_BRAM_PORTB_RST),
+        .rstb(samples_generator_0_BRAM_PORTB_RST),
         .wea(axi_bram_ctrl_1_BRAM_PORTA_WE),
-        .web(axi_bram_ctrl_1_BRAM_PORTB_WE));
+        .web(samples_generator_0_BRAM_PORTB_WE));
   design_1_c_counter_binary_0_0 c_counter_binary_0
        (.CLK(xdma_0_axi_aclk),
         .Q(c_counter_binary_0_Q));
+  assign ilvector_logic_0_Res = self_pcie_reset_0_pcie_reset_n & sys_rst_n;
+  design_1_samples_generator_0_0 samples_generator_0
+       (.aclk(xdma_0_axi_aclk),
+        .aresetn(user_resetn),
+        .bram_portb_addr(samples_generator_0_BRAM_PORTB_ADDR),
+        .bram_portb_clk(samples_generator_0_BRAM_PORTB_CLK),
+        .bram_portb_din(samples_generator_0_BRAM_PORTB_DIN),
+        .bram_portb_dout(samples_generator_0_BRAM_PORTB_DOUT),
+        .bram_portb_en(samples_generator_0_BRAM_PORTB_EN),
+        .bram_portb_rst(samples_generator_0_BRAM_PORTB_RST),
+        .bram_portb_we(samples_generator_0_BRAM_PORTB_WE),
+        .m_axis_tdata(samples_generator_0_M_AXIS_TDATA),
+        .m_axis_tkeep(samples_generator_0_M_AXIS_TKEEP),
+        .m_axis_tlast(samples_generator_0_M_AXIS_TLAST),
+        .m_axis_tready(samples_generator_0_M_AXIS_TREADY),
+        .m_axis_tvalid(samples_generator_0_M_AXIS_TVALID));
+  design_1_self_pcie_reset_0_0 self_pcie_reset_0
+       (.clk(util_ds_buf_0_BUFG_O),
+        .pcie_reset_n(self_pcie_reset_0_pcie_reset_n));
   design_1_util_ds_buf_0 util_ds_buf
        (.IBUF_DS_N(pcie_clk_clk_n),
         .IBUF_DS_P(pcie_clk_clk_p),
         .IBUF_OUT(util_ds_buf_IBUF_OUT));
+  design_1_util_ds_buf_0_0 util_ds_buf_0
+       (.BUFG_I(util_ds_buf_IBUF_OUT),
+        .BUFG_O(util_ds_buf_0_BUFG_O));
   design_1_xdma_0_0 xdma_0
        (.axi_aclk(xdma_0_axi_aclk),
         .axi_aresetn(user_resetn),
@@ -278,35 +318,31 @@ module design_1
         .m_axil_wstrb(S00_AXI_1_WSTRB),
         .m_axil_wvalid(S00_AXI_1_WVALID),
         .m_axis_h2c_tdata_0(xdma_0_M_AXIS_H2C_0_TDATA),
-        .m_axis_h2c_tdata_1(xdma_0_M_AXIS_H2C_1_TDATA),
         .m_axis_h2c_tkeep_0(xdma_0_M_AXIS_H2C_0_TKEEP),
-        .m_axis_h2c_tkeep_1(xdma_0_M_AXIS_H2C_1_TKEEP),
         .m_axis_h2c_tlast_0(xdma_0_M_AXIS_H2C_0_TLAST),
-        .m_axis_h2c_tlast_1(xdma_0_M_AXIS_H2C_1_TLAST),
         .m_axis_h2c_tready_0(xdma_0_M_AXIS_H2C_0_TREADY),
-        .m_axis_h2c_tready_1(xdma_0_M_AXIS_H2C_1_TREADY),
+        .m_axis_h2c_tready_1(1'b1),
         .m_axis_h2c_tvalid_0(xdma_0_M_AXIS_H2C_0_TVALID),
-        .m_axis_h2c_tvalid_1(xdma_0_M_AXIS_H2C_1_TVALID),
         .pci_exp_rxn(pcie_7x_mgt_rtl_0_rxn),
         .pci_exp_rxp(pcie_7x_mgt_rtl_0_rxp),
         .pci_exp_txn(pcie_7x_mgt_rtl_0_txn),
         .pci_exp_txp(pcie_7x_mgt_rtl_0_txp),
         .s_axis_c2h_tdata_0(xdma_0_M_AXIS_H2C_0_TDATA),
-        .s_axis_c2h_tdata_1(xdma_0_M_AXIS_H2C_1_TDATA),
+        .s_axis_c2h_tdata_1(samples_generator_0_M_AXIS_TDATA),
         .s_axis_c2h_tkeep_0(xdma_0_M_AXIS_H2C_0_TKEEP),
-        .s_axis_c2h_tkeep_1(xdma_0_M_AXIS_H2C_1_TKEEP),
+        .s_axis_c2h_tkeep_1(samples_generator_0_M_AXIS_TKEEP),
         .s_axis_c2h_tlast_0(xdma_0_M_AXIS_H2C_0_TLAST),
-        .s_axis_c2h_tlast_1(xdma_0_M_AXIS_H2C_1_TLAST),
+        .s_axis_c2h_tlast_1(samples_generator_0_M_AXIS_TLAST),
         .s_axis_c2h_tready_0(xdma_0_M_AXIS_H2C_0_TREADY),
-        .s_axis_c2h_tready_1(xdma_0_M_AXIS_H2C_1_TREADY),
+        .s_axis_c2h_tready_1(samples_generator_0_M_AXIS_TREADY),
         .s_axis_c2h_tvalid_0(xdma_0_M_AXIS_H2C_0_TVALID),
-        .s_axis_c2h_tvalid_1(xdma_0_M_AXIS_H2C_1_TVALID),
+        .s_axis_c2h_tvalid_1(samples_generator_0_M_AXIS_TVALID),
         .sys_clk(util_ds_buf_IBUF_OUT),
-        .sys_rst_n(sys_rst_n),
+        .sys_rst_n(ilvector_logic_0_Res),
         .user_lnk_up(user_lnk_up),
         .usr_irq_req(xlconstant_1_dout));
   assign xlconstant_1_dout = 1'h0;
-  assign LED = c_counter_binary_0_Q[0:0];
+  assign LED = c_counter_binary_0_Q[25:25];
 endmodule
 
 module design_1_axi_interconnect_0_0

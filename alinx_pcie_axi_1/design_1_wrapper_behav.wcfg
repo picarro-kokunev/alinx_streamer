@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="design_1_wrapper_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="\$unit_design_1_xdma_0_0_dma_cpl_sv_523591476 " />
+            <top_module name="axi_bram_ctrl_funcs" />
+            <top_module name="design_1_wrapper" />
+            <top_module name="glbl" />
+            <top_module name="vcomponents" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000000000 ms"></ZoomStartTime>
+      <ZoomEndTime time="10.377990001 ms"></ZoomEndTime>
+      <Cursor1Time time="10.377990000 ms"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="204"></NameColumnWidth>
+      <ValueColumnWidth column_width="184"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="44" />
+   <wvobject type="array" fp_name="/design_1_wrapper/LED">
+      <obj_property name="ElementShortName">LED[0:0]</obj_property>
+      <obj_property name="ObjectShortName">LED[0:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/pcie_7x_mgt_rtl_0_rxn">
+      <obj_property name="ElementShortName">pcie_7x_mgt_rtl_0_rxn[1:0]</obj_property>
+      <obj_property name="ObjectShortName">pcie_7x_mgt_rtl_0_rxn[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/pcie_7x_mgt_rtl_0_rxp">
+      <obj_property name="ElementShortName">pcie_7x_mgt_rtl_0_rxp[1:0]</obj_property>
+      <obj_property name="ObjectShortName">pcie_7x_mgt_rtl_0_rxp[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/pcie_7x_mgt_rtl_0_txn">
+      <obj_property name="ElementShortName">pcie_7x_mgt_rtl_0_txn[1:0]</obj_property>
+      <obj_property name="ObjectShortName">pcie_7x_mgt_rtl_0_txn[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/pcie_7x_mgt_rtl_0_txp">
+      <obj_property name="ElementShortName">pcie_7x_mgt_rtl_0_txp[1:0]</obj_property>
+      <obj_property name="ObjectShortName">pcie_7x_mgt_rtl_0_txp[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/pcie_clk_clk_n">
+      <obj_property name="ElementShortName">pcie_clk_clk_n[0:0]</obj_property>
+      <obj_property name="ObjectShortName">pcie_clk_clk_n[0:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/pcie_clk_clk_p">
+      <obj_property name="ElementShortName">pcie_clk_clk_p[0:0]</obj_property>
+      <obj_property name="ObjectShortName">pcie_clk_clk_p[0:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/sys_rst_n">
+      <obj_property name="ElementShortName">sys_rst_n</obj_property>
+      <obj_property name="ObjectShortName">sys_rst_n</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/user_lnk_up">
+      <obj_property name="ElementShortName">user_lnk_up</obj_property>
+      <obj_property name="ObjectShortName">user_lnk_up</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/user_resetn">
+      <obj_property name="ElementShortName">user_resetn</obj_property>
+      <obj_property name="ObjectShortName">user_resetn</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/aclk">
+      <obj_property name="ElementShortName">aclk</obj_property>
+      <obj_property name="ObjectShortName">aclk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/aresetn">
+      <obj_property name="ElementShortName">aresetn</obj_property>
+      <obj_property name="ObjectShortName">aresetn</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/bram_portb_clk">
+      <obj_property name="ElementShortName">bram_portb_clk</obj_property>
+      <obj_property name="ObjectShortName">bram_portb_clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/bram_portb_rst">
+      <obj_property name="ElementShortName">bram_portb_rst</obj_property>
+      <obj_property name="ObjectShortName">bram_portb_rst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/bram_portb_en">
+      <obj_property name="ElementShortName">bram_portb_en</obj_property>
+      <obj_property name="ObjectShortName">bram_portb_en</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/bram_portb_we">
+      <obj_property name="ElementShortName">bram_portb_we[3:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_portb_we[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/bram_portb_addr">
+      <obj_property name="ElementShortName">bram_portb_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_portb_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/bram_portb_din">
+      <obj_property name="ElementShortName">bram_portb_din[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_portb_din[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/bram_portb_dout">
+      <obj_property name="ElementShortName">bram_portb_dout[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_portb_dout[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/m_axis_tdata">
+      <obj_property name="ElementShortName">m_axis_tdata[63:0]</obj_property>
+      <obj_property name="ObjectShortName">m_axis_tdata[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/m_axis_tkeep">
+      <obj_property name="ElementShortName">m_axis_tkeep[7:0]</obj_property>
+      <obj_property name="ObjectShortName">m_axis_tkeep[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/m_axis_tlast">
+      <obj_property name="ElementShortName">m_axis_tlast</obj_property>
+      <obj_property name="ObjectShortName">m_axis_tlast</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/m_axis_tvalid">
+      <obj_property name="ElementShortName">m_axis_tvalid</obj_property>
+      <obj_property name="ObjectShortName">m_axis_tvalid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/m_axis_tready">
+      <obj_property name="ElementShortName">m_axis_tready</obj_property>
+      <obj_property name="ObjectShortName">m_axis_tready</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/state">
+      <obj_property name="ElementShortName">state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/sample_count">
+      <obj_property name="ElementShortName">sample_count[15:0]</obj_property>
+      <obj_property name="ObjectShortName">sample_count[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/sample_idx">
+      <obj_property name="ElementShortName">sample_idx[15:0]</obj_property>
+      <obj_property name="ObjectShortName">sample_idx[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/pending_addr">
+      <obj_property name="ElementShortName">pending_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">pending_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/beat_data">
+      <obj_property name="ElementShortName">beat_data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">beat_data[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/samples_in_beat">
+      <obj_property name="ElementShortName">samples_in_beat[2:0]</obj_property>
+      <obj_property name="ObjectShortName">samples_in_beat[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/bram_en_r">
+      <obj_property name="ElementShortName">bram_en_r</obj_property>
+      <obj_property name="ObjectShortName">bram_en_r</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/bram_addr_r">
+      <obj_property name="ElementShortName">bram_addr_r[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_addr_r[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/samples_added">
+      <obj_property name="ElementShortName">samples_added[15:0]</obj_property>
+      <obj_property name="ObjectShortName">samples_added[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/total_in_beat">
+      <obj_property name="ElementShortName">total_in_beat[2:0]</obj_property>
+      <obj_property name="ObjectShortName">total_in_beat[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/BRAM_ADDR_WIDTH">
+      <obj_property name="ElementShortName">BRAM_ADDR_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">BRAM_ADDR_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/SAMPLE_BASE_BYTE">
+      <obj_property name="ElementShortName">SAMPLE_BASE_BYTE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">SAMPLE_BASE_BYTE[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/MAX_SAMPLES">
+      <obj_property name="ElementShortName">MAX_SAMPLES[31:0]</obj_property>
+      <obj_property name="ObjectShortName">MAX_SAMPLES[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/REG_CTRL_BYTE">
+      <obj_property name="ElementShortName">REG_CTRL_BYTE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_CTRL_BYTE[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/REG_N_BYTE">
+      <obj_property name="ElementShortName">REG_N_BYTE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_N_BYTE[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/S_POLL">
+      <obj_property name="ElementShortName">S_POLL[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S_POLL[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/S_LOAD_N">
+      <obj_property name="ElementShortName">S_LOAD_N[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S_LOAD_N[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/S_WAIT">
+      <obj_property name="ElementShortName">S_WAIT[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S_WAIT[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/S_ACCUM">
+      <obj_property name="ElementShortName">S_ACCUM[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S_ACCUM[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/design_1_wrapper/design_1_i/samples_generator_0/inst/S_SEND">
+      <obj_property name="ElementShortName">S_SEND[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S_SEND[2:0]</obj_property>
+   </wvobject>
+</wave_config>

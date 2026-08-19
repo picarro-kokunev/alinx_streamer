@@ -174,7 +174,13 @@ vcom -work xil_defaultlib -64 -93  \
 "../../../bd/design_1/ip/design_1_c_counter_binary_0_0/sim/design_1_c_counter_binary_0_0.vhd" \
 
 vlog -work xil_defaultlib -64 -incr -mfcu  "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/d6c9/hdl/verilog" "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../../../../../../../../opt/Xilinx_2/2025.2/data/rsb/busdef" "+incdir+/opt/Xilinx_2/2025.2/data/xilinx_vip/include" \
-"../../../bd/design_1/sim/design_1.v" \
+"../../../bd/design_1/ip/design_1_self_pcie_reset_0_0/sim/design_1_self_pcie_reset_0_0.v" \
+
+vcom -work xil_defaultlib -64 -93  \
+"../../../bd/design_1/ip/design_1_util_ds_buf_0_0/sim/design_1_util_ds_buf_0_0.vhd" \
+
+vlog -work xil_defaultlib -64 -incr -mfcu  "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/d6c9/hdl/verilog" "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../../../../../../../../opt/Xilinx_2/2025.2/data/rsb/busdef" "+incdir+/opt/Xilinx_2/2025.2/data/xilinx_vip/include" \
+"../../../bd/design_1/ip/design_1_samples_generator_0_0/sim/design_1_samples_generator_0_0.v" \
 
 vlog -work generic_baseblocks_v2_1_2 -64 -incr -mfcu  "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/d6c9/hdl/verilog" "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../../../../../../../../opt/Xilinx_2/2025.2/data/rsb/busdef" "+incdir+/opt/Xilinx_2/2025.2/data/xilinx_vip/include" \
 "../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/0c28/hdl/generic_baseblocks_v2_1_vl_rfs.v" \
@@ -193,6 +199,7 @@ vlog -work axi_protocol_converter_v2_1_37 -64 -incr -mfcu  "+incdir+../../../../
 
 vlog -work xil_defaultlib -64 -incr -mfcu  "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/d6c9/hdl/verilog" "+incdir+../../../../alinx_pcie_axi_1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../../../../../../../../opt/Xilinx_2/2025.2/data/rsb/busdef" "+incdir+/opt/Xilinx_2/2025.2/data/xilinx_vip/include" \
 "../../../bd/design_1/ip/design_1_axi_interconnect_0_imp_auto_pc_0/sim/design_1_axi_interconnect_0_imp_auto_pc_0.v" \
+"../../../bd/design_1/sim/design_1.v" \
 
 vlog -work xil_defaultlib \
 "glbl.v"
